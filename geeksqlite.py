@@ -20,10 +20,10 @@ except:
 	sys.exit(1)
 	
 # Load Modules
-import filedialog, sys, os
+import filedialog, sys, os, dist
 
 # gettext
-gettext.bindtextdomain('geeksqlite', './lang')
+gettext.bindtextdomain('geeksqlite', dist.langdir)
 gettext.textdomain('geeksqlite')
 _ = gettext.gettext
 	
@@ -36,6 +36,74 @@ def err(text):
 	
 class geeksqliteMain:
 	
+	def browse_to(self, table, start=0, limit=50, search=None):
+		self.browse_current_table = table
+		self.browse_current_start = start
+		self.browse_current_limit = limit
+		self.browse_current_search = search
+		
+		if self.fileopened:
+			ef = self.mainTree.get_widget('DataField')
+			try:
+				ef.remove(self.btv)
+				self.btv = False
+			except:
+				print "Error"
+			try:
+				query = "SELECT * FROM "+table;
+				if search != None:
+					query += " "+search
+				query += " LIMIT "+str(start)+","+str(limit)+";"
+				
+				result = self.sql(query)
+				ls = False
+				C = 0
+				any = False
+				for row in self.cursor:
+					any = True
+					l = len(row)
+					list = []
+					for field in row:
+						list.append(str(field))
+					if not ls:
+						columns = [str] * l
+						ls = gtk.ListStore(*columns)
+					ls.append(list)
+					C += 1
+				if any:
+					cols = [""]*l
+					cells = [""]*l
+					labels = [""]*l
+					j = 0
+					for k in self.cursor.description:
+						labels[j] = str(k[0])
+						j += 1
+					self.btv = gtk.TreeView(ls)
+					for i in range(0,l):
+						cols[i] = gtk.TreeViewColumn(labels[i])
+						cells[i] = gtk.CellRendererText()
+						cols[i].pack_start(cells[i])
+						cols[i].add_attribute(cells[i], 'text', i)
+						cols[i].set_resizable(True)
+						cols[i].set_reorderable(True)
+						self.btv.append_column(cols[i])
+						self.btv.show()
+					ef.add(self.btv)
+					scrolllabel = self.mainTree.get_widget('ScrollLabel')
+					result2 = self.sql("SELECT * FROM "+table+";")
+					total = len(self.cursor.fetchall())
+					if total < start+limit:
+						self.mainTree.get_widget('ScrollRight').hide()
+					else:
+						self.mainTree.get_widget('ScrollRight').show()
+					if start == 0:
+						self.mainTree.get_widget('ScrollLeft').hide()
+					else:
+						self.mainTree.get_widget('ScrollLeft').show()
+					scrolllabel.set_text(str(start)+' to '+str(start+C)+' of '+str(total))
+			except sqlite3.Error, e:
+				ebuf.set_text('[SQLite Error] '+e.args[0])
+		
 	def do_open(self, file=None):
 		if file != None:
 			self.filename = file
@@ -45,7 +113,7 @@ class geeksqliteMain:
 				self.connection = sqlite3.connect(self.filename)
 				self.cursor = self.connection.cursor()
 				self.fileopened = True
-				self.cursor.execute('select name, sql from sqlite_master WHERE type = "table"')
+				self.cursor.execute('select name, sql from sqlite_master WHERE type = "table";')
 				self.log_add('-- -- OPEN FILE -- --')
 			except:
 				err(_('Unable to open database file'))
@@ -68,12 +136,12 @@ class geeksqliteMain:
 		# Tables
 		ls = gtk.ListStore(str, str, str)
 		ls2 = gtk.ListStore(str)
-		result = self.sql('select name, sql from sqlite_master WHERE type = "table"')
+		result = self.sql('select name, sql from sqlite_master WHERE type = "table";')
 		for row in self.cursor:
 			n = row[0]
 			ls.append([n, 'table', row[1]])
 			ls2.append([n])
-		result = self.sql('select name, sql from sqlite_master WHERE type = "index"')
+		result = self.sql('select name, sql from sqlite_master WHERE type = "index";')
 		for row in self.cursor:
 			n = row[0]
 			ls.append([n, 'index', row[1]])
@@ -126,8 +194,22 @@ class geeksqliteMain:
 		dialog.hide()
 		
 	def browse(self, this):
-		pass
+		if this.get_active_text() != None:
+			self.browse_to(table=this.get_active_text(),start=0,limit=50,search=None)
 		
+	def browse_nextpage(self, this):
+		cb = self.mainTree.get_widget('TableSelect').get_active_text()
+		if cb != None:
+			self.browse_to(table=self.browse_current_table,start=self.browse_current_start+self.browse_current_limit,limit=self.browse_current_limit,search=self.browse_current_search)
+		
+	def browse_previouspage(self, this):
+		cb = self.mainTree.get_widget('TableSelect').get_active_text()
+		if cb != None:
+			start = self.browse_current_start-self.browse_current_limit
+			if start < 0:
+				start = 0
+			self.browse_to(table=self.browse_current_table,start=start,limit=self.browse_current_limit,search=self.browse_current_search)
+
 	def execute(self, this):
 		if self.fileopened:
 			ibuf = self.mainTree.get_widget('ExecInput').get_buffer()
@@ -159,6 +241,11 @@ class geeksqliteMain:
 							ls.append(list)
 						cols = [""]*l
 						cells = [""]*l
+						labels = [""]*l
+						j = 0
+						for k in self.cursor.description:
+							labels[j] = str(k[0])
+							j += 1
 						self.exectv = gtk.TreeView(ls)
 						for i in range(0,l):
 							cols[i] = gtk.TreeViewColumn('')
@@ -224,7 +311,11 @@ class geeksqliteMain:
 				"on_ExecButton_clicked" : self.execute,
 				"on_TableSelect_changed" : self.browse,
 				"on_ImportSQL_activate" : self.importSQL,
-				"on_ExportSQL_activate" : self.exportSQL
+				"on_ExportSQL_activate" : self.exportSQL,
+				"on_ScrollRight_activate" : self.browse_nextpage,
+				"on_ScrollRight_clicked" : self.browse_nextpage,
+				"on_ScrollLeft_activate" : self.browse_previouspage,
+				"on_ScrollLeft_clicked" : self.browse_previouspage
 			  }
 		self.mainTree.signal_autoconnect(dic)
 	
@@ -261,7 +352,7 @@ class geeksqliteMain:
 		
 	def __init__(self):
 		# Main Window
-		self.mainTree = gtk.glade.XML("interface/mainwindow.glade")
+		self.mainTree = gtk.glade.XML(dist.interfacedir+"/mainwindow.glade")
 		self.grab_widgets()
 		self.connect_events()	
 		self.design_treeviews()

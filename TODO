@@ -1,7 +1,12 @@
 - Save (As) file (srsly? only save AS? autosave?)
-- Create Table
-- Delete Table
-- Modify Table
-- Create Index
-- Delete Index
-- Browse Data
+- Structure
+	- Create Table
+	- Delete Table
+	- Modify Table
+	- Create Index
+	- Delete Index
+- Data
+	- Add Data
+	- Delete Data
+	- Refresh Data
+	- Search Data

@@ -408,16 +408,13 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkScrolledWindow" id="scrolledwindow2">
+                  <widget class="GtkScrolledWindow" id="DataField">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="hscrollbar_policy">automatic</property>
                     <property name="vscrollbar_policy">automatic</property>
                     <child>
-                      <widget class="GtkTreeView" id="BrowseTreeview">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                      </widget>
+                      <placeholder/>
                     </child>
                   </widget>
                   <packing>
@@ -448,7 +445,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <signal name="activate" handler="on_ScrollLeft_activate"/>
+                        <signal name="clicked" handler="on_ScrollLeft_clicked" object=" "/>
+                        <signal name="activate" handler="on_ScrollLeft_activate" object=" "/>
                       </widget>
                       <packing>
                         <property name="x">5</property>
@@ -463,7 +461,8 @@
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <signal name="activate" handler="on_ScrollRight_activate"/>
+                        <signal name="clicked" handler="on_ScrollRight_clicked" object=" "/>
+                        <signal name="activate" handler="on_ScrollRight_activate" object=" "/>
                       </widget>
                       <packing>
                         <property name="x">155</property>
