@@ -1,12 +1,20 @@
 - Save (As) file (srsly? only save AS? autosave?)
 - Structure
 	- Create Table
-	- Delete Table
 	- Modify Table
 	- Create Index
 	- Delete Index
+	- Views?
 - Data
-	- Add Data
-	- Delete Data
-	- Refresh Data
+	- Modify Data
 	- Search Data
+		- LIKE
+		- NOT LIKE
+		- <
+		- >
+		- <=
+		- >=
+		- = 
+		- !=
+		- ISNULL
+		- NOTNULL

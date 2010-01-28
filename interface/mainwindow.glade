@@ -168,6 +168,7 @@
                         <property name="visible">True</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_MainMenuTableCreate_activate"/>
+                        <accelerator key="c" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <child internal-child="image">
                           <widget class="GtkImage" id="image3">
                             <property name="visible">True</property>
@@ -182,7 +183,8 @@
                         <property name="label" translatable="yes">Delete Table</property>
                         <property name="visible">True</property>
                         <property name="use_stock">False</property>
-                        <signal name="activate" handler="on_MainMenuTableDelete_activate"/>
+                        <signal name="activate" handler="on_MainMenuTableDelete_activate" object=" "/>
+                        <accelerator key="d" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <child internal-child="image">
                           <widget class="GtkImage" id="image4">
                             <property name="visible">True</property>
@@ -199,6 +201,7 @@
                         <property name="visible">True</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_MainMenuTableModify_activate"/>
+                        <accelerator key="e" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <child internal-child="image">
                           <widget class="GtkImage" id="image5">
                             <property name="visible">True</property>
@@ -219,6 +222,7 @@
                         <property name="visible">True</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_MainMenuIndexCreate_activate"/>
+                        <accelerator key="i" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <child internal-child="image">
                           <widget class="GtkImage" id="image6">
                             <property name="visible">True</property>
@@ -234,6 +238,7 @@
                         <property name="visible">True</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_MainMenuIndexDelete_activate"/>
+                        <accelerator key="r" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
                         <child internal-child="image">
                           <widget class="GtkImage" id="image7">
                             <property name="visible">True</property>
@@ -362,7 +367,8 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_AddButton_activate"/>
+                        <signal name="clicked" handler="on_AddButton_clicked" object=" "/>
+                        <signal name="activate" handler="on_AddButton_activate" object=" "/>
                       </widget>
                       <packing>
                         <property name="x">315</property>
@@ -378,7 +384,8 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_DeleteButton_activate"/>
+                        <signal name="clicked" handler="on_DeleteButton_clicked" object=" "/>
+                        <signal name="activate" handler="on_DeleteButton_activate" object=" "/>
                       </widget>
                       <packing>
                         <property name="x">440</property>
@@ -394,7 +401,10 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="use_stock">True</property>
+                        <signal name="clicked" handler="on_ReloadButton_clicked" object=" "/>
                         <signal name="activate" handler="on_ReloadButton_activate" object=" "/>
+                        <accelerator key="F5" signal="clicked"/>
+                        <accelerator key="F5" signal="activate"/>
                       </widget>
                       <packing>
                         <property name="x">565</property>

@@ -2,42 +2,66 @@
 <glade-interface>
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
-  <widget class="GtkDialog" id="TableNameDialog">
-    <property name="width_request">260</property>
-    <property name="height_request">160</property>
+  <widget class="GtkDialog" id="FilterDialog">
+    <property name="width_request">325</property>
+    <property name="height_request">260</property>
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">&lt;title&gt;</property>
+    <property name="title" translatable="yes">Filter</property>
     <property name="resizable">False</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
-      <widget class="GtkVBox" id="dialog-vbox1">
+      <widget class="GtkVBox" id="dialog-vbox2">
         <property name="visible">True</property>
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
-          <widget class="GtkFixed" id="TableNameField">
+          <widget class="GtkFixed" id="fixed1">
             <property name="visible">True</property>
             <child>
-              <widget class="GtkComboBox" id="TableSelect">
-                <property name="width_request">230</property>
-                <property name="height_request">27</property>
-              </widget>
-              <packing>
-                <property name="x">5</property>
-                <property name="y">25</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkLabel" id="label1">
-                <property name="width_request">230</property>
-                <property name="height_request">20</property>
+              <widget class="GtkComboBox" id="FieldSelect">
+                <property name="width_request">300</property>
+                <property name="height_request">30</property>
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Select table:</property>
               </widget>
               <packing>
                 <property name="x">5</property>
                 <property name="y">5</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkComboBox" id="MethodSelect">
+                <property name="width_request">300</property>
+                <property name="height_request">30</property>
+                <property name="visible">True</property>
+                <property name="no_show_all">True</property>
+                <property name="items" translatable="yes">=
+!=
+LIKE
+NOT LIKE
+&lt;
+&gt;
+&lt;=
+&gt;=
+ISNULL
+NOTNULL</property>
+              </widget>
+              <packing>
+                <property name="x">5</property>
+                <property name="y">40</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkEntry" id="FilterInput">
+                <property name="width_request">300</property>
+                <property name="height_request">27</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="invisible_char">&#x25CF;</property>
+              </widget>
+              <packing>
+                <property name="x">5</property>
+                <property name="y">75</property>
               </packing>
             </child>
           </widget>
@@ -46,13 +70,12 @@
           </packing>
         </child>
         <child internal-child="action_area">
-          <widget class="GtkHButtonBox" id="dialog-action_area1">
+          <widget class="GtkHButtonBox" id="dialog-action_area2">
             <property name="visible">True</property>
             <property name="layout_style">end</property>
             <child>
-              <widget class="GtkButton" id="CancelBtn">
+              <widget class="GtkButton" id="FilterDlgCancel">
                 <property name="label">gtk-cancel</property>
-                <property name="response_id">1</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -65,9 +88,8 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="OkBtn">
+              <widget class="GtkButton" id="FilterDlgOk">
                 <property name="label">gtk-ok</property>
-                <property name="response_id">3</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
