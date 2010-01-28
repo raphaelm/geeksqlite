@@ -351,7 +351,8 @@
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_SearchButton_activate"/>
+                        <signal name="clicked" handler="on_SearchButton_clicked" object=" "/>
+                        <signal name="activate" handler="on_SearchButton_activate" object=" "/>
                       </widget>
                       <packing>
                         <property name="x">210</property>
@@ -403,8 +404,8 @@
                         <property name="use_stock">True</property>
                         <signal name="clicked" handler="on_ReloadButton_clicked" object=" "/>
                         <signal name="activate" handler="on_ReloadButton_activate" object=" "/>
-                        <accelerator key="F5" signal="clicked"/>
                         <accelerator key="F5" signal="activate"/>
+                        <accelerator key="F5" signal="clicked"/>
                       </widget>
                       <packing>
                         <property name="x">565</property>
@@ -440,7 +441,6 @@
                         <property name="width_request">120</property>
                         <property name="height_request">27</property>
                         <property name="visible">True</property>
-                        <property name="label" translatable="yes">label</property>
                       </widget>
                       <packing>
                         <property name="x">35</property>

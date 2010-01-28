@@ -80,7 +80,7 @@ class geeksqliteMain:
 			try:
 				query = "SELECT rowid, * FROM "+table;
 				if search != None:
-					query += " "+search
+					query += " WHERE "+search
 				query += " LIMIT "+str(start)+","+str(limit)+";"
 				result = self.sql(query)
 				ls = False
@@ -100,15 +100,15 @@ class geeksqliteMain:
 				if any:
 					cols = [""]*l
 					cells = [""]*l
-					labels = [""]*l
+					self.browse_current_labels = [""]*l
 					j = 0
 					for k in self.cursor.description:
-						labels[j] = str(k[0])
+						self.browse_current_labels[j] = str(k[0])
 						j += 1
 					self.btv = gtk.TreeView(ls)
 					
 					for i in range(0,l):
-						cols[i] = gtk.TreeViewColumn(labels[i])
+						cols[i] = gtk.TreeViewColumn(self.browse_current_labels[i])
 						cells[i] = gtk.CellRendererText()
 						cols[i].pack_start(cells[i])
 						cols[i].add_attribute(cells[i], 'text', i)
@@ -129,7 +129,7 @@ class geeksqliteMain:
 						self.mainTree.get_widget('ScrollLeft').show()
 					scrolllabel.set_text(str(start+1)+' to '+str(start+C)+' of '+str(total))
 			except sqlite3.Error, e:
-				ebuf.set_text('[SQLite Error] '+e.args[0])
+				err('[SQLite Error] '+e.args[0])
 		
 	def do_open(self, file=None):
 		if file != None:
@@ -359,6 +359,56 @@ class geeksqliteMain:
 				self.sql('DELETE FROM '+self.browse_current_table+' WHERE rowid = '+rowid)
 			self.reloadbrowse()
 			
+	def initfilter(self, this):
+		cbt = self.mainTree.get_widget('TableSelect').get_active_text()
+		if cbt != None and len(self.browse_current_labels) > 0:
+			dialogTree = gtk.glade.XML(dist.interfacedir+"/filterdialog.glade")
+			dlg = dialogTree.get_widget('FilterDialog')
+			
+			cb = gtk.combo_box_new_text()
+			cb.set_size_request(300,30)
+			
+			lookforrow = None
+			if self.browse_current_search_field and self.browse_current_search_method and self.browse_current_search_filter:
+				dialogTree.get_widget('MethodSelect').set_active(self.browse_current_search_method_a)
+				dialogTree.get_widget('FilterInput').set_text(self.browse_current_search_filter)
+				lookforrow = self.browse_current_search_field
+				
+			i = 0
+			for row in self.browse_current_labels:
+				cb.append_text(row)
+				if lookforrow == row:
+					cb.set_active(i)
+				i+=1
+		
+			cb.show()
+			dialogTree.get_widget('FilterField').put(cb, 5, 5)
+			run = dlg.run()
+			if run == 3:
+				cbm = dialogTree.get_widget('MethodSelect')
+				fi = dialogTree.get_widget('FilterInput')
+				if cb.get_active_text() and cbm.get_active_text(): 
+					field = cb.get_active_text()
+					method = cbm.get_active_text()
+					if method != 'NOTNULL' and method != 'ISNULL':
+						filter = " '"+fi.get_text()+"'"
+					else:
+						filter = ''
+					self.browse_to(table=self.browse_current_table,
+					start=self.browse_current_start,
+					limit=self.browse_current_limit,
+					search=field+' '+method+filter)
+					self.browse_current_search_field = field
+					self.browse_current_search_method = method
+					self.browse_current_search_method_a = cbm.get_active()
+					self.browse_current_search_filter = fi.get_text()
+				else:
+					a = 0 # do nothing!
+				dlg.destroy()
+			else:
+				dlg.destroy()
+				return None
+			
 	#### GTK INITIALISATION
 	
 	def grab_widgets(self):
@@ -390,6 +440,8 @@ class geeksqliteMain:
 				"on_AddButton_clicked" : self.addemptyrecord,
 				"on_DeleteButton_activate" : self.deleterecord,
 				"on_DeleteButton_clicked" : self.deleterecord,
+				"on_SearchButton_activate" : self.initfilter,
+				"on_SearchButton_clicked" : self.initfilter
 			  }
 		self.mainTree.signal_autoconnect(dic)
 	
@@ -432,6 +484,10 @@ class geeksqliteMain:
 		self.design_treeviews()
 		self.fileopened = False
 		self.browse_current_table = None
+		self.browse_current_search_field = None
+		self.browse_current_search_method = None
+		self.browse_current_search_filter = None
+		self.browse_current_labels = []
 		
 		if len(sys.argv) == 2:
 			if sys.argv[1] in ('-h', '--help'):
