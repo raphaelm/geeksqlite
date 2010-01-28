@@ -1,7 +1,18 @@
-- Save (As) file (srsly? only save AS? autosave?)
-- Structure
-	- Create Table
-	- Modify Table
-	- Create Index
-	- Delete Index
-	- Views?
+NEEDED FOR BETA
+	- Structure
+		- Create Table
+		- Modify Table
+		- Create Index
+		- Delete Index
+		- Views?
+		
+NEEDED FOR RELEASE
+	- Configuration
+	- Multi-Language
+	- Deployment
+		- Debian-/Ubuntu-Package
+		- setup.py package
+		- Windows package (py2exe?)
+		
+IDEAS
+	- 
