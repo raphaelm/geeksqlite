@@ -86,15 +86,14 @@ class geeksqliteMain:
 				ls = False
 				C = 0
 				any = False
+				l = len(self.cursor.description)
+				columns = [str] * l
+				ls = gtk.ListStore(*columns)
 				for row in self.cursor:
 					any = True
-					l = len(row)
 					list = []
 					for field in row:
 						list.append(str(field))
-					if not ls:
-						columns = [str] * l
-						ls = gtk.ListStore(*columns)
 					ls.append(list)
 					C += 1
 				if any:
@@ -112,6 +111,8 @@ class geeksqliteMain:
 						cells[i] = gtk.CellRendererText()
 						cols[i].pack_start(cells[i])
 						cols[i].add_attribute(cells[i], 'text', i)
+						cells[i].set_property('editable', True)
+						cells[i].connect('edited', self.edited, (i))
 						cols[i].set_resizable(True)
 						self.btv.append_column(cols[i])
 						self.btv.show()
@@ -181,6 +182,15 @@ class geeksqliteMain:
 		self.mainTree.get_widget('TableSelect').set_model(ls2)
 		
 	#### EVENT HANDLERS
+	
+	def edited(self, cell, path, new_text, user_data):
+		model = self.btv.get_model()
+		iter = model.get_iter(path)
+		if iter != None:
+				rowid = str(model.get(iter, 0)[0])
+				self.sql('UPDATE '+self.browse_current_table+' SET '+self.browse_current_labels[user_data]+" = '"+new_text+"' WHERE rowid = "+rowid)
+				self.reloadbrowse()
+		
 	def close(self, this = None):
 		if self.fileopened:
 			ls = gtk.ListStore(str, str, str)
@@ -359,6 +369,7 @@ class geeksqliteMain:
 				self.sql('DELETE FROM '+self.browse_current_table+' WHERE rowid = '+rowid)
 			self.reloadbrowse()
 			
+			
 	def initfilter(self, this):
 		cbt = self.mainTree.get_widget('TableSelect').get_active_text()
 		if cbt != None and len(self.browse_current_labels) > 0:
@@ -441,7 +452,7 @@ class geeksqliteMain:
 				"on_DeleteButton_activate" : self.deleterecord,
 				"on_DeleteButton_clicked" : self.deleterecord,
 				"on_SearchButton_activate" : self.initfilter,
-				"on_SearchButton_clicked" : self.initfilter
+				"on_SearchButton_clicked" : self.initfilter,
 			  }
 		self.mainTree.signal_autoconnect(dic)
 	

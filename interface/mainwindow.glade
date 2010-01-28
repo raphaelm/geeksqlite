@@ -3,7 +3,7 @@
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkWindow" id="MainWindow">
-    <property name="width_request">700</property>
+    <property name="width_request">635</property>
     <property name="height_request">500</property>
     <property name="visible">True</property>
     <property name="title" translatable="yes">geek'SQLite</property>
@@ -362,7 +362,7 @@
                     <child>
                       <widget class="GtkButton" id="AddButton">
                         <property name="label">gtk-add</property>
-                        <property name="width_request">120</property>
+                        <property name="width_request">100</property>
                         <property name="height_request">27</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -379,7 +379,7 @@
                     <child>
                       <widget class="GtkButton" id="DeleteButton">
                         <property name="label">gtk-delete</property>
-                        <property name="width_request">120</property>
+                        <property name="width_request">100</property>
                         <property name="height_request">27</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -389,14 +389,14 @@
                         <signal name="activate" handler="on_DeleteButton_activate" object=" "/>
                       </widget>
                       <packing>
-                        <property name="x">440</property>
+                        <property name="x">420</property>
                         <property name="y">5</property>
                       </packing>
                     </child>
                     <child>
                       <widget class="GtkButton" id="ReloadButton">
                         <property name="label">gtk-refresh</property>
-                        <property name="width_request">120</property>
+                        <property name="width_request">100</property>
                         <property name="height_request">27</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
@@ -404,11 +404,11 @@
                         <property name="use_stock">True</property>
                         <signal name="clicked" handler="on_ReloadButton_clicked" object=" "/>
                         <signal name="activate" handler="on_ReloadButton_activate" object=" "/>
-                        <accelerator key="F5" signal="activate"/>
                         <accelerator key="F5" signal="clicked"/>
+                        <accelerator key="F5" signal="activate"/>
                       </widget>
                       <packing>
-                        <property name="x">565</property>
+                        <property name="x">525</property>
                         <property name="y">5</property>
                       </packing>
                     </child>
