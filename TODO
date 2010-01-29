@@ -3,12 +3,10 @@ NEEDED FOR BETA
 		- Create Table
 		- Modify Table
 		- Create Index
-		- Delete Index
 		- Views?
 		
 NEEDED FOR RELEASE
 	- Configuration
-	- Multi-Language
 	- Deployment
 		- Debian-/Ubuntu-Package
 		- setup.py package

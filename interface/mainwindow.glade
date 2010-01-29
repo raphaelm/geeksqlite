@@ -18,7 +18,7 @@
             <child>
               <widget class="GtkMenuItem" id="menuitem1">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">_Datei</property>
+                <property name="label" translatable="yes">_File</property>
                 <property name="use_underline">True</property>
                 <child>
                   <widget class="GtkMenu" id="menu1">
@@ -157,7 +157,7 @@
             <child>
               <widget class="GtkMenuItem" id="menuitem2">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">_Bearbeiten</property>
+                <property name="label" translatable="yes">_Edit</property>
                 <property name="use_underline">True</property>
                 <child>
                   <widget class="GtkMenu" id="menu2">
@@ -180,7 +180,7 @@
                     </child>
                     <child>
                       <widget class="GtkImageMenuItem" id="MainMenuTableDelete">
-                        <property name="label" translatable="yes">Delete Table</property>
+                        <property name="label" translatable="yes">Drop Table</property>
                         <property name="visible">True</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_MainMenuTableDelete_activate" object=" "/>
@@ -234,7 +234,7 @@
                     </child>
                     <child>
                       <widget class="GtkImageMenuItem" id="MainMenuIndexDelete">
-                        <property name="label" translatable="yes">Delete Index</property>
+                        <property name="label" translatable="yes">Drop Index</property>
                         <property name="visible">True</property>
                         <property name="use_stock">False</property>
                         <signal name="activate" handler="on_MainMenuIndexDelete_activate"/>
@@ -270,7 +270,7 @@
             <child>
               <widget class="GtkMenuItem" id="menuitem4">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">_Hilfe</property>
+                <property name="label" translatable="yes">_Help</property>
                 <property name="use_underline">True</property>
                 <child>
                   <widget class="GtkMenu" id="menu3">

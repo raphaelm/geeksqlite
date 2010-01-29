@@ -1,0 +1,204 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR Raphael Michel
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: geek'SQLite 0.0.0\n"
+"Report-Msgid-Bugs-To: raphael@geeksfactory.de\n"
+"POT-Creation-Date: 2010-01-29 18:01+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+#: geeksqlite.py:199
+msgid "Unable to open database file"
+msgstr ""
+
+#: geeksqlite.py:269 interface/mainwindow.glade:183
+msgid "Drop Table"
+msgstr ""
+
+#: geeksqlite.py:270
+#, python-format
+msgid "Do you really want to remove the table %s?"
+msgstr ""
+
+#: geeksqlite.py:280 interface/mainwindow.glade:237
+msgid "Drop Index"
+msgstr ""
+
+#: geeksqlite.py:281
+#, python-format
+msgid "Do you really want to remove the index %s?"
+msgstr ""
+
+#: geeksqlite.py:380
+msgid "[SQLite Error] "
+msgstr ""
+
+#: geeksqlite.py:382
+msgid "[geekSQLite Error] Not a complete statement!"
+msgstr ""
+
+#: geeksqlite.py:384 geeksqlite.py:400 geeksqlite.py:412
+msgid "No database loaded"
+msgstr ""
+
+#: interface/filterdialog.glade:9
+msgid "Filter"
+msgstr ""
+
+#: interface/filterdialog.glade:37
+msgid ""
+"=\n"
+"!=\n"
+"LIKE\n"
+"NOT LIKE\n"
+"<\n"
+">\n"
+"<=\n"
+">=\n"
+"ISNULL\n"
+"NOTNULL"
+msgstr ""
+
+#: interface/indexcreatedialog.glade:9 interface/indexnamedialog.glade:9
+#: interface/tablenamedialog.glade:9
+msgid "<title>"
+msgstr ""
+
+#: interface/indexcreatedialog.glade:26
+msgid "Index name:"
+msgstr ""
+
+#: interface/indexcreatedialog.glade:51
+msgid "Table:"
+msgstr ""
+
+#: interface/indexcreatedialog.glade:74
+msgid "Field:"
+msgstr ""
+
+#: interface/indexcreatedialog.glade:97
+msgid "Order:"
+msgstr ""
+
+#: interface/indexcreatedialog.glade:109
+msgid ""
+"Ascending\n"
+"Descending"
+msgstr ""
+
+#: interface/indexcreatedialog.glade:119
+msgid "_UNIQUE"
+msgstr ""
+
+#: interface/indexnamedialog.glade:36
+msgid "Select index:"
+msgstr ""
+
+#: interface/mainwindow.glade:9
+msgid "geek'SQLite"
+msgstr ""
+
+#: interface/mainwindow.glade:21
+msgid "_File"
+msgstr ""
+
+#: interface/mainwindow.glade:74
+msgid "Import"
+msgstr ""
+
+#: interface/mainwindow.glade:84 interface/mainwindow.glade:112
+msgid "SQL file"
+msgstr ""
+
+#: interface/mainwindow.glade:102
+msgid "Export"
+msgstr ""
+
+#: interface/mainwindow.glade:160
+msgid "_Edit"
+msgstr ""
+
+#: interface/mainwindow.glade:167 interface/tablecreatedialog.glade:8
+msgid "Create Table"
+msgstr ""
+
+#: interface/mainwindow.glade:200
+msgid "Modify Table"
+msgstr ""
+
+#: interface/mainwindow.glade:221
+msgid "Create Index"
+msgstr ""
+
+#: interface/mainwindow.glade:273
+msgid "_Help"
+msgstr ""
+
+#: interface/mainwindow.glade:318
+msgid "Database Structure"
+msgstr ""
+
+#: interface/mainwindow.glade:452
+msgid "<"
+msgstr ""
+
+#: interface/mainwindow.glade:468
+msgid ">"
+msgstr ""
+
+#: interface/mainwindow.glade:496
+msgid "Browse Data"
+msgstr ""
+
+#: interface/mainwindow.glade:518
+msgid "SQL string:"
+msgstr ""
+
+#: interface/mainwindow.glade:526
+msgid "Execute!"
+msgstr ""
+
+#: interface/mainwindow.glade:554
+msgid "Errors (if any):"
+msgstr ""
+
+#: interface/mainwindow.glade:576
+msgid "Result:"
+msgstr ""
+
+#: interface/mainwindow.glade:634
+msgid "\t"
+msgstr ""
+
+#: interface/mainwindow.glade:650
+msgid "Execute SQL"
+msgstr ""
+
+#: interface/mainwindow.glade:679
+msgid "SQL Log"
+msgstr ""
+
+#: interface/tablecreatedialog.glade:25
+msgid "Table name:"
+msgstr ""
+
+#: interface/tablecreatedialog.glade:67
+msgid "Add field"
+msgstr ""
+
+#: interface/tablecreatedialog.glade:81
+msgid "Delete field"
+msgstr ""
+
+#: interface/tablenamedialog.glade:36
+msgid "Select table:"
+msgstr ""

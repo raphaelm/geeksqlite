@@ -1,0 +1,124 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Raphael <raphael@geeksfactory.de>\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+
+msgid "Unable to open database file"
+msgstr ""
+
+msgid "Drop Table"
+msgstr ""
+
+msgid "Drop Index"
+msgstr ""
+
+msgid "Do you really want to remove the table %s?"
+msgstr ""
+
+msgid "Do you really want to remove the index %s?"
+msgstr ""
+
+msgid "[SQLite Error] "
+msgstr ""
+
+msgid "[geekSQLite Error] Not a complete statement!"
+msgstr ""
+
+msgid "No database loaded"
+msgstr ""
+
+msgid "Database Structure"
+msgstr ""
+
+msgid "Filter"
+msgstr ""
+
+msgid "Index name:"
+msgstr ""
+
+msgid "Table:"
+msgstr ""
+
+msgid "Field:"
+msgstr ""
+
+msgid "Order:"
+msgstr ""
+
+msgid ""
+"Ascending\n"
+"Descending"
+msgstr ""
+
+msgid "_UNIQUE"
+msgstr ""
+
+msgid "Select index:"
+msgstr ""
+
+msgid "Table name:"
+msgstr ""
+
+msgid "Create Table"
+msgstr ""
+
+msgid "Add field"
+msgstr ""
+
+msgid "Delete field"
+msgstr ""
+
+msgid "_File"
+msgstr ""
+
+msgid "Import"
+msgstr ""
+
+msgid "SQL file"
+msgstr ""
+
+msgid "Export"
+msgstr ""
+
+msgid "_Edit"
+msgstr ""
+
+msgid "Modify Table"
+msgstr ""
+
+msgid "Create Index"
+msgstr ""
+
+msgid "_Help"
+msgstr ""
+
+msgid "Browse Data"
+msgstr ""
+
+msgid "SQL string:"
+msgstr ""
+
+msgid "Execute!"
+msgstr ""
+
+msgid "Errors (if any):"
+msgstr ""
+
+msgid "Result:"
+msgstr ""
+
+msgid "Execute SQL"
+msgstr ""
+
+msgid "SQL Log"
+msgstr ""
+
+msgid "Select table:"
+msgstr ""
+

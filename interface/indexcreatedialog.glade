@@ -2,10 +2,11 @@
 <glade-interface>
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
-  <widget class="GtkDialog" id="dialog1">
-    <property name="width_request">340</property>
+  <widget class="GtkDialog" id="IndexCreateDialog">
+    <property name="width_request">425</property>
+    <property name="height_request">230</property>
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Create Table</property>
+    <property name="title" translatable="yes">&lt;title&gt;</property>
     <property name="resizable">False</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
@@ -15,79 +16,118 @@
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
-          <widget class="GtkFixed" id="fixed1">
+          <widget class="GtkFixed" id="IndexNameField">
             <property name="visible">True</property>
             <child>
-              <widget class="GtkLabel" id="label1">
+              <widget class="GtkLabel" id="label2">
                 <property name="width_request">100</property>
-                <property name="height_request">20</property>
+                <property name="height_request">27</property>
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Table name:</property>
+                <property name="label" translatable="yes">Index name:</property>
               </widget>
               <packing>
                 <property name="x">5</property>
-                <property name="y">7</property>
+                <property name="y">5</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkEntry" id="TblNameEntry">
-                <property name="width_request">200</property>
-                <property name="height_request">22</property>
+              <widget class="GtkEntry" id="NameEntry">
+                <property name="width_request">295</property>
+                <property name="height_request">27</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="invisible_char">&#x25CF;</property>
               </widget>
               <packing>
-                <property name="x">115</property>
+                <property name="x">110</property>
                 <property name="y">5</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkScrolledWindow" id="FieldsField">
-                <property name="width_request">310</property>
-                <property name="height_request">290</property>
+              <widget class="GtkLabel" id="label3">
+                <property name="width_request">100</property>
+                <property name="height_request">27</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="hscrollbar_policy">automatic</property>
-                <property name="vscrollbar_policy">automatic</property>
-                <child>
-                  <widget class="GtkTreeView" id="treeview1">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                  </widget>
-                </child>
+                <property name="label" translatable="yes">Table:</property>
               </widget>
               <packing>
                 <property name="x">5</property>
-                <property name="y">30</property>
+                <property name="y">35</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="AddBtn">
-                <property name="label" translatable="yes">Add field</property>
-                <property name="width_request">100</property>
-                <property name="height_request">27</property>
+              <widget class="GtkComboBox" id="TableSelect">
+                <property name="width_request">295</property>
+                <property name="height_request">30</property>
                 <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
-              </widget>
-              <packing>
-                <property name="x">215</property>
-                <property name="y">330</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkButton" id="DelBtn">
-                <property name="label" translatable="yes">Delete field</property>
-                <property name="width_request">100</property>
-                <property name="height_request">27</property>
-                <property name="visible">True</property>
-                <property name="can_focus">True</property>
-                <property name="receives_default">True</property>
               </widget>
               <packing>
                 <property name="x">110</property>
-                <property name="y">330</property>
+                <property name="y">35</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="label1">
+                <property name="width_request">100</property>
+                <property name="height_request">27</property>
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Field:</property>
+              </widget>
+              <packing>
+                <property name="x">5</property>
+                <property name="y">70</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkComboBox" id="FieldSelect">
+                <property name="width_request">295</property>
+                <property name="height_request">30</property>
+                <property name="visible">True</property>
+              </widget>
+              <packing>
+                <property name="x">110</property>
+                <property name="y">70</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="label4">
+                <property name="width_request">100</property>
+                <property name="height_request">27</property>
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Order:</property>
+              </widget>
+              <packing>
+                <property name="x">5</property>
+                <property name="y">105</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkComboBox" id="OrderSelect">
+                <property name="width_request">295</property>
+                <property name="height_request">30</property>
+                <property name="visible">True</property>
+                <property name="items" translatable="yes">Ascending
+Descending</property>
+              </widget>
+              <packing>
+                <property name="x">110</property>
+                <property name="y">105</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkCheckButton" id="checkbutton1">
+                <property name="label" translatable="yes">_UNIQUE</property>
+                <property name="width_request">295</property>
+                <property name="height_request">27</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="use_underline">True</property>
+                <property name="draw_indicator">True</property>
+              </widget>
+              <packing>
+                <property name="x">110</property>
+                <property name="y">140</property>
               </packing>
             </child>
           </widget>
@@ -102,6 +142,7 @@
             <child>
               <widget class="GtkButton" id="CancelBtn">
                 <property name="label">gtk-cancel</property>
+                <property name="response_id">1</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -116,6 +157,7 @@
             <child>
               <widget class="GtkButton" id="OkBtn">
                 <property name="label">gtk-ok</property>
+                <property name="response_id">3</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>

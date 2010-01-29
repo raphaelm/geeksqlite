@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
+import sys
 try:
 	import gtk, gtk.glade
 	gtktype = "gtk"
@@ -20,19 +21,42 @@ except:
 	sys.exit(1)
 	
 # Load Modules
-import filedialog, sys, os, dist
+import filedialog, os, dist #,configparser
 
-# gettext
-gettext.bindtextdomain('geeksqlite', dist.langdir)
-gettext.textdomain('geeksqlite')
-_ = gettext.gettext
+# Load config
+"""try:
+	config = ConfigParser.ConfigParser()
+	config.read([os.path.expanduser('~/.geeksqlite'), os.path.expanduser('~/.geeksqlite.cfg'), os.path.expanduser('~/.geeksqlite.conf'), 'config.cfg', 'geeksqlite.conf', 'geeksqlite.cfg'])
+except:
+	print("Failed loading configuration")"""
 	
+try:
+	gtk.glade.bindtextdomain('geeksqlite', dist.langdir)
+	gtk.glade.textdomain('geeksqlite')
+	gettext.bindtextdomain('geeksqlite', dist.langdir)
+	gettext.textdomain('geeksqlite')
+	_ = gettext.gettext
+except:
+	print("Failed loading language")
+
 def err(text):
 	error_dlg = gtk.MessageDialog(type=gtk.MESSAGE_ERROR
 				, message_format=text
 				, buttons=gtk.BUTTONS_OK)
 	error_dlg.run()
 	error_dlg.destroy()
+	
+def confirm(text):
+	dlg = gtk.MessageDialog(message_format=text, flags=gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT | gtk.MESSAGE_QUESTION)
+	dlg.add_button(gtk.STOCK_NO, 1)
+	dlg.add_button(gtk.STOCK_YES, 3)
+	run = dlg.run()
+	if run == 3:
+		ret = True
+	else:
+		ret = False
+	dlg.destroy()
+	return ret
 	
 class geeksqliteMain:
 	
@@ -63,6 +87,34 @@ class geeksqliteMain:
 		else:
 			dlg.destroy()
 			return None
+	
+	def getindexname(self, title):
+		dialogTree = gtk.glade.XML(dist.interfacedir+"/indexnamedialog.glade")
+		dlg = dialogTree.get_widget('TableNameDialog')
+		dlg.set_title(title)
+		
+		cb = gtk.combo_box_new_text()
+		cb.set_size_request(240,30)
+		
+		result = self.sql('select name, sql from sqlite_master WHERE type = "index";')
+		for row in self.cursor:
+			n = row[0]
+			#ls.append([n])
+			cb.append_text(n)
+		
+		cb.show()
+		dialogTree.get_widget('IndexNameField').put(cb, 5, 25)
+		run = dlg.run()
+		if run == 3:
+			if cb.get_active_text():
+				tablename = cb.get_active_text()
+			else:
+				tablename = None
+			dlg.destroy()
+			return tablename
+		else:
+			dlg.destroy()
+			return None
 		
 	def browse_to(self, table, start=0, limit=50, search=None):
 		self.browse_current_table = table
@@ -78,7 +130,7 @@ class geeksqliteMain:
 			except:
 				self.btv = False
 			try:
-				query = "SELECT rowid, * FROM "+table;
+				query = "SELECT _rowid_, * FROM "+table;
 				if search != None:
 					query += " WHERE "+search
 				query += " LIMIT "+str(start)+","+str(limit)+";"
@@ -215,13 +267,20 @@ class geeksqliteMain:
 		
 	def table_delete(self, this):
 		tblname = self.gettablename(_('Drop Table'))
-		if tblname:
+		if tblname and confirm(_("Do you really want to remove the table %s?") % tblname):
 			self.sql('DROP TABLE '+tblname)
 			if tblname == self.browse_current_table:
 				self.browse_to('sqlite_master',
 				start=0,
 				limit=0,
 				search=None)
+			self.reloadstructure()
+		
+	def index_delete(self, this):
+		indexname = self.gettablename(_('Drop Index'))
+		if indexname and confirm(_("Do you really want to remove the index %s?") % indexname):
+			self.sql('DROP INDEX '+indexname)
+			self.reloadbrowse()
 			self.reloadstructure()
 		
 	def exit(self, this):
@@ -307,7 +366,7 @@ class geeksqliteMain:
 							j += 1
 						self.exectv = gtk.TreeView(ls)
 						for i in range(0,l):
-							cols[i] = gtk.TreeViewColumn('')
+							cols[i] = gtk.TreeViewColumn(labels[i])
 							cells[i] = gtk.CellRendererText()
 							cols[i].pack_start(cells[i])
 							cols[i].add_attribute(cells[i], 'text', i)
@@ -318,11 +377,11 @@ class geeksqliteMain:
 					self.reloadstructure()
 					self.reloadbrowse()
 				except sqlite3.Error, e:
-					ebuf.set_text('[SQLite Error] '+e.args[0])
+					ebuf.set_text(_('[SQLite Error] ')+e.args[0])
 			else:
-				ebuf.set_text('[geekSQLite Error] Not a complete statement!')
+				ebuf.set_text(_('[geekSQLite Error] Not a complete statement!'))
 		else:
-			err('No database loaded')
+			err(_('No database loaded'))
 		
 	def importSQL(self, this):
 		if self.fileopened:
@@ -338,7 +397,7 @@ class geeksqliteMain:
 				self.reloadstructure()
 				self.reloadbrowse()
 		else:
-			err('No database loaded')
+			err(_('No database loaded'))
 	
 	def exportSQL(self, this):
 		if self.fileopened:
@@ -350,7 +409,7 @@ class geeksqliteMain:
 					for line in self.connection.iterdump():
 						f.write('%s\n' % line)
 		else:
-			err('No database loaded')
+			err(_('No database loaded'))
 			
 	def addemptyrecord(self, this):
 		cb = self.mainTree.get_widget('TableSelect').get_active_text()
