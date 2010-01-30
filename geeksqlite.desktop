@@ -2,7 +2,7 @@
 Encoding=UTF-8
 Name=geek'SQLite
 Comment=SQLite3 database browser
-Exec=cookiepascal
+Exec=geeksqlite
 Icon=/usr/share/pixmaps/geeksqlite.png
 Terminal=false
 Type=Application

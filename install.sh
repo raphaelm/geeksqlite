@@ -12,7 +12,7 @@ install -bC --mode=0755 geeksqlite.py $DESTDIR/usr/lib/geeksqlite/geeksqlite.py
 install -bC --mode=0755 dist.py $DESTDIR/usr/lib/geeksqlite/dist.py
 install -bC --mode=0755 version.py $DESTDIR/usr/lib/geeksqlite/version.py
 install -bC --mode=0755 filedialog.py $DESTDIR/usr/lib/geeksqlite/filedialog.py
-install -bC --mode=0744 interface/*.glade $DESTDIRusr/lib/geeksqlite/
+install -bC --mode=0744 interface/*.glade $DESTDIR/usr/lib/geeksqlite/
 # docs
 install -bC --mode=0744 README $DESTDIR/usr/share/doc/geeksqlite/README
 gzip geeksqlite.1

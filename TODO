@@ -4,7 +4,8 @@ NEEDED FOR BETA
 		- Modify Table
 		- Create Index
 		- Views?
-		
+	- Create new databases(!)
+	
 NEEDED FOR RELEASE
 	- Deployment
 		- Debian-/Ubuntu-Package
