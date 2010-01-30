@@ -1,0 +1,5 @@
+geeksqlite (0.0.20100130-1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)  <nnnn is the bug number of your ITP>
+
+ -- Raphael Michel <raphael@geeksfactory.de>  Sat, 30 Jan 2010 17:44:13 +0100

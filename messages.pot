@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geek'SQLite 0.0.0\n"
 "Report-Msgid-Bugs-To: raphael@geeksfactory.de\n"
-"POT-Creation-Date: 2010-01-29 18:01+0100\n"
+"POT-Creation-Date: 2010-01-30 16:50+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,38 +16,88 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: geeksqlite.py:199
+#: geeksqlite.py:210
+#, python-format
+msgid "%(start)d to %(end)d of %(total)d"
+msgstr ""
+
+#: geeksqlite.py:224
+msgid "-- -- OPEN FILE -- --"
+msgstr ""
+
+#: geeksqlite.py:226
 msgid "Unable to open database file"
 msgstr ""
 
-#: geeksqlite.py:269 interface/mainwindow.glade:183
+#: geeksqlite.py:254
+msgid "table"
+msgstr ""
+
+#: geeksqlite.py:259
+msgid "index"
+msgstr ""
+
+#: geeksqlite.py:283
+msgid "-- -- CLOSE FILE -- --"
+msgstr ""
+
+#: geeksqlite.py:296 interface/mainwindow.glade:183
 msgid "Drop Table"
 msgstr ""
 
-#: geeksqlite.py:270
+#: geeksqlite.py:297
 #, python-format
 msgid "Do you really want to remove the table %s?"
 msgstr ""
 
-#: geeksqlite.py:280 interface/mainwindow.glade:237
+#: geeksqlite.py:307 interface/mainwindow.glade:237
 msgid "Drop Index"
 msgstr ""
 
-#: geeksqlite.py:281
+#: geeksqlite.py:308
 #, python-format
 msgid "Do you really want to remove the index %s?"
 msgstr ""
 
-#: geeksqlite.py:380
+#: geeksqlite.py:408
 msgid "[SQLite Error] "
 msgstr ""
 
-#: geeksqlite.py:382
+#: geeksqlite.py:410
 msgid "[geekSQLite Error] Not a complete statement!"
 msgstr ""
 
-#: geeksqlite.py:384 geeksqlite.py:400 geeksqlite.py:412
+#: geeksqlite.py:412 geeksqlite.py:428 geeksqlite.py:440
 msgid "No database loaded"
+msgstr ""
+
+#: geeksqlite.py:496
+msgid "You have to restart geek'SQLite to apply some changes like the language"
+msgstr ""
+
+#: geeksqlite.py:592
+msgid "Name"
+msgstr ""
+
+#: geeksqlite.py:599
+msgid "Type"
+msgstr ""
+
+#: geeksqlite.py:606
+msgid "Schema"
+msgstr ""
+
+#: geeksqlite.py:634
+msgid ""
+"geekSQLite - free Python GTK+ SQLite3 database file browser\n"
+"USAGE:\n"
+"geeksqlite [argument]\n"
+"\n"
+"POSSIBLE ARGUMENTS:\n"
+"* any sqlite database file (example: geeksqlite test.sqlite)\n"
+"* -v for version informations\n"
+"* -l for the license\n"
+"* -h for this text"
 msgstr ""
 
 #: interface/filterdialog.glade:9
@@ -185,6 +235,26 @@ msgstr ""
 
 #: interface/mainwindow.glade:679
 msgid "SQL Log"
+msgstr ""
+
+#: interface/preferences.glade:9
+msgid "Preferences"
+msgstr ""
+
+#: interface/preferences.glade:30
+msgid "Language:"
+msgstr ""
+
+#: interface/preferences.glade:52
+msgid "Encoding:"
+msgstr ""
+
+#: interface/preferences.glade:64
+msgid "utf-8"
+msgstr ""
+
+#: interface/preferences.glade:76
+msgid "Locale"
 msgstr ""
 
 #: interface/tablecreatedialog.glade:25

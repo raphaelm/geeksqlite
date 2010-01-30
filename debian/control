@@ -1,0 +1,20 @@
+Source: geeksqlite
+Section: devel
+Priority: optional
+Maintainer: Raphael Michel <raphael@geeksfactory.de>
+Build-Depends: python (>= 2.6.4), build-essential, python-glade2, python-gtk2
+Standards-Version: 3.6.2
+
+Package: geeksqlite
+Architecture: all
+Depends: ${shlibs:Depends}, ${misc:Depends}, python (>= 2.6.4), python-glade2, python-gtk2
+Recommends: libsqlite3-0
+Suggests: sqlite3
+Pre-Depends:
+Conflicts:
+Provides:
+Replaces:
+Description: free Python GTK+ SQLite3 database file browser
+  geek'SQLite is a graphical SQLite3 database file browser, excellent for developers and end users. 
+  geek'SQLite is powered by Python and GTK+. 
+  geek'SQLite is open source and free (licensed unter the terms of the MIT license). Website: http://www.geeksfactory.de/geeksqlite/

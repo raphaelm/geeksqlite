@@ -1,0 +1,9 @@
+geekSQLite - free Python GTK+ SQLite3 database file browser
+USAGE:
+geeksqlite [argument]
+
+POSSIBLE ARGUMENTS:
+* any sqlite database file (example: geeksqlite test.sqlite)
+* -v for version informations
+* -l for the license
+* -h for this text

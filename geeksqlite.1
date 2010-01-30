@@ -1,0 +1,33 @@
+.TH geeksqlite 1 "January 29, 2010" "" "geek'SQLite"
+
+.SH NAME
+geeksqlite \- graphical program for viewing and editing SQLite3 databases
+
+.SH SYNOPSIS
+.B geeksqlite
+.RI [ options ]  [ filename ]
+.br
+
+.SH CONFIGURATION
+geek'SQLite looks for his configuration on one of the following possible places (in this order): ~/.geeksqlite ./geeksqlite.conf /etc/geeksqlite
+
+.SH DESCRIPTION
+This manual page explains the
+.B geeksqlite
+program. This program allows you to view and edit the structure and data contained in SQLite3 database files - as easy as editing tables in your favorite spreadsheet software. Have fun!
+.PP
+\fBgeeksqlite\fP is written in Python using the power of GTK+ and gettext.
+
+.SH OPTIONS
+.B
+.IP -v/--version
+Shows version information and quits.
+.B
+.IP -l/--license
+Prints the license geek'SQLite is licensed under and quits.
+.B
+.IP -h/--help
+Prints some help information.
+
+.SH "SEE ALSO"
+sqlite3 (1)

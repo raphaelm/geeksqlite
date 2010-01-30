@@ -5,88 +5,90 @@ msgstr ""
 "POT-Creation-Date: 2010-01-30 16:50+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Raphael <raphael@geeksfactory.de>\n"
-"Language-Team: Raphael Michel <raphael@geeksfactory.de>\n"
+"Language-Team: NoMoKeTo <webmaster@nomoketo.de>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"X-Poedit-Language: German\n"
+"X-Poedit-Language: Esperanto\n"
+"Plural-Forms: j\n"
 "X-Poedit-Country: GERMANY\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
 #: geeksqlite.py:210
 #, python-format
 msgid "%(start)d to %(end)d of %(total)d"
-msgstr "%(start)d bis %(end)d von %(total)d"
+msgstr ""
 
 #: geeksqlite.py:224
 msgid "-- -- OPEN FILE -- --"
-msgstr "-- -- DATEI ÖFFNEN -- --"
+msgstr ""
 
 #: geeksqlite.py:226
 msgid "Unable to open database file"
-msgstr "Die Datenbankdatei konnte nicht geöffnet werden"
+msgstr "Ne eblis malfermi la datumbazon."
 
 #: geeksqlite.py:254
+#, fuzzy
 msgid "table"
-msgstr "Tabelle"
+msgstr "Tabelo:"
 
 #: geeksqlite.py:259
 msgid "index"
-msgstr "Index"
+msgstr ""
 
 #: geeksqlite.py:283
 msgid "-- -- CLOSE FILE -- --"
-msgstr "-- -- DATEI SCHLIESSEN -- --"
+msgstr ""
 
 #: geeksqlite.py:296
 #: interface/mainwindow.glade:183
 msgid "Drop Table"
-msgstr "Tabelle löschen"
+msgstr "Forigi tabelon"
 
 #: geeksqlite.py:297
 #, python-format
 msgid "Do you really want to remove the table %s?"
-msgstr "Wollen Sie die Tabelle '%s' wirklich entfernen?"
+msgstr "Ĉu vi vere volas forigi la tabulon %s?"
 
 #: geeksqlite.py:307
 #: interface/mainwindow.glade:237
 msgid "Drop Index"
-msgstr "Index löschen"
+msgstr "Forigu indekson"
 
 #: geeksqlite.py:308
 #, python-format
 msgid "Do you really want to remove the index %s?"
-msgstr "Wollen Sie den Index '%s' wirklich entfernen?"
+msgstr "Ĉu vi vere volas forigi la indekson %s?"
 
 #: geeksqlite.py:408
 msgid "[SQLite Error] "
-msgstr "[SQLite-Fehler] "
+msgstr "[SQLite Eraro]"
 
 #: geeksqlite.py:410
 msgid "[geekSQLite Error] Not a complete statement!"
-msgstr "[geekSQLite-Fehler] Dies ist kein kompletter SQL-Befehl!"
+msgstr "[geekSQLite Eraro] Malkompleta ordono!"
 
 #: geeksqlite.py:412
 #: geeksqlite.py:428
 #: geeksqlite.py:440
 msgid "No database loaded"
-msgstr "Es ist keine Datenbankdatei geöffnet!"
+msgstr "Nenia datumbazo ŝarĝita"
 
 #: geeksqlite.py:496
 msgid "You have to restart geek'SQLite to apply some changes like the language"
-msgstr "Um manche Einstellungen zu übernehmen (wie z.B. die Sprache) muss geek'SQLite neugestartet werden!"
+msgstr ""
 
 #: geeksqlite.py:592
 msgid "Name"
-msgstr "Name"
+msgstr ""
 
 #: geeksqlite.py:599
 msgid "Type"
-msgstr "Typ"
+msgstr ""
 
 #: geeksqlite.py:606
 msgid "Schema"
-msgstr "SQL-Query"
+msgstr ""
 
 #: geeksqlite.py:634
 msgid ""
@@ -99,11 +101,11 @@ msgid ""
 "* -v for version informations\n"
 "* -l for the license\n"
 "* -h for this text"
-msgstr "geek'SQLite - freier Python GTK+ SQLite3-DatenbankbrowserNUTZUNG:geeksqlite [argument]MÖGLICHE ARGUMENTE:* eine SQLite3-Datenbankdatei (Beispiel: geeksqlite test.sqlite)* -v für die Version von geek'SQLite* -l für den Lizenztext der Lizenz unter der geek'SQLite verbreitet wird* -h für diese Ausgabe"
+msgstr ""
 
 #: interface/filterdialog.glade:9
 msgid "Filter"
-msgstr "Filter"
+msgstr "Filtrilo"
 
 #: interface/filterdialog.glade:37
 msgid ""
@@ -137,27 +139,27 @@ msgstr "<title>"
 
 #: interface/indexcreatedialog.glade:26
 msgid "Index name:"
-msgstr "Index-Name:"
+msgstr "Indeksnomo:"
 
 #: interface/indexcreatedialog.glade:51
 msgid "Table:"
-msgstr "Tabelle:"
+msgstr "Tabelo:"
 
 #: interface/indexcreatedialog.glade:74
 msgid "Field:"
-msgstr "Feld:"
+msgstr "Kampo:"
 
 #: interface/indexcreatedialog.glade:97
 msgid "Order:"
-msgstr "Reihenfolge:"
+msgstr "Ordo:"
 
 #: interface/indexcreatedialog.glade:109
 msgid ""
 "Ascending\n"
 "Descending"
 msgstr ""
-"Aufsteigend\n"
-"Absteigend"
+"Kreskante\n"
+"Malkreskante"
 
 #: interface/indexcreatedialog.glade:119
 msgid "_UNIQUE"
@@ -165,7 +167,7 @@ msgstr "_UNIQUE"
 
 #: interface/indexnamedialog.glade:36
 msgid "Select index:"
-msgstr "Index auswählen:"
+msgstr "Elektu indekson:"
 
 #: interface/mainwindow.glade:9
 msgid "geek'SQLite"
@@ -173,45 +175,45 @@ msgstr "geek'SQLite"
 
 #: interface/mainwindow.glade:21
 msgid "_File"
-msgstr "_Datei"
+msgstr "Dosiero"
 
 #: interface/mainwindow.glade:74
 msgid "Import"
-msgstr "Import"
+msgstr "Importi"
 
 #: interface/mainwindow.glade:84
 #: interface/mainwindow.glade:112
 msgid "SQL file"
-msgstr "SQL-Datei"
+msgstr "SQL dosiero"
 
 #: interface/mainwindow.glade:102
 msgid "Export"
-msgstr "Export"
+msgstr "Eksporti"
 
 #: interface/mainwindow.glade:160
 msgid "_Edit"
-msgstr "_Bearbeiten"
+msgstr "Redakti"
 
 #: interface/mainwindow.glade:167
 #: interface/tablecreatedialog.glade:8
 msgid "Create Table"
-msgstr "Tabelle erstellen"
+msgstr "Krei tabelon"
 
 #: interface/mainwindow.glade:200
 msgid "Modify Table"
-msgstr "Tabelle modifizieren"
+msgstr "Modifi tabelon"
 
 #: interface/mainwindow.glade:221
 msgid "Create Index"
-msgstr "Index erstellen"
+msgstr "Krei indekson"
 
 #: interface/mainwindow.glade:273
 msgid "_Help"
-msgstr "_Hilfe"
+msgstr "Helpo"
 
 #: interface/mainwindow.glade:318
 msgid "Database Structure"
-msgstr "Datenbankstruktur"
+msgstr "Datumbaza strukturo"
 
 #: interface/mainwindow.glade:452
 msgid "<"
@@ -223,23 +225,23 @@ msgstr ">"
 
 #: interface/mainwindow.glade:496
 msgid "Browse Data"
-msgstr "Daten"
+msgstr "Esplori datumojn"
 
 #: interface/mainwindow.glade:518
 msgid "SQL string:"
-msgstr "SQL-Befehl:"
+msgstr "SQL ĉeno"
 
 #: interface/mainwindow.glade:526
 msgid "Execute!"
-msgstr "Ausführen!"
+msgstr "Plenumu!"
 
 #: interface/mainwindow.glade:554
 msgid "Errors (if any):"
-msgstr "Fehler:"
+msgstr "Eraroj:"
 
 #: interface/mainwindow.glade:576
 msgid "Result:"
-msgstr "Ergebnis:"
+msgstr "Rezulto:"
 
 #: interface/mainwindow.glade:634
 msgid "\t"
@@ -247,49 +249,45 @@ msgstr "\t"
 
 #: interface/mainwindow.glade:650
 msgid "Execute SQL"
-msgstr "SQL ausführen"
+msgstr "Plenumi SQL"
 
 #: interface/mainwindow.glade:679
 msgid "SQL Log"
-msgstr "SQL-Log"
+msgstr "SQL protokolo"
 
 #: interface/preferences.glade:9
 msgid "Preferences"
-msgstr "Einstellungen"
+msgstr ""
 
 #: interface/preferences.glade:30
 msgid "Language:"
-msgstr "Sprache:"
+msgstr ""
 
 #: interface/preferences.glade:52
 msgid "Encoding:"
-msgstr "Kodierung:"
+msgstr ""
 
 #: interface/preferences.glade:64
 msgid "utf-8"
-msgstr "utf.8"
+msgstr ""
 
 #: interface/preferences.glade:76
 msgid "Locale"
-msgstr "Lokalisation"
+msgstr ""
 
 #: interface/tablecreatedialog.glade:25
 msgid "Table name:"
-msgstr "Tabellenname:"
+msgstr "Tabelnomo:"
 
 #: interface/tablecreatedialog.glade:67
 msgid "Add field"
-msgstr "Feld hinzufügen"
+msgstr "Aldoni kampon"
 
 #: interface/tablecreatedialog.glade:81
 msgid "Delete field"
-msgstr "Feld entfernen"
+msgstr "Forigi kampon"
 
 #: interface/tablenamedialog.glade:36
 msgid "Select table:"
-msgstr "Tabelle auswählen:"
-
-#, fuzzy
-#~ msgid "Do you really want to remove the %s?"
-#~ msgstr "Wollen Sie die Tabelle '%s' wirklich entfernen?"
+msgstr "Elektu tabelon:"
 

@@ -21,15 +21,24 @@ except:
 	sys.exit(1)
 	
 # Load Modules
-import filedialog, os, dist #,configparser
+import filedialog, os, dist, ConfigParser, locale
 
 # Load config
-"""try:
+cfgfilename = ''
+for n in dist.possibleconfigfiles:
+	if os.path.isfile(n):
+		cfgfilename = n
+		print "Load configuration from: "+n
+		break
+try:
 	config = ConfigParser.ConfigParser()
-	config.read([os.path.expanduser('~/.geeksqlite'), os.path.expanduser('~/.geeksqlite.cfg'), os.path.expanduser('~/.geeksqlite.conf'), 'config.cfg', 'geeksqlite.conf', 'geeksqlite.cfg'])
+	config.read(cfgfilename)
+	LANGUAGE = config.get('locale', 'lang').strip()
+	locale.setlocale(locale.LC_ALL, (config.get('locale', 'lang').strip(), config.get('locale', 'encoding').strip()))
 except:
-	print("Failed loading configuration")"""
+	print "Failed loading configuration"
 	
+
 try:
 	gtk.glade.bindtextdomain('geeksqlite', dist.langdir)
 	gtk.glade.textdomain('geeksqlite')
@@ -37,10 +46,26 @@ try:
 	gettext.textdomain('geeksqlite')
 	_ = gettext.gettext
 except:
-	print("Failed loading language")
+	print "Failed loading language"
+
+# GTK HELPERS
 
 def err(text):
 	error_dlg = gtk.MessageDialog(type=gtk.MESSAGE_ERROR
+				, message_format=text
+				, buttons=gtk.BUTTONS_OK)
+	error_dlg.run()
+	error_dlg.destroy()
+
+def warning(text):
+	error_dlg = gtk.MessageDialog(type=gtk.MESSAGE_WARNING
+				, message_format=text
+				, buttons=gtk.BUTTONS_OK)
+	error_dlg.run()
+	error_dlg.destroy()
+
+def info(text):
+	error_dlg = gtk.MessageDialog(type=gtk.MESSAGE_INFO
 				, message_format=text
 				, buttons=gtk.BUTTONS_OK)
 	error_dlg.run()
@@ -58,6 +83,8 @@ def confirm(text):
 	dlg.destroy()
 	return ret
 	
+# MAIN CLASS
+
 class geeksqliteMain:
 	
 	def gettablename(self, title):
@@ -180,7 +207,7 @@ class geeksqliteMain:
 						self.mainTree.get_widget('ScrollLeft').hide()
 					else:
 						self.mainTree.get_widget('ScrollLeft').show()
-					scrolllabel.set_text(str(start+1)+' to '+str(start+C)+' of '+str(total))
+					scrolllabel.set_text(_('%(start)d to %(end)d of %(total)d') % {'start':start+1, 'end':start+C, 'total':total})
 			except sqlite3.Error, e:
 				err('[SQLite Error] '+e.args[0])
 		
@@ -194,7 +221,7 @@ class geeksqliteMain:
 				self.cursor = self.connection.cursor()
 				self.fileopened = True
 				self.cursor.execute('select name, sql from sqlite_master WHERE type = "table";')
-				self.log_add('-- -- OPEN FILE -- --')
+				self.log_add(_('-- -- OPEN FILE -- --'))
 			except:
 				err(_('Unable to open database file'))
 				self.fileopened = False
@@ -224,12 +251,12 @@ class geeksqliteMain:
 		result = self.sql('select name, sql from sqlite_master WHERE type = "table";')
 		for row in self.cursor:
 			n = row[0]
-			ls.append([n, 'table', row[1]])
+			ls.append([n, _('table'), row[1]])
 			ls2.append([n])
 		result = self.sql('select name, sql from sqlite_master WHERE type = "index";')
 		for row in self.cursor:
 			n = row[0]
-			ls.append([n, 'index', row[1]])
+			ls.append([n, _('index'), row[1]])
 		self.mainTree.get_widget('StructTv').set_model(ls)
 		self.mainTree.get_widget('TableSelect').set_model(ls2)
 		
@@ -240,7 +267,7 @@ class geeksqliteMain:
 		iter = model.get_iter(path)
 		if iter != None:
 				rowid = str(model.get(iter, 0)[0])
-				self.sql('UPDATE '+self.browse_current_table+' SET '+self.browse_current_labels[user_data]+" = '"+new_text+"' WHERE rowid = "+rowid)
+				self.sql('UPDATE '+self.browse_current_table+' SET '+self.browse_current_labels[user_data]+" = '"+new_text+"' WHERE _rowid_ = "+rowid)
 				self.reloadbrowse()
 		
 	def close(self, this = None):
@@ -253,7 +280,7 @@ class geeksqliteMain:
 			self.connection.close()
 			self.cursor = None
 			self.fileopened = False
-			self.log_add('-- -- CLOSE FILE -- --')
+			self.log_add(_('-- -- CLOSE FILE -- --'))
 		else:
 			self.fileopened = False
 		
@@ -288,6 +315,7 @@ class geeksqliteMain:
 		gtk.main_quit(self, this)
 		
 	def display_about(self, this): # About
+		global LANGUAGE
 		import version as ver
 		dialog = gtk.AboutDialog()
 		dialog.set_name(ver.name)
@@ -301,7 +329,7 @@ class geeksqliteMain:
 		dialog.set_authors(ver.authors)
 		dialog.set_documenters(ver.documenters)
 		dialog.set_artists(ver.artists)
-		dialog.set_translator_credits(ver.translators)
+		dialog.set_translator_credits(ver.translators(LANGUAGE))
 		response = dialog.run()
 		dialog.hide()
 		
@@ -425,9 +453,50 @@ class geeksqliteMain:
 			iter = tuple[1]
 			if iter != None:
 				rowid = model.get_value(iter, 0)
-				self.sql('DELETE FROM '+self.browse_current_table+' WHERE rowid = '+rowid)
+				self.sql('DELETE FROM '+self.browse_current_table+' WHERE _rowid_ = '+rowid)
 			self.reloadbrowse()
 			
+			
+	def preferences(self, this):
+		global config, cfgfile, cfgfilename
+		
+		dialogTree = gtk.glade.XML(dist.interfacedir+"/preferences.glade")
+		dlg = dialogTree.get_widget('PreferencesDialog')
+		
+		# LANGUAGE
+		
+		cb = dialogTree.get_widget('LanguageSelect')
+		dialogTree.get_widget('EncodingSelect').set_active(0)
+		
+		cb = gtk.combo_box_new_text()
+		cb.set_size_request(300,30)
+		i = 0
+		for l in dist.languages:
+			cb.append_text(l)
+			try:
+				if l == config.get('locale', 'lang').strip():
+					active = i
+			except:
+				a = 2
+			i += 0
+		cb.set_active(i)
+		cb.show()
+		dialogTree.get_widget('LocaleField').put(cb, 110, 5)
+		
+		# RUN
+		
+		run = dlg.run()
+		if run == 3:
+			try:
+				config.set('locale', 'lang', cb.get_active_text())
+				config.set('locale', 'encoding', 'utf-8')
+				cfgfile = open(cfgfilename, 'w+')
+				config.write(cfgfile)
+			finally:
+				info(_("You have to restart geek'SQLite to apply some changes like the language"))
+				dlg.destroy()
+		else:
+			dlg.destroy()
 			
 	def initfilter(self, this):
 		cbt = self.mainTree.get_widget('TableSelect').get_active_text()
@@ -495,6 +564,7 @@ class geeksqliteMain:
 				"on_MainMenuClose_activate" : self.close,
 				"on_MainMenuTableCreate_activate" : self.table_create,
 				"on_MainMenuTableDelete_activate" : self.table_delete,
+				"on_MainMenuConfig_activate" : self.preferences,
 				"on_ExecButton_activate" : self.execute,
 				"on_ExecButton_clicked" : self.execute,
 				"on_TableSelect_changed" : self.browse,
@@ -519,21 +589,21 @@ class geeksqliteMain:
 		# Structure Treeview
 		tv = self.mainTree.get_widget('StructTv')
 		
-		self.structtv_col = gtk.TreeViewColumn('Name')
+		self.structtv_col = gtk.TreeViewColumn(_('Name'))
 		self.structtv_cell = gtk.CellRendererText()
 		self.structtv_col.pack_start(self.structtv_cell)
 		self.structtv_col.add_attribute(self.structtv_cell, 'text', 0)
 		self.structtv_col.set_resizable(True)
 		tv.append_column(self.structtv_col)	
 		
-		self.structtv_col2 = gtk.TreeViewColumn('Type')
+		self.structtv_col2 = gtk.TreeViewColumn(_('Type'))
 		self.structtv_cell2 = gtk.CellRendererText()
 		self.structtv_col2.pack_start(self.structtv_cell2)
 		self.structtv_col2.add_attribute(self.structtv_cell2, 'text', 1)
 		self.structtv_col2.set_resizable(True)
 		tv.append_column(self.structtv_col2)	
 		
-		self.structtv_col3 = gtk.TreeViewColumn('Schema')
+		self.structtv_col3 = gtk.TreeViewColumn(_('Schema'))
 		self.structtv_cell3 = gtk.CellRendererText()
 		self.structtv_col3.pack_start(self.structtv_cell3)
 		self.structtv_col3.add_attribute(self.structtv_cell3, 'text', 2)
@@ -561,7 +631,7 @@ class geeksqliteMain:
 		
 		if len(sys.argv) == 2:
 			if sys.argv[1] in ('-h', '--help'):
-				print """geekSQLite - free Python GTK+ SQLite3 database file browser
+				print _("""geekSQLite - free Python GTK+ SQLite3 database file browser
 USAGE:
 geeksqlite [argument]
 
@@ -569,7 +639,7 @@ POSSIBLE ARGUMENTS:
 * any sqlite database file (example: geeksqlite test.sqlite)
 * -v for version informations
 * -l for the license
-* -h for this text"""
+* -h for this text""")
 				sys.exit(0)
 			elif sys.argv[1] in ('-v', '--version'):
 				import version as ver

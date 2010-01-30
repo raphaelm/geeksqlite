@@ -6,7 +6,6 @@ NEEDED FOR BETA
 		- Views?
 		
 NEEDED FOR RELEASE
-	- Configuration
 	- Deployment
 		- Debian-/Ubuntu-Package
 		- setup.py package

@@ -1,0 +1,13 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=geek'SQLite
+Comment=SQLite3 database browser
+Exec=cookiepascal
+Icon=/usr/share/pixmaps/geeksqlite.png
+Terminal=false
+Type=Application
+Categories=Application;Development;
+StartupNotify=false
+Name[de]=geek'SQLite
+Name[en]=geek'SQLite
+Name[eo]=geek'SQLite
