@@ -4,13 +4,12 @@ NEEDED FOR BETA
 		- Modify Table
 		- Create Index
 		- Views?
-	- Create new databases(!)
 	
 NEEDED FOR RELEASE
 	- Deployment
-		- Debian-/Ubuntu-Package
-		- setup.py package
+		- Debian-/Ubuntu-Package (done, not uploaded yet)
 		- Windows package (py2exe?)
+	- Structure/Data: Views?
 		
 IDEAS
 	- 

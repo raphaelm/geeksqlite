@@ -24,19 +24,42 @@ except:
 import filedialog, os, dist, ConfigParser, locale
 
 # Load config
-cfgfilename = ''
-for n in dist.possibleconfigfiles:
-	if os.path.isfile(n):
-		cfgfilename = n
-		print "Load configuration from: "+n
-		break
-try:
-	config = ConfigParser.ConfigParser()
-	config.read(cfgfilename)
-	LANGUAGE = config.get('locale', 'lang').strip()
-	locale.setlocale(locale.LC_ALL, (config.get('locale', 'lang').strip(), config.get('locale', 'encoding').strip()))
-except:
-	print "Failed loading configuration"
+def loadconfig():
+	global cfgfilename, cfgfile, config, LANGUAGE, ENCODING
+	cfgfilename = ''
+	for n in dist.possibleconfigfiles:
+		if os.path.isfile(n):
+			cfgfilename = n
+			print "Load configuration from: "+n
+			break
+		else:
+			try:
+				open(n, 'a+') # Create file
+				if os.access(n, os.W_OK):
+					cfgfilename = n
+					print "Create new config file: "+n
+					break
+			except:
+				a = 0
+	try:
+		config = ConfigParser.ConfigParser()
+		config.read(cfgfilename)
+		# Load Config, set defaults
+		try:
+			config.add_section('locale')
+		except:
+			a = 0
+		try:
+			LANGUAGE = config.get('locale', 'lang').strip()
+		except:
+			LANGUAGE = 'en'
+		try:
+			ENCODING = config.get('locale', 'encoding').strip()
+		except:
+			ENCODING = 'utf-8'
+		locale.setlocale(locale.LC_ALL, (LANGUAGE, ENCODING))
+	except:
+		print "Failed loading configuration"
 	
 
 try:
@@ -478,8 +501,8 @@ class geeksqliteMain:
 					active = i
 			except:
 				a = 2
-			i += 0
-		cb.set_active(i)
+			i += 1
+		cb.set_active(active)
 		cb.show()
 		dialogTree.get_widget('LocaleField').put(cb, 110, 5)
 		
@@ -492,6 +515,8 @@ class geeksqliteMain:
 				config.set('locale', 'encoding', 'utf-8')
 				cfgfile = open(cfgfilename, 'w+')
 				config.write(cfgfile)
+				print "Writing configuration to "+cfgfilename
+				loadconfig()
 			finally:
 				info(_("You have to restart geek'SQLite to apply some changes like the language"))
 				dlg.destroy()
@@ -547,6 +572,14 @@ class geeksqliteMain:
 			else:
 				dlg.destroy()
 				return None
+				
+	def newfile(self, this):
+		if self.fileopened:
+			self.close()
+		
+		d = filedialog.FileDialog()
+		self.filename = d.get_filename(action='save')
+		self.do_open()
 			
 	#### GTK INITIALISATION
 	
@@ -561,6 +594,7 @@ class geeksqliteMain:
 				"on_MainMenuExit_activate" : self.exit,
 				"on_MainMenuAbout_activate" : self.display_about,
 				"on_MainMenuOpen_activate" : self.open,
+				"on_MainMenuNew_activate" : self.newfile,
 				"on_MainMenuClose_activate" : self.close,
 				"on_MainMenuTableCreate_activate" : self.table_create,
 				"on_MainMenuTableDelete_activate" : self.table_delete,
@@ -628,6 +662,7 @@ class geeksqliteMain:
 		self.browse_current_search_method = None
 		self.browse_current_search_filter = None
 		self.browse_current_labels = []
+		self.window.set_icon(gtk.gdk.pixbuf_new_from_file(dist.icon))
 		
 		if len(sys.argv) == 2:
 			if sys.argv[1] in ('-h', '--help'):
@@ -653,5 +688,6 @@ POSSIBLE ARGUMENTS:
 			self.do_open(sys.argv[1])
 		
 if __name__ == "__main__":
+	loadconfig()
 	gsl = geeksqliteMain()
 	gtk.main()
