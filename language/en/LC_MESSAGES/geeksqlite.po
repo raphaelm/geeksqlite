@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geek'SQLite\n"
 "Report-Msgid-Bugs-To: raphael@geeksfactory.de\n"
-"POT-Creation-Date: 2010-01-30 16:50+0100\n"
+"POT-Creation-Date: 2010-02-01 20:36+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Raphael <raphael@geeksfactory.de>\n"
 "Language-Team: Raphael Michel <raphael@geeksfactory.de>\n"
@@ -12,82 +12,97 @@ msgstr ""
 "X-Poedit-Language: English\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: geeksqlite.py:210
+#: geeksqlite.py:231
 #, python-format
 msgid "%(start)d to %(end)d of %(total)d"
 msgstr ""
 
-#: geeksqlite.py:224
+#: geeksqlite.py:245
 msgid "-- -- OPEN FILE -- --"
 msgstr ""
 
-#: geeksqlite.py:226
+#: geeksqlite.py:247
 msgid "Unable to open database file"
 msgstr ""
 
-#: geeksqlite.py:254
+#: geeksqlite.py:275
 msgid "table"
 msgstr ""
 
-#: geeksqlite.py:259
+#: geeksqlite.py:280
 msgid "index"
 msgstr ""
 
-#: geeksqlite.py:283
+#: geeksqlite.py:287
+msgid "Select Table"
+msgstr ""
+
+#: geeksqlite.py:337
+msgid "No index was created because you did not fill in all required fields!"
+msgstr ""
+
+#: geeksqlite.py:343
+#: geeksqlite.py:390
+#: geeksqlite.py:400
+#: geeksqlite.py:506
+#: geeksqlite.py:522
+#: geeksqlite.py:534
+msgid "No database loaded"
+msgstr ""
+
+#: geeksqlite.py:366
 msgid "-- -- CLOSE FILE -- --"
 msgstr ""
 
-#: geeksqlite.py:296
+#: geeksqlite.py:380
 #: interface/mainwindow.glade:183
 msgid "Drop Table"
 msgstr ""
 
-#: geeksqlite.py:297
+#: geeksqlite.py:381
 #, python-format
 msgid "Do you really want to remove the table %s?"
 msgstr ""
 
-#: geeksqlite.py:307
+#: geeksqlite.py:394
 #: interface/mainwindow.glade:237
 msgid "Drop Index"
 msgstr ""
 
-#: geeksqlite.py:308
+#: geeksqlite.py:395
 #, python-format
 msgid "Do you really want to remove the index %s?"
 msgstr ""
 
-#: geeksqlite.py:408
+#: geeksqlite.py:480
+msgid "Empty result"
+msgstr ""
+
+#: geeksqlite.py:502
 msgid "[SQLite Error] "
 msgstr ""
 
-#: geeksqlite.py:410
+#: geeksqlite.py:504
 msgid "[geekSQLite Error] Not a complete statement!"
 msgstr ""
 
-#: geeksqlite.py:412
-#: geeksqlite.py:428
-#: geeksqlite.py:440
-msgid "No database loaded"
-msgstr ""
-
-#: geeksqlite.py:496
+#: geeksqlite.py:593
 msgid "You have to restart geek'SQLite to apply some changes like the language"
 msgstr ""
 
-#: geeksqlite.py:592
+#: geeksqlite.py:699
 msgid "Name"
 msgstr ""
 
-#: geeksqlite.py:599
+#: geeksqlite.py:706
 msgid "Type"
 msgstr ""
 
-#: geeksqlite.py:606
+#: geeksqlite.py:713
 msgid "Schema"
 msgstr ""
 
-#: geeksqlite.py:634
+#: geeksqlite.py:742
 msgid ""
 "geekSQLite - free Python GTK+ SQLite3 database file browser\n"
 "USAGE:\n"
@@ -119,9 +134,8 @@ msgid ""
 msgstr ""
 
 #: interface/indexcreatedialog.glade:9
-#: interface/indexnamedialog.glade:9
-#: interface/tablenamedialog.glade:9
-msgid "<title>"
+#: interface/mainwindow.glade:221
+msgid "Create Index"
 msgstr ""
 
 #: interface/indexcreatedialog.glade:26
@@ -129,25 +143,26 @@ msgid "Index name:"
 msgstr ""
 
 #: interface/indexcreatedialog.glade:51
-msgid "Table:"
-msgstr ""
-
-#: interface/indexcreatedialog.glade:74
 msgid "Field:"
 msgstr ""
 
-#: interface/indexcreatedialog.glade:97
+#: interface/indexcreatedialog.glade:73
 msgid "Order:"
 msgstr ""
 
-#: interface/indexcreatedialog.glade:109
+#: interface/indexcreatedialog.glade:85
 msgid ""
-"Ascending\n"
-"Descending"
+"ASC (Ascending)\n"
+"DESC (Descending)"
 msgstr ""
 
-#: interface/indexcreatedialog.glade:119
+#: interface/indexcreatedialog.glade:95
 msgid "_UNIQUE"
+msgstr ""
+
+#: interface/indexnamedialog.glade:9
+#: interface/tablenamedialog.glade:9
+msgid "<title>"
 msgstr ""
 
 #: interface/indexnamedialog.glade:36
@@ -186,10 +201,6 @@ msgstr ""
 
 #: interface/mainwindow.glade:200
 msgid "Modify Table"
-msgstr ""
-
-#: interface/mainwindow.glade:221
-msgid "Create Index"
 msgstr ""
 
 #: interface/mainwindow.glade:273

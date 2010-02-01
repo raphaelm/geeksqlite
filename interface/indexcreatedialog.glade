@@ -4,9 +4,9 @@
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkDialog" id="IndexCreateDialog">
     <property name="width_request">425</property>
-    <property name="height_request">230</property>
+    <property name="height_request">260</property>
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">&lt;title&gt;</property>
+    <property name="title" translatable="yes">Create Index</property>
     <property name="resizable">False</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
@@ -16,7 +16,7 @@
         <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
-          <widget class="GtkFixed" id="IndexNameField">
+          <widget class="GtkFixed" id="IndexCreateField">
             <property name="visible">True</property>
             <child>
               <widget class="GtkLabel" id="label2">
@@ -44,29 +44,6 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="label3">
-                <property name="width_request">100</property>
-                <property name="height_request">27</property>
-                <property name="visible">True</property>
-                <property name="label" translatable="yes">Table:</property>
-              </widget>
-              <packing>
-                <property name="x">5</property>
-                <property name="y">35</property>
-              </packing>
-            </child>
-            <child>
-              <widget class="GtkComboBox" id="TableSelect">
-                <property name="width_request">295</property>
-                <property name="height_request">30</property>
-                <property name="visible">True</property>
-              </widget>
-              <packing>
-                <property name="x">110</property>
-                <property name="y">35</property>
-              </packing>
-            </child>
-            <child>
               <widget class="GtkLabel" id="label1">
                 <property name="width_request">100</property>
                 <property name="height_request">27</property>
@@ -75,18 +52,17 @@
               </widget>
               <packing>
                 <property name="x">5</property>
-                <property name="y">70</property>
+                <property name="y">40</property>
               </packing>
             </child>
             <child>
               <widget class="GtkComboBox" id="FieldSelect">
                 <property name="width_request">295</property>
                 <property name="height_request">30</property>
-                <property name="visible">True</property>
               </widget>
               <packing>
                 <property name="x">110</property>
-                <property name="y">70</property>
+                <property name="y">40</property>
               </packing>
             </child>
             <child>
@@ -98,7 +74,7 @@
               </widget>
               <packing>
                 <property name="x">5</property>
-                <property name="y">105</property>
+                <property name="y">75</property>
               </packing>
             </child>
             <child>
@@ -106,16 +82,16 @@
                 <property name="width_request">295</property>
                 <property name="height_request">30</property>
                 <property name="visible">True</property>
-                <property name="items" translatable="yes">Ascending
-Descending</property>
+                <property name="items" translatable="yes">ASC (Ascending)
+DESC (Descending)</property>
               </widget>
               <packing>
                 <property name="x">110</property>
-                <property name="y">105</property>
+                <property name="y">75</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkCheckButton" id="checkbutton1">
+              <widget class="GtkCheckButton" id="UniqueCheck">
                 <property name="label" translatable="yes">_UNIQUE</property>
                 <property name="width_request">295</property>
                 <property name="height_request">27</property>
@@ -127,7 +103,7 @@ Descending</property>
               </widget>
               <packing>
                 <property name="x">110</property>
-                <property name="y">140</property>
+                <property name="y">110</property>
               </packing>
             </child>
           </widget>

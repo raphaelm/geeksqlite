@@ -21,7 +21,7 @@ except:
 	sys.exit(1)
 	
 # Load Modules
-import filedialog, os, dist, ConfigParser, locale
+import filedialog, os, dist, ConfigParser, locale, re
 
 # Load config
 def loadconfig():
@@ -107,9 +107,7 @@ def confirm(text):
 	return ret
 	
 # MAIN CLASS
-
 class geeksqliteMain:
-	
 	def gettablename(self, title):
 		dialogTree = gtk.glade.XML(dist.interfacedir+"/tablenamedialog.glade")
 		dlg = dialogTree.get_widget('TableNameDialog')
@@ -284,14 +282,76 @@ class geeksqliteMain:
 		self.mainTree.get_widget('TableSelect').set_model(ls2)
 		
 	#### EVENT HANDLERS
-	
+	def index_create(self, this):
+		if self.fileopened:
+			tblname = self.gettablename(_('Select Table'))
+			if tblname:
+				dialogTree = gtk.glade.XML(dist.interfacedir+"/indexcreatedialog.glade")
+				dlg = dialogTree.get_widget('IndexCreateDialog')
+		
+				cb = gtk.combo_box_new_text()
+				cb.set_size_request(295,30)
+				dialogTree.get_widget('OrderSelect').set_active(0)
+				
+				res = self.sql("SELECT sql FROM sqlite_master WHERE name = '"+tblname+"'")
+				row = self.cursor.fetchone()
+				m = re.search(r'CREATE TABLE ([^\(]*) \((.*)\)', row[0])
+				fields = m.group(2).strip()
+				if ',' in fields:
+					fieldlist = fields.split(',')
+					for f in fieldlist:
+						f = f.strip()
+						spacepos = f.find(' ')
+						if spacepos == -1:
+							cb.append_text(f)
+						else:
+							cb.append_text(f[:spacepos])
+				else:
+					spacepos = fields.find(' ')
+					cb.append_text(fields[:spacepos])
+				
+				cb.show()
+				dialogTree.get_widget('IndexCreateField').put(cb, 110, 40)
+				run = dlg.run()
+				if run == 3:
+					if cb.get_active_text() and dialogTree.get_widget('OrderSelect').get_active_text() and dialogTree.get_widget('NameEntry').get_text():
+						sql = "CREATE "
+						if dialogTree.get_widget('UniqueCheck').get_active():
+							sql += "UNIQUE "
+						sql += "INDEX "
+						sql += dialogTree.get_widget('NameEntry').get_text()
+						sql += " ON "
+						sql += tblname
+						sql += " ("
+						sql += cb.get_active_text()
+						sql += " "
+						order = dialogTree.get_widget('OrderSelect').get_active_text()
+						sql += order[:order.find(' ')].strip()
+						sql += ");"
+						try:
+							self.sql(sql)
+							self.reloadstructure()
+						except sqlite3.Error, e:
+							err('[SQLite Error] '+e.args[0])
+					else:
+						warning(_('No index was created because you did not fill in all required fields!'))
+					dlg.destroy()
+				else:
+					dlg.destroy()
+					return None
+		else:
+			err(_('No database loaded'))
+			
 	def edited(self, cell, path, new_text, user_data):
 		model = self.btv.get_model()
 		iter = model.get_iter(path)
 		if iter != None:
 				rowid = str(model.get(iter, 0)[0])
-				self.sql('UPDATE '+self.browse_current_table+' SET '+self.browse_current_labels[user_data]+" = '"+new_text+"' WHERE _rowid_ = "+rowid)
-				self.reloadbrowse()
+				try:
+					self.sql('UPDATE '+self.browse_current_table+' SET '+self.browse_current_labels[user_data]+" = '"+new_text+"' WHERE _rowid_ = "+rowid)
+					self.reloadbrowse()
+				except sqlite3.Error, e:
+					err('[SQLite Error] '+e.args[0])
 		
 	def close(self, this = None):
 		if self.fileopened:
@@ -316,22 +376,28 @@ class geeksqliteMain:
 		pass
 		
 	def table_delete(self, this):
-		tblname = self.gettablename(_('Drop Table'))
-		if tblname and confirm(_("Do you really want to remove the table %s?") % tblname):
-			self.sql('DROP TABLE '+tblname)
-			if tblname == self.browse_current_table:
-				self.browse_to('sqlite_master',
-				start=0,
-				limit=0,
-				search=None)
-			self.reloadstructure()
+		if self.fileopened:
+			tblname = self.gettablename(_('Drop Table'))
+			if tblname and confirm(_("Do you really want to remove the table %s?") % tblname):
+				self.sql('DROP TABLE IF EXISTS '+tblname)
+				if tblname == self.browse_current_table:
+					self.browse_to('sqlite_master',
+					start=0,
+					limit=0,
+					search=None)
+				self.reloadstructure()
+		else:
+			err(_('No database loaded'))
 		
 	def index_delete(self, this):
-		indexname = self.gettablename(_('Drop Index'))
-		if indexname and confirm(_("Do you really want to remove the index %s?") % indexname):
-			self.sql('DROP INDEX '+indexname)
-			self.reloadbrowse()
-			self.reloadstructure()
+		if self.fileopened:
+			indexname = self.getindexname(_('Drop Index'))
+			if indexname and confirm(_("Do you really want to remove the index %s?") % indexname):
+				self.sql('DROP INDEX IF EXISTS '+indexname)
+				self.reloadbrowse()
+				self.reloadstructure()
+		else:
+			err(_('No database loaded'))
 		
 	def exit(self, this):
 		self.close()
@@ -399,6 +465,7 @@ class geeksqliteMain:
 					result = self.sql(inpu)
 					if inpu.lstrip().upper().startswith("SELECT"):
 						ls = False
+						i = 0
 						for row in self.cursor:
 							l = len(row)
 							list = []
@@ -408,23 +475,27 @@ class geeksqliteMain:
 								columns = [str] * l
 								ls = gtk.ListStore(*columns)
 							ls.append(list)
-						cols = [""]*l
-						cells = [""]*l
-						labels = [""]*l
-						j = 0
-						for k in self.cursor.description:
-							labels[j] = str(k[0])
-							j += 1
-						self.exectv = gtk.TreeView(ls)
-						for i in range(0,l):
-							cols[i] = gtk.TreeViewColumn(labels[i])
-							cells[i] = gtk.CellRendererText()
-							cols[i].pack_start(cells[i])
-							cols[i].add_attribute(cells[i], 'text', i)
-							cols[i].set_resizable(True)
-							self.exectv.append_column(cols[i])
-							self.exectv.show()
-						ef.add(self.exectv)
+							i += 1
+						if i == 0:
+							ebuf.set_text(_('Empty result'))
+						else:
+							cols = [""]*l
+							cells = [""]*l
+							labels = [""]*l
+							j = 0
+							for k in self.cursor.description:
+								labels[j] = str(k[0])
+								j += 1
+							self.exectv = gtk.TreeView(ls)
+							for i in range(0,l):
+								cols[i] = gtk.TreeViewColumn(labels[i])
+								cells[i] = gtk.CellRendererText()
+								cols[i].pack_start(cells[i])
+								cols[i].add_attribute(cells[i], 'text', i)
+								cols[i].set_resizable(True)
+								self.exectv.append_column(cols[i])
+								self.exectv.show()
+							ef.add(self.exectv)
 					self.reloadstructure()
 					self.reloadbrowse()
 				except sqlite3.Error, e:
@@ -494,6 +565,7 @@ class geeksqliteMain:
 		cb = gtk.combo_box_new_text()
 		cb.set_size_request(300,30)
 		i = 0
+		active = 0
 		for l in dist.languages:
 			cb.append_text(l)
 			try:
@@ -582,7 +654,6 @@ class geeksqliteMain:
 		self.do_open()
 			
 	#### GTK INITIALISATION
-	
 	def grab_widgets(self):
 		# Main Window
 		self.window = self.mainTree.get_widget("MainWindow")
@@ -597,6 +668,8 @@ class geeksqliteMain:
 				"on_MainMenuNew_activate" : self.newfile,
 				"on_MainMenuClose_activate" : self.close,
 				"on_MainMenuTableCreate_activate" : self.table_create,
+				"on_MainMenuIndexCreate_activate" : self.index_create,
+				"on_MainMenuIndexDelete_activate" : self.index_delete,
 				"on_MainMenuTableDelete_activate" : self.table_delete,
 				"on_MainMenuConfig_activate" : self.preferences,
 				"on_ExecButton_activate" : self.execute,
