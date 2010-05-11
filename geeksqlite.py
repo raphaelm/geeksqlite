@@ -23,6 +23,7 @@ except:
 # Load Modules
 import dist
 import filedialog, os, ConfigParser, locale, re, math
+from optparse import OptionParser
 
 # Load config
 def loadconfig():
@@ -42,6 +43,9 @@ def loadconfig():
 					break
 			except:
 				a = 0
+	loadconfigfile(cfgfilename)
+	
+def loadconfigfile(cfgfilename):
 	try:
 		config = ConfigParser.ConfigParser()
 		config.read(cfgfilename)
@@ -96,8 +100,7 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
-THE SOFTWARE.
-""")
+THE SOFTWARE.""")
 ver_website			= "http://www.geeksfactory.de/geeksqlite"
 ver_website_label	= "geeksfactory.de/geeksqlite"
 # Add you here if you have edited the code, the documentation or 
@@ -819,30 +822,42 @@ class geeksqliteMain:
 		self.window.set_icon(gtk.gdk.pixbuf_new_from_file(dist.icon))
 		
 		if len(sys.argv) == 2:
-			if sys.argv[1] in ('-h', '--help'):
-				print _("""geekSQLite - free Python GTK+ SQLite3 database file browser
-USAGE:
-geeksqlite [argument]
-
-POSSIBLE ARGUMENTS:
-* any sqlite database file (example: geeksqlite test.sqlite)
-* -v for version informations
-* -l for the license
-* -h for this text""")
-				sys.exit(0)
-			elif sys.argv[1] in ('-v', '--version'):
-				import version as ver
-				print ver.name, ver.version
-				print ver.copyright
-				sys.exit(0)
-			elif sys.argv[1] in ('-l', '--license'):
-				import version as ver
-				print ver.license
-				sys.exit(0)
 			self.do_open(sys.argv[1])
 		
 if __name__ == "__main__":
-	loadconfig()
+	
+	parser = OptionParser(usage="Usage: %prog [options] [file]", prog="geeksqlite")
+	parser.add_option("-c", "--config", dest="cfg", default=None,
+					  help="reads configuration from FILE", metavar="FILE")
+	parser.add_option("-q", "--quiet",
+					  action="store_true", dest="quiet", default=False,
+					  help="don't print anything(!) stdout or stderr")
+	parser.add_option("-v", "--version",
+					  action="store_true", dest="displayversion", default=False,
+					  help="displays version information and quits")
+	parser.add_option("-l", "--license",
+					  action="store_true", dest="displaylicense", default=False,
+					  help="displays geek'SQLite's license information and quits")
+				
+	(options, args) = parser.parse_args()
+	
+	if options.displayversion:
+		print ver_name, ver_version
+		print ver_copyright
+		sys.exit(0)
+	if options.displaylicense:
+		print ver_license
+		sys.exit(0)
+	if options.quiet:
+		null = open('/dev/null', 'w')
+		sys.stderr = null
+		sys.stdout = null
+	
+	if options.cfg:
+		loadconfigfile(options.cfg)
+	else:
+		loadconfig()
+	
 	gsl = geeksqliteMain()
 	try:
 		gtk.main()
