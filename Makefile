@@ -1,15 +1,13 @@
-#
-# Targets
-#
-
-#
-# The First target is the one build when there is nothing on make command line
-#
+# geek'SQLite Makefile
 all:
-	./make.sh
+	msgfmt language/de/LC_MESSAGES/geeksqlite.po -o language/de/LC_MESSAGES/geeksqlite.mo
+	msgfmt language/en/LC_MESSAGES/geeksqlite.po -o language/en/LC_MESSAGES/geeksqlite.mo
+	msgfmt language/eo/LC_MESSAGES/geeksqlite.po -o language/eo/LC_MESSAGES/geeksqlite.mo
+	gzip geeksqlite.1
 
 clean:
-	./clean.sh
+	rm -f language/*/LC_MESSAGES/geeksqlite.mo
+	gunzip geeksqlite.1.gz
 
 install:
 	./install.sh
