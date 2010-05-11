@@ -1,33 +1,41 @@
-.TH geeksqlite 1 "January 29, 2010" "" "geek'SQLite"
+.TH geeksqlite 1 "May 11, 2010" "" "geek'SQLite"
 
 .SH NAME
 geeksqlite \- graphical program for viewing and editing SQLite3 databases
 
 .SH SYNOPSIS
 .B geeksqlite
-.RI [ options ]  [ filename ]
-.br
-
-.SH CONFIGURATION
-geek'SQLite looks for his configuration on one of the following possible places (in this order): ~/.geeksqlite ./geeksqlite.conf /etc/geeksqlite
+.RB [\| \-qvlh \|]
+.RB [\| \-c 
+.IR configurationfile \|] 
+.RI [\| databasefile \|]
 
 .SH DESCRIPTION
-This manual page explains the
 .B geeksqlite
-program. This program allows you to view and edit the structure and data contained in SQLite3 database files - as easy as editing tables in your favorite spreadsheet software. Have fun!
+allows you to view and edit the structure and data contained in SQLite3 database files - as easy as editing tables in your favorite spreadsheet software. Have fun!
 .PP
 \fBgeeksqlite\fP is written in Python using the power of GTK+ and gettext.
 
 .SH OPTIONS
 .B
-.IP -v/--version
-Shows version information and quits.
+.IP \-c\ FILE,\ \-\-config=FILE
+reads configuration from FILE
 .B
-.IP -l/--license
-Prints the license geek'SQLite is licensed under and quits.
+.IP \-q,\ \-\-quiet
+don't print anything(!) stdout or stderr
 .B
-.IP -h/--help
-Prints some help information.
+.IP \-v,\ \-\-version
+displays version information and quits
+.B
+.IP \-l,\ \-\-license
+displays geek'SQLite's license information and quits
+.B
+.IP \-h,\ \-\-help
+prints some help information.
+
+.SH CONFIGURATION
+geek'SQLite looks for his configuration file on one of the following possible places (in this order): 
+~/.geeksqlite, ./geeksqlite.conf, /etc/geeksqlite
 
 .SH "SEE ALSO"
 sqlite3 (1)
