@@ -11,7 +11,6 @@
     <child>
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <child>
           <widget class="GtkMenuBar" id="menubar1">
             <property name="visible">True</property>
@@ -325,7 +324,6 @@
             <child>
               <widget class="GtkVBox" id="vbox2">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <widget class="GtkFixed" id="fixed1">
                     <property name="height_request">40</property>
@@ -404,8 +402,8 @@
                         <property name="use_stock">True</property>
                         <signal name="clicked" handler="on_ReloadButton_clicked" object=" "/>
                         <signal name="activate" handler="on_ReloadButton_activate" object=" "/>
-                        <accelerator key="F5" signal="clicked"/>
                         <accelerator key="F5" signal="activate"/>
+                        <accelerator key="F5" signal="clicked"/>
                       </widget>
                       <packing>
                         <property name="x">525</property>
@@ -438,7 +436,7 @@
                     <property name="visible">True</property>
                     <child>
                       <widget class="GtkLabel" id="ScrollLabel">
-                        <property name="width_request">120</property>
+                        <property name="width_request">170</property>
                         <property name="height_request">27</property>
                         <property name="visible">True</property>
                       </widget>
@@ -475,7 +473,7 @@
                         <signal name="activate" handler="on_ScrollRight_activate" object=" "/>
                       </widget>
                       <packing>
-                        <property name="x">155</property>
+                        <property name="x">205</property>
                         <property name="y">5</property>
                       </packing>
                     </child>

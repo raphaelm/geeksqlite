@@ -21,7 +21,8 @@ except:
 	sys.exit(1)
 	
 # Load Modules
-import filedialog, os, dist, ConfigParser, locale, re
+import dist
+import filedialog, os, ConfigParser, locale, re, math
 
 # Load config
 def loadconfig():
@@ -61,7 +62,6 @@ def loadconfig():
 	except:
 		print "Failed loading configuration"
 	
-
 try:
 	gtk.glade.bindtextdomain('geeksqlite', dist.langdir)
 	gtk.glade.textdomain('geeksqlite')
@@ -70,6 +70,49 @@ try:
 	_ = gettext.gettext
 except:
 	print "Failed loading language"
+	
+# Cersion Information
+ver_name 			= _("geek'SQLite")
+ver_version			= "0.0.0"
+ver_copyright		= _(u"Copyright © 2010 geek's factory")
+ver_comments		= _("free Python GTK+ SQLite3 database file browser")
+ver_license			= _("""Copyright (c) 2010 geek's factory
+
+MIT-License
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+""")
+ver_website			= "http://www.geeksfactory.de/geeksqlite"
+ver_website_label	= "geeksfactory.de/geeksqlite"
+# Add you here if you have edited the code, the documentation or 
+# something else
+ver_authors			= ["Raphael Michel <raphael@geeksfactory.de>"]
+ver_documenters		= ["Raphael Michel <raphael@geeksfactory.de>"]
+ver_artists			= ["Raphael Michel <raphael@geeksfactory.de>"]
+
+def ver_translators(language):
+	if language == 'en':
+		return """Raphael Michel <raphael@geeksfactory.de>"""
+	elif language == 'de':
+		return """Raphael Michel <raphael@geeksfactory.de>"""
+	elif language == 'eo':
+		return u"""Nils Martin Klünder <webmaster@nomoketo.de>"""
 
 # GTK HELPERS
 
@@ -107,6 +150,7 @@ def confirm(text):
 	return ret
 	
 # MAIN CLASS
+
 class geeksqliteMain:
 	def gettablename(self, title):
 		dialogTree = gtk.glade.XML(dist.interfacedir+"/tablenamedialog.glade")
@@ -188,6 +232,7 @@ class geeksqliteMain:
 				any = False
 				l = len(self.cursor.description)
 				columns = [str] * l
+				self.emptyrow = [None]*l
 				ls = gtk.ListStore(*columns)
 				for row in self.cursor:
 					any = True
@@ -205,33 +250,47 @@ class geeksqliteMain:
 						self.browse_current_labels[j] = str(k[0])
 						j += 1
 					self.btv = gtk.TreeView(ls)
-					
 					for i in range(0,l):
-						cols[i] = gtk.TreeViewColumn(self.browse_current_labels[i])
+						if i == 0:
+							coltitle = '#'
+						else:
+							coltitle = self.browse_current_labels[i]
+						cols[i] = gtk.TreeViewColumn(coltitle)
 						cells[i] = gtk.CellRendererText()
 						cols[i].pack_start(cells[i])
 						cols[i].add_attribute(cells[i], 'text', i)
+						cols[i].set_sizing(gtk.TREE_VIEW_COLUMN_FIXED)
+						cols[i].set_fixed_width(100)
 						cells[i].set_property('editable', True)
-						cells[i].connect('edited', self.edited, (i))
+						cells[i].connect('edited', self.edited, (i, ls))
 						cols[i].set_resizable(True)
 						self.btv.append_column(cols[i])
 						self.btv.show()
+					cols[0].set_fixed_width(45)
 					ef.add(self.btv)
-					scrolllabel = self.mainTree.get_widget('ScrollLabel')
-					result2 = self.sql("SELECT * FROM "+table+";")
-					total = len(self.cursor.fetchall())
-					if total < start+limit:
-						self.mainTree.get_widget('ScrollRight').hide()
-					else:
-						self.mainTree.get_widget('ScrollRight').show()
-					if start == 0:
-						self.mainTree.get_widget('ScrollLeft').hide()
-					else:
-						self.mainTree.get_widget('ScrollLeft').show()
-					scrolllabel.set_text(_('%(start)d to %(end)d of %(total)d') % {'start':start+1, 'end':start+C, 'total':total})
+					self.browse_current_count = C
+					self.refreshscrolllabel()
 			except sqlite3.Error, e:
 				err('[SQLite Error] '+e.args[0])
-		
+	
+	def refreshscrolllabel(self):
+		scrolllabel = self.mainTree.get_widget('ScrollLabel')
+		allquery = "SELECT * FROM "+self.browse_current_table
+		if self.browse_current_search != None:
+			allquery += " WHERE "+self.browse_current_search
+		result2 = self.sql(allquery)
+		total = len(self.cursor.fetchall())
+		if total < self.browse_current_start+self.browse_current_limit:
+			self.mainTree.get_widget('ScrollRight').hide()
+		else:
+			self.mainTree.get_widget('ScrollRight').show()
+		if self.browse_current_start == 0:
+			self.mainTree.get_widget('ScrollLeft').hide()
+		else:
+			self.mainTree.get_widget('ScrollLeft').show()
+		scrolllabel.set_text(_('%(start)d to %(end)d of %(total)d') % {'start':self.browse_current_start+1, 'end':self.browse_current_start+self.browse_current_count, 'total':total})
+		return total
+	
 	def do_open(self, file=None):
 		if file != None:
 			self.filename = file
@@ -241,6 +300,7 @@ class geeksqliteMain:
 				self.connection = sqlite3.connect(self.filename)
 				self.cursor = self.connection.cursor()
 				self.fileopened = True
+				self.connection.text_factory = str
 				self.cursor.execute('select name, sql from sqlite_master WHERE type = "table";')
 				self.log_add(_('-- -- OPEN FILE -- --'))
 			except:
@@ -253,9 +313,23 @@ class geeksqliteMain:
 		buf = self.mainTree.get_widget('LogMemo').get_buffer()
 		buf.insert(buf.get_end_iter(), text+"\n")
 		
-	def sql(self, text):
+	def sql(self, text, parameters = None, errorhandling = True):
 		self.log_add(text)
-		return self.cursor.execute(text)
+		if errorhandling == False: 
+			if parameters:
+				return self.cursor.execute(text, parameters)
+			else:
+				return self.cursor.execute(text)
+		else:
+			try:
+				if parameters:
+					return self.cursor.execute(text, parameters)
+				else:
+					return self.cursor.execute(text)
+			except sqlite3.Error, e:
+				err(_('SQLite Error: ')+e.args[0])
+				return False
+			
 		
 	def reloadbrowse(self, this = None):
 		cb = self.mainTree.get_widget('TableSelect').get_active_text()
@@ -281,7 +355,6 @@ class geeksqliteMain:
 		self.mainTree.get_widget('StructTv').set_model(ls)
 		self.mainTree.get_widget('TableSelect').set_model(ls2)
 		
-	#### EVENT HANDLERS
 	def index_create(self, this):
 		if self.fileopened:
 			tblname = self.gettablename(_('Select Table'))
@@ -343,15 +416,15 @@ class geeksqliteMain:
 			err(_('No database loaded'))
 			
 	def edited(self, cell, path, new_text, user_data):
-		model = self.btv.get_model()
+		model = user_data[1]
 		iter = model.get_iter(path)
 		if iter != None:
 				rowid = str(model.get(iter, 0)[0])
-				try:
-					self.sql('UPDATE '+self.browse_current_table+' SET '+self.browse_current_labels[user_data]+" = '"+new_text+"' WHERE _rowid_ = "+rowid)
-					self.reloadbrowse()
-				except sqlite3.Error, e:
-					err('[SQLite Error] '+e.args[0])
+				if not self.sql('UPDATE '+self.browse_current_table+' SET '+self.browse_current_labels[user_data[0]]+" = ? WHERE _rowid_ = ?", (new_text, rowid)):
+					return False
+				else:
+					model[path][user_data[0]] = new_text
+					return 
 		
 	def close(self, this = None):
 		if self.fileopened:
@@ -399,26 +472,28 @@ class geeksqliteMain:
 		else:
 			err(_('No database loaded'))
 		
-	def exit(self, this):
+	def exit(self, this = False):
 		self.close()
 		gtk.main_quit(self, this)
+		sys.exit(0)
 		
 	def display_about(self, this): # About
-		global LANGUAGE
-		import version as ver
+		global LANGUAGE, ver_name, ver_name, ver_version, ver_copyright
+		global ver_comments, ver_license, ver_website, ver_website_label
+		global ver_authors, ver_documenters, ver_artists
 		dialog = gtk.AboutDialog()
-		dialog.set_name(ver.name)
-		dialog.set_program_name(ver.name)
-		dialog.set_version(ver.version)
-		dialog.set_copyright(ver.copyright)
-		dialog.set_comments(ver.comments)
-		dialog.set_license(ver.license)
-		dialog.set_website(ver.website)
-		dialog.set_website_label(ver.website_label)
-		dialog.set_authors(ver.authors)
-		dialog.set_documenters(ver.documenters)
-		dialog.set_artists(ver.artists)
-		dialog.set_translator_credits(ver.translators(LANGUAGE))
+		dialog.set_name(ver_name)
+		dialog.set_program_name(ver_name)
+		dialog.set_version(ver_version)
+		dialog.set_copyright(ver_copyright)
+		dialog.set_comments(ver_comments)
+		dialog.set_license(ver_license)
+		dialog.set_website(ver_website)
+		dialog.set_website_label(ver_website_label)
+		dialog.set_authors(ver_authors)
+		dialog.set_documenters(ver_documenters)
+		dialog.set_artists(ver_artists)
+		dialog.set_translator_credits(ver_translators(LANGUAGE))
 		response = dialog.run()
 		dialog.hide()
 		
@@ -462,7 +537,7 @@ class geeksqliteMain:
 				except:
 					pass
 				try:
-					result = self.sql(inpu)
+					result = self.sql(inpu, None, False)
 					if inpu.lstrip().upper().startswith("SELECT"):
 						ls = False
 						i = 0
@@ -492,6 +567,8 @@ class geeksqliteMain:
 								cells[i] = gtk.CellRendererText()
 								cols[i].pack_start(cells[i])
 								cols[i].add_attribute(cells[i], 'text', i)
+								cols[i].set_sizing(gtk.TREE_VIEW_COLUMN_FIXED)
+								cols[i].set_fixed_width(100)
 								cols[i].set_resizable(True)
 								self.exectv.append_column(cols[i])
 								self.exectv.show()
@@ -537,7 +614,9 @@ class geeksqliteMain:
 		cb = self.mainTree.get_widget('TableSelect').get_active_text()
 		if cb != None:
 			self.sql('INSERT INTO '+self.browse_current_table+' DEFAULT VALUES')
-			self.reloadbrowse()
+			#self.reloadbrowse()
+			total = self.refreshscrolllabel()
+			self.browse_to(self.browse_current_table, (math.floor(total/self.browse_current_limit)*50), self.browse_current_limit, self.browse_current_search)
 		
 	def deleterecord(self, this):
 		cb = self.mainTree.get_widget('TableSelect').get_active_text()
@@ -547,8 +626,10 @@ class geeksqliteMain:
 			iter = tuple[1]
 			if iter != None:
 				rowid = model.get_value(iter, 0)
-				self.sql('DELETE FROM '+self.browse_current_table+' WHERE _rowid_ = '+rowid)
-			self.reloadbrowse()
+				if self.sql('DELETE FROM '+self.browse_current_table+' WHERE _rowid_ = ?', (rowid,)):
+					del model[iter]
+					self.browse_current_count = self.browse_current_count-1
+					self.refreshscrolllabel()
 			
 			
 	def preferences(self, this):
@@ -763,4 +844,10 @@ POSSIBLE ARGUMENTS:
 if __name__ == "__main__":
 	loadconfig()
 	gsl = geeksqliteMain()
-	gtk.main()
+	try:
+		gtk.main()
+	except KeyboardInterrupt:
+		try:
+			gsl.exit()
+		finally:
+			sys.exit(0)
