@@ -2,8 +2,8 @@
 <glade-interface>
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
-  <widget class="GtkDialog" id="TableNameDialog">
-    <property name="width_request">265</property>
+  <widget class="GtkDialog" id="ViewNameDialog">
+    <property name="width_request">255</property>
     <property name="height_request">115</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">&lt;title&gt;</property>
@@ -15,10 +15,10 @@
         <property name="visible">True</property>
         <property name="spacing">2</property>
         <child>
-          <widget class="GtkFixed" id="IndexNameField">
+          <widget class="GtkFixed" id="ViewNameField">
             <property name="visible">True</property>
             <child>
-              <widget class="GtkComboBox" id="IndexSelect">
+              <widget class="GtkComboBox" id="ViewSelect">
                 <property name="width_request">230</property>
                 <property name="height_request">27</property>
               </widget>
@@ -32,7 +32,7 @@
                 <property name="width_request">230</property>
                 <property name="height_request">20</property>
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Select index:</property>
+                <property name="label" translatable="yes">Select view:</property>
               </widget>
               <packing>
                 <property name="x">5</property>

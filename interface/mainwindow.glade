@@ -113,6 +113,14 @@
                                 <signal name="activate" handler="on_ExportSQL_activate"/>
                               </widget>
                             </child>
+                            <child>
+                              <widget class="GtkMenuItem" id="ExportCSV">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">Current table as CSV (using current filters)</property>
+                                <property name="use_underline">True</property>
+                                <signal name="activate" handler="on_ExportCSV_activate"/>
+                              </widget>
+                            </child>
                           </widget>
                         </child>
                         <child internal-child="image">
@@ -253,12 +261,50 @@
                       </widget>
                     </child>
                     <child>
+                      <widget class="GtkImageMenuItem" id="MainMenuCreateView">
+                        <property name="label">Create View</property>
+                        <property name="visible">True</property>
+                        <property name="use_stock">False</property>
+                        <signal name="activate" handler="on_MainMenuCreateView_activate" object=" "/>
+                        <accelerator key="v" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                        <child internal-child="image">
+                          <widget class="GtkImage" id="image9">
+                            <property name="visible">True</property>
+                            <property name="xalign">0.49000000953674316</property>
+                            <property name="yalign">0.49000000953674316</property>
+                            <property name="stock">gtk-new</property>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkImageMenuItem" id="MainMenuDropView">
+                        <property name="label">Drop View</property>
+                        <property name="visible">True</property>
+                        <property name="use_stock">False</property>
+                        <signal name="activate" handler="on_MainMenuDropView_activate" object=" "/>
+                        <accelerator key="u" signal="activate" modifiers="GDK_SHIFT_MASK | GDK_CONTROL_MASK"/>
+                        <child internal-child="image">
+                          <widget class="GtkImage" id="image8">
+                            <property name="visible">True</property>
+                            <property name="yalign">0.49000000953674316</property>
+                            <property name="stock">gtk-delete</property>
+                          </widget>
+                        </child>
+                      </widget>
+                    </child>
+                    <child>
+                      <widget class="GtkSeparatorMenuItem" id="seperatormenuitem1">
+                        <property name="visible">True</property>
+                      </widget>
+                    </child>
+                    <child>
                       <widget class="GtkImageMenuItem" id="MainMenuConfig">
                         <property name="label">gtk-preferences</property>
                         <property name="visible">True</property>
                         <property name="use_underline">True</property>
                         <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_MainMenuConfig_activate"/>
+                        <signal name="activate" handler="on_MainMenuConfig_activate" object=" "/>
                         <accelerator key="p" signal="activate" modifiers="GDK_CONTROL_MASK"/>
                       </widget>
                     </child>
@@ -402,8 +448,8 @@
                         <property name="use_stock">True</property>
                         <signal name="clicked" handler="on_ReloadButton_clicked" object=" "/>
                         <signal name="activate" handler="on_ReloadButton_activate" object=" "/>
-                        <accelerator key="F5" signal="activate"/>
                         <accelerator key="F5" signal="clicked"/>
+                        <accelerator key="F5" signal="activate"/>
                       </widget>
                       <packing>
                         <property name="x">525</property>

@@ -3,8 +3,8 @@
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkDialog" id="AddFieldDialog">
-    <property name="width_request">330</property>
-    <property name="height_request">125</property>
+    <property name="width_request">350</property>
+    <property name="height_request">260</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">Add Field</property>
     <property name="resizable">False</property>
@@ -52,6 +52,84 @@
               <packing>
                 <property name="x">5</property>
                 <property name="y">37</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkRadioButton" id="RadioNOTNULL">
+                <property name="label" translatable="yes">NOT NULL</property>
+                <property name="width_request">150</property>
+                <property name="height_request">23</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="active">True</property>
+                <property name="draw_indicator">True</property>
+              </widget>
+              <packing>
+                <property name="x">115</property>
+                <property name="y">65</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkRadioButton" id="RadioUNIQUE">
+                <property name="label" translatable="yes">UNIQUE</property>
+                <property name="width_request">150</property>
+                <property name="height_request">23</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="draw_indicator">True</property>
+                <property name="group">RadioNOTNULL</property>
+              </widget>
+              <packing>
+                <property name="x">115</property>
+                <property name="y">90</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkRadioButton" id="RadioDEFAULT">
+                <property name="label" translatable="yes">DEFAULT:</property>
+                <property name="width_request">150</property>
+                <property name="height_request">23</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="draw_indicator">True</property>
+                <property name="group">RadioNOTNULL</property>
+              </widget>
+              <packing>
+                <property name="x">115</property>
+                <property name="y">115</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkEntry" id="DefaultInput">
+                <property name="width_request">175</property>
+                <property name="height_request">23</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="invisible_char">&#x25CF;</property>
+              </widget>
+              <packing>
+                <property name="x">135</property>
+                <property name="y">140</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkRadioButton" id="RadioNONE">
+                <property name="label" translatable="yes">nothing. just a field.</property>
+                <property name="width_request">200</property>
+                <property name="height_request">23</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">False</property>
+                <property name="active">True</property>
+                <property name="draw_indicator">True</property>
+                <property name="group">RadioNOTNULL</property>
+              </widget>
+              <packing>
+                <property name="x">115</property>
+                <property name="y">165</property>
               </packing>
             </child>
           </widget>

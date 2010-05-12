@@ -3,8 +3,8 @@
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkDialog" id="TableNameDialog">
-    <property name="width_request">260</property>
-    <property name="height_request">160</property>
+    <property name="width_request">275</property>
+    <property name="height_request">130</property>
     <property name="border_width">5</property>
     <property name="title" translatable="yes">&lt;title&gt;</property>
     <property name="resizable">False</property>
@@ -13,7 +13,6 @@
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <widget class="GtkFixed" id="TableNameField">

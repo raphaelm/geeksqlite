@@ -46,7 +46,7 @@ def loadconfig():
 	loadconfigfile(cfgfilename)
 	
 def loadconfigfile(cfgfilename):
-	global cfgfile, config, LANGUAGE, ENCODING
+	global cfgfile, config, LANGUAGE, ENCODING, CSVSEP, CSVMASK
 	try:
 		config = ConfigParser.ConfigParser()
 		config.read(cfgfilename)
@@ -54,11 +54,27 @@ def loadconfigfile(cfgfilename):
 		try:
 			config.add_section('locale')
 		except:
-			a = 0
+			pass
+		try:
+			config.add_section('export')
+		except:
+			pass
 		try:
 			LANGUAGE = config.get('locale', 'lang').strip()
 		except:
 			LANGUAGE = 'en'
+		try:
+			CSVSEP = config.get('export', 'csvsep').strip()
+		except:
+			CSVSEP = ','
+		try:
+			CSVMASK = config.get('export', 'csvmask').strip()
+			if CSVMASK != 'True':
+				CSVMASK = False
+			else:
+				CSVMASK = True
+		except:
+			CSVMASK = True
 		try:
 			ENCODING = config.get('locale', 'encoding').strip()
 		except:
@@ -206,7 +222,15 @@ class TableCreator:
 			if cb.get_active_text():
 				ftype = cb.get_active_text()
 			else:
-				ftype = None
+				ftype = ''
+			
+			if dialogTree.get_widget('RadioNOTNULL').get_active():
+				ftype += ' NOT NULL'
+			elif dialogTree.get_widget('RadioUNIQUE').get_active():
+				ftype += ' UNIQUE'
+			elif dialogTree.get_widget('RadioDEFAULT').get_active():
+				ftype += ' DEFAULT \''+dialogTree.get_widget('DefaultInput').get_text()+'\''
+				
 			fname = dialogTree.get_widget('NameInput').get_text()
 			dlg.destroy()
 			self.ftv.get_model().append([fname, ftype])
@@ -223,10 +247,10 @@ class TableCreator:
 		
 	def build_query(self, tblname):
 		query = ['CREATE TABLE']
-		query.append(tblname)
+		query.append('`'+tblname+'`')
 		fieldlistitems = []
 		for row in self.ftv.get_model():
-			fieldlistitems.append(row[0]+' '+row[1])
+			fieldlistitems.append('`'+row[0]+'` '+row[1])
 			
 		if len(tblname) < 1 or len(fieldlistitems) < 1:
 			return False
@@ -293,14 +317,14 @@ class TableModifier(TableCreator):
 		queries = []
 		
 		# Rename Query
-		queries.append("ALTER TABLE "+self.oldtblname+" RENAME TO geeksqlite_tmp_table")
+		queries.append("ALTER TABLE `"+self.oldtblname+"` RENAME TO `geeksqlite_tmp_table`")
 		
 		# Create Query
 		query = ['CREATE TABLE']
-		query.append(tblname)
+		query.append('`'+tblname+'`')
 		fieldlistitems = []
 		for row in self.ftv.get_model():
-			fieldlistitems.append(row[0]+' '+row[1])
+			fieldlistitems.append('`'+row[0]+'` '+row[1])
 			self.newfields.append(row[0])
 			
 		if len(tblname) < 1 or len(fieldlistitems) < 1:
@@ -314,13 +338,13 @@ class TableModifier(TableCreator):
 		if self.newfields == self.oldfields and tblname == self.oldtblname:
 			return []
 		elif self.newfields == self.oldfields and tblname != self.oldtblname:
-			return ["ALTER TABLE "+self.oldtblname+" RENAME TO "+tblname]
+			return ["ALTER TABLE `"+self.oldtblname+"` RENAME TO `"+tblname+"`"]
 		
 		# Copy and Drop
 		holdfields = list(set(self.oldfields) & set(self.newfields))
 		holdfields = ", ".join(holdfields)
-		queries.append("INSERT INTO "+tblname+" ("+holdfields+") SELECT "+holdfields+" FROM geeksqlite_tmp_table")
-		queries.append("DROP TABLE geeksqlite_tmp_table")
+		queries.append("INSERT INTO `"+tblname+"` ("+holdfields+") SELECT "+holdfields+" FROM `geeksqlite_tmp_table`")
+		queries.append("DROP TABLE `geeksqlite_tmp_table`")
 		
 		return queries
 		
@@ -361,7 +385,7 @@ class TableModifier(TableCreator):
 		self.dialogTree.get_widget('TblNameEntry').set_text(self.oldtblname)
 		
 		m = re.search(r'CREATE TABLE ([^\(]*) \((.*)\)', tblquery)
-		fields = m.group(2).strip()
+		fields = m.group(2).strip().replace('`', '')
 		if ',' in fields:
 			fieldlist = fields.split(',')
 			for f in fieldlist:
@@ -376,11 +400,11 @@ class TableModifier(TableCreator):
 		else:
 			spacepos = fields.find(' ')
 			if spacepos == -1:
-				ls.append([f, ''])
-				self.oldfields.append(f)
+				ls.append([fields, ''])
+				self.oldfields.append(fields)
 			else:
-				ls.append([f[:spacepos], f[spacepos:].strip()])
-				self.oldfields.append(f[:spacepos])
+				ls.append([fields[:spacepos], fields[spacepos:].strip()])
+				self.oldfields.append(fields[:spacepos])
 							
 		self.ftv.set_model(ls)	
 	
@@ -405,7 +429,7 @@ class TableModifier(TableCreator):
 		else:
 			self.dlg.destroy()
 			return False
-
+			
 # MAIN CLASS
 class geeksqliteMain:
 	def gettablename(self, title):
@@ -416,7 +440,7 @@ class geeksqliteMain:
 		cb = gtk.combo_box_new_text()
 		cb.set_size_request(240,30)
 		
-		result = self.sql('select name, sql from sqlite_master WHERE type = "table";')
+		result = self.sql('select `name`, `sql` from `sqlite_master` WHERE `type` = "table";')
 		for row in self.cursor:
 			n = row[0]
 			#ls.append([n])
@@ -444,7 +468,7 @@ class geeksqliteMain:
 		cb = gtk.combo_box_new_text()
 		cb.set_size_request(240,30)
 		
-		result = self.sql('select name, sql from sqlite_master WHERE type = "index";')
+		result = self.sql('select `name`, `sql` from `sqlite_master` WHERE `type` = "index";')
 		for row in self.cursor:
 			n = row[0]
 			#ls.append([n])
@@ -452,6 +476,34 @@ class geeksqliteMain:
 		
 		cb.show()
 		dialogTree.get_widget('IndexNameField').put(cb, 5, 25)
+		run = dlg.run()
+		if run == 3:
+			if cb.get_active_text():
+				tablename = cb.get_active_text()
+			else:
+				tablename = None
+			dlg.destroy()
+			return tablename
+		else:
+			dlg.destroy()
+			return None
+	
+	def getviewname(self, title):
+		dialogTree = gtk.glade.XML(dist.interfacedir+"/viewnamedialog.glade")
+		dlg = dialogTree.get_widget('ViewNameDialog')
+		dlg.set_title(title)
+		
+		cb = gtk.combo_box_new_text()
+		cb.set_size_request(240,30)
+		
+		result = self.sql('select `name`, `sql` from `sqlite_master` WHERE `type` = "view";')
+		for row in self.cursor:
+			n = row[0]
+			#ls.append([n])
+			cb.append_text(n)
+		
+		cb.show()
+		dialogTree.get_widget('ViewNameField').put(cb, 5, 25)
 		run = dlg.run()
 		if run == 3:
 			if cb.get_active_text():
@@ -479,7 +531,7 @@ class geeksqliteMain:
 			except:
 				self.btv = False
 			try:
-				query = "SELECT _rowid_, * FROM "+table;
+				query = "SELECT `_rowid_`, * FROM `"+table+"`";
 				if search != None:
 					query += " WHERE "+search
 				query += " LIMIT "+str(start)+","+str(limit)+";"
@@ -534,7 +586,7 @@ class geeksqliteMain:
 	
 	def refreshscrolllabel(self):
 		scrolllabel = self.mainTree.get_widget('ScrollLabel')
-		allquery = "SELECT * FROM "+self.browse_current_table
+		allquery = "SELECT * FROM `"+self.browse_current_table+"`"
 		if self.browse_current_search != None:
 			allquery += " WHERE "+self.browse_current_search
 		result2 = self.sql(allquery)
@@ -560,7 +612,7 @@ class geeksqliteMain:
 				self.cursor = self.connection.cursor()
 				self.fileopened = True
 				self.connection.text_factory = str
-				self.cursor.execute('select name, sql from sqlite_master WHERE type = "table";')
+				self.cursor.execute('select `name`, `sql` from `sqlite_master` WHERE `type` = "table";')
 				self.log_add(_('-- -- OPEN FILE -- --'))
 			except:
 				err(_('Unable to open database file'))
@@ -604,15 +656,25 @@ class geeksqliteMain:
 		# Tables
 		ls = gtk.ListStore(str, str, str)
 		ls2 = gtk.ListStore(str)
-		result = self.sql('select name, sql from sqlite_master WHERE type = "table";')
+		result = self.sql('select `name`, `sql` from `sqlite_master` WHERE `type` = "table";')
 		for row in self.cursor:
 			n = row[0]
 			ls.append([n, _('table'), row[1]])
 			ls2.append([n])
-		result = self.sql('select name, sql from sqlite_master WHERE type = "index";')
+			
+		# Indexes
+		result = self.sql('select `name`, `sql` from `sqlite_master` WHERE `type` = "index";')
 		for row in self.cursor:
 			n = row[0]
 			ls.append([n, _('index'), row[1]])
+			
+		# Views
+		result = self.sql('select `name`, `sql` from `sqlite_master` WHERE `type` = "view";')
+		for row in self.cursor:
+			n = row[0]
+			ls.append([n, _('view'), row[1]])
+			ls2.append([n])
+			
 		self.mainTree.get_widget('StructTv').set_model(ls)
 		self.mainTree.get_widget('TableSelect').set_model(ls2)
 		
@@ -627,10 +689,10 @@ class geeksqliteMain:
 				cb.set_size_request(295,30)
 				dialogTree.get_widget('OrderSelect').set_active(0)
 				
-				res = self.sql("SELECT sql FROM sqlite_master WHERE name = '"+tblname+"'")
+				res = self.sql("SELECT `sql` FROM `sqlite_master` WHERE `name` = '"+tblname+"'")
 				row = self.cursor.fetchone()
 				m = re.search(r'CREATE TABLE ([^\(]*) \((.*)\)', row[0])
-				fields = m.group(2).strip()
+				fields = m.group(2).strip().replace('`', '')
 				if ',' in fields:
 					fieldlist = fields.split(',')
 					for f in fieldlist:
@@ -654,11 +716,11 @@ class geeksqliteMain:
 							sql += "UNIQUE "
 						sql += "INDEX "
 						sql += dialogTree.get_widget('NameEntry').get_text()
-						sql += " ON "
+						sql += " ON `"
 						sql += tblname
-						sql += " ("
+						sql += "` (`"
 						sql += cb.get_active_text()
-						sql += " "
+						sql += "` "
 						order = dialogTree.get_widget('OrderSelect').get_active_text()
 						sql += order[:order.find(' ')].strip()
 						sql += ");"
@@ -681,7 +743,7 @@ class geeksqliteMain:
 		iter = model.get_iter(path)
 		if iter != None:
 				rowid = str(model.get(iter, 0)[0])
-				if not self.sql('UPDATE '+self.browse_current_table+' SET '+self.browse_current_labels[user_data[0]]+" = ? WHERE _rowid_ = ?", (new_text, rowid)):
+				if not self.sql('UPDATE `'+self.browse_current_table+'` SET `'+self.browse_current_labels[user_data[0]]+"` = ? WHERE `_rowid_` = ?", (new_text, rowid)):
 					return False
 				else:
 					model[path][user_data[0]] = new_text
@@ -689,6 +751,14 @@ class geeksqliteMain:
 		
 	def close(self, this = None):
 		if self.fileopened:
+			try:
+				self.mainTree.get_widget('ExecField').remove(self.exectv)
+			except:
+				pass
+			try:
+				self.mainTree.get_widget('DataField').remove(self.btv)
+			except:
+				pass
 			ls = gtk.ListStore(str, str, str)
 			ls2 = gtk.ListStore(str)
 			self.mainTree.get_widget('StructTv').set_model(ls)
@@ -720,7 +790,7 @@ class geeksqliteMain:
 		if self.fileopened:
 			tblname = self.gettablename(_('Modify Table'))
 			if tblname:
-				result = self.sql('select sql from sqlite_master WHERE type = "table" AND name = ?;', (tblname,))
+				result = self.sql('select `sql` from `sqlite_master` WHERE `type` = "table" AND `name` = ?;', (tblname,))
 				tblquery = self.cursor.fetchone()[0]
 				tc = TableModifier(tblname, tblquery, self)
 				result = tc.run()
@@ -732,12 +802,11 @@ class geeksqliteMain:
 		else:
 			err(_('No database loaded'))
 			
-		
 	def table_delete(self, this):
 		if self.fileopened:
 			tblname = self.gettablename(_('Drop Table'))
 			if tblname and confirm(_("Do you really want to remove the table %s?") % tblname):
-				self.sql('DROP TABLE IF EXISTS '+tblname)
+				self.sql('DROP TABLE IF EXISTS `'+tblname+'`')
 				if tblname == self.browse_current_table:
 					self.browse_to('sqlite_master',
 					start=0,
@@ -747,11 +816,51 @@ class geeksqliteMain:
 		else:
 			err(_('No database loaded'))
 		
+	def view_delete(self, this):
+		if self.fileopened:
+			tblname = self.getviewname(_('Drop View'))
+			if tblname and confirm(_("Do you really want to remove the view %s?") % tblname):
+				self.sql('DROP VIEW IF EXISTS `'+tblname+'`')
+				if tblname == self.browse_current_table:
+					self.browse_to('sqlite_master',
+					start=0,
+					limit=0,
+					search=None)
+				self.reloadstructure()
+		else:
+			err(_('No database loaded'))
+		
+	def view_create(self, this):
+		if self.fileopened:
+				dialogTree = gtk.glade.XML(dist.interfacedir+"/viewcreatedialog.glade")
+				dlg = dialogTree.get_widget('CreateViewDialog')
+		
+				run = dlg.run()
+				if run == 3:
+					ibuf = dialogTree.get_widget('ViewSQL').get_buffer()
+					inpu = ibuf.get_text(ibuf.get_start_iter(), ibuf.get_end_iter())
+					if dialogTree.get_widget('ViewName').get_text() and len(inpu) > 0:
+						sql = "CREATE VIEW `"
+						sql += dialogTree.get_widget('ViewName').get_text()
+						sql += "` AS "
+						sql += inpu
+						
+						self.sql(sql)
+						self.reloadstructure()
+					else:
+						warning(_('No view was created because you did not fill in all required fields!'))
+					dlg.destroy()
+				else:
+					dlg.destroy()
+					return None
+		else:
+			err(_('No database loaded'))
+		
 	def index_delete(self, this):
 		if self.fileopened:
 			indexname = self.getindexname(_('Drop Index'))
 			if indexname and confirm(_("Do you really want to remove the index %s?") % indexname):
-				self.sql('DROP INDEX IF EXISTS '+indexname)
+				self.sql('DROP INDEX IF EXISTS `'+indexname+'`')
 				self.reloadbrowse()
 				self.reloadstructure()
 		else:
@@ -894,11 +1003,49 @@ class geeksqliteMain:
 						f.write('%s\n' % line)
 		else:
 			err(_('No database loaded'))
+	
+	def exportCSV(self, this):
+		global CSVSEP, CSVMASK
+		if self.fileopened:
+			cb = self.mainTree.get_widget('TableSelect').get_active_text()
+			if cb != None:
+				d = filedialog.FileDialog()
+				f = d.get_filename(action='save')
+				if f != None:
+					f = open(f, 'w+')
+					
+					search = self.browse_current_search
+					query = "SELECT `_rowid_`, * FROM `"+cb+"`";
+					if search != None:
+						query += " WHERE "+search
+					result = self.sql(query)
+					
+					labels = []
+					for label in self.cursor.description:
+						labels.append(label[0])
+						
+					f.write(CSVSEP.join(labels)+"\n")
+					
+					for row in self.cursor:
+						list = []
+						for field in row:
+							if field == None:
+								field = ''
+							else:
+								field = str(field)
+							if CSVMASK:
+								field = '"'+field.replace('"', r'\"')+'"'
+							list.append(field)
+						f.write(CSVSEP.join(list)+"\n")
+					
+					f.close()
+		else:
+			err(_('No database loaded'))
 			
 	def addemptyrecord(self, this):
 		cb = self.mainTree.get_widget('TableSelect').get_active_text()
 		if cb != None:
-			self.sql('INSERT INTO '+self.browse_current_table+' DEFAULT VALUES')
+			self.sql('INSERT INTO `'+self.browse_current_table+'` DEFAULT VALUES')
 			#self.reloadbrowse()
 			total = self.refreshscrolllabel()
 			self.browse_to(self.browse_current_table, (math.floor(total/self.browse_current_limit)*50), self.browse_current_limit, self.browse_current_search)
@@ -911,14 +1058,14 @@ class geeksqliteMain:
 			iter = tuple[1]
 			if iter != None:
 				rowid = model.get_value(iter, 0)
-				if self.sql('DELETE FROM '+self.browse_current_table+' WHERE _rowid_ = ?', (rowid,)):
+				if self.sql('DELETE FROM `'+self.browse_current_table+'` WHERE `_rowid_` = ?', (rowid,)):
 					del model[iter]
 					self.browse_current_count = self.browse_current_count-1
 					self.refreshscrolllabel()
 			
 			
 	def preferences(self, this):
-		global config, cfgfile, cfgfilename
+		global config, cfgfile, cfgfilename, CSVSEP, CSVMASK
 		
 		dialogTree = gtk.glade.XML(dist.interfacedir+"/preferences.glade")
 		dlg = dialogTree.get_widget('PreferencesDialog')
@@ -944,6 +1091,10 @@ class geeksqliteMain:
 		cb.show()
 		dialogTree.get_widget('LocaleField').put(cb, 110, 5)
 		
+		# EXPORT
+		dialogTree.get_widget('CsvSep').set_text(CSVSEP)
+		dialogTree.get_widget('CsvMask').set_active(CSVMASK)
+		
 		# RUN
 		
 		run = dlg.run()
@@ -951,6 +1102,10 @@ class geeksqliteMain:
 			try:
 				config.set('locale', 'lang', cb.get_active_text())
 				config.set('locale', 'encoding', 'utf-8')
+				config.set('export', 'csvsep', dialogTree.get_widget('CsvSep').get_text())
+				config.set('export', 'csvmask', dialogTree.get_widget('CsvMask').get_active())
+				CSVSEP = dialogTree.get_widget('CsvSep').get_text()
+				CSVMASK = dialogTree.get_widget('CsvMask').get_active()
 				cfgfile = open(cfgfilename, 'w+')
 				config.write(cfgfile)
 				print "Writing configuration to "+cfgfilename
@@ -1038,12 +1193,15 @@ class geeksqliteMain:
 				"on_MainMenuIndexDelete_activate" : self.index_delete,
 				"on_MainMenuTableDelete_activate" : self.table_delete,
 				"on_MainMenuTableModify_activate" : self.table_modify,
+				"on_MainMenuDropView_activate": self.view_delete,
+				"on_MainMenuCreateView_activate": self.view_create,
 				"on_MainMenuConfig_activate" : self.preferences,
 				"on_ExecButton_activate" : self.execute,
 				"on_ExecButton_clicked" : self.execute,
 				"on_TableSelect_changed" : self.browse,
 				"on_ImportSQL_activate" : self.importSQL,
 				"on_ExportSQL_activate" : self.exportSQL,
+				"on_ExportCSV_activate" : self.exportCSV,
 				"on_ScrollRight_activate" : self.browse_nextpage,
 				"on_ScrollRight_clicked" : self.browse_nextpage,
 				"on_ScrollLeft_activate" : self.browse_previouspage,

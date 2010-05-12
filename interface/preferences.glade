@@ -13,7 +13,6 @@
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox1">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <widget class="GtkNotebook" id="notebook1">
@@ -76,6 +75,67 @@
                 <property name="label" translatable="yes">Locale</property>
               </widget>
               <packing>
+                <property name="tab_fill">False</property>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkFixed" id="fixed1">
+                <property name="visible">True</property>
+                <child>
+                  <widget class="GtkLabel" id="label5">
+                    <property name="width_request">120</property>
+                    <property name="height_request">27</property>
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">.csv Seperator:</property>
+                  </widget>
+                  <packing>
+                    <property name="x">5</property>
+                    <property name="y">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkEntry" id="CsvSep">
+                    <property name="width_request">74</property>
+                    <property name="height_request">25</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">&#x25CF;</property>
+                    <property name="text" translatable="yes">,</property>
+                  </widget>
+                  <packing>
+                    <property name="x">130</property>
+                    <property name="y">5</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkCheckButton" id="CsvMask">
+                    <property name="label" translatable="yes">mask .csv values with ""</property>
+                    <property name="width_request">250</property>
+                    <property name="height_request">25</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">False</property>
+                    <property name="active">True</property>
+                    <property name="draw_indicator">True</property>
+                  </widget>
+                  <packing>
+                    <property name="x">130</property>
+                    <property name="y">35</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="label4">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Export</property>
+              </widget>
+              <packing>
+                <property name="position">1</property>
                 <property name="tab_fill">False</property>
                 <property name="type">tab</property>
               </packing>

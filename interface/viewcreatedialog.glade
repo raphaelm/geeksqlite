@@ -2,12 +2,10 @@
 <glade-interface>
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
-  <widget class="GtkDialog" id="TableNameDialog">
-    <property name="width_request">265</property>
-    <property name="height_request">115</property>
+  <widget class="GtkDialog" id="CreateViewDialog">
+    <property name="width_request">430</property>
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">&lt;title&gt;</property>
-    <property name="resizable">False</property>
+    <property name="title" translatable="yes">Create View</property>
     <property name="type_hint">normal</property>
     <property name="has_separator">False</property>
     <child internal-child="vbox">
@@ -15,28 +13,64 @@
         <property name="visible">True</property>
         <property name="spacing">2</property>
         <child>
-          <widget class="GtkFixed" id="IndexNameField">
+          <widget class="GtkVBox" id="vbox1">
             <property name="visible">True</property>
             <child>
-              <widget class="GtkComboBox" id="IndexSelect">
-                <property name="width_request">230</property>
-                <property name="height_request">27</property>
+              <widget class="GtkHBox" id="hbox1">
+                <property name="visible">True</property>
+                <child>
+                  <widget class="GtkLabel" id="label">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">Name:</property>
+                  </widget>
+                  <packing>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkEntry" id="ViewName">
+                    <property name="width_request">162</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="invisible_char">&#x25CF;</property>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </widget>
               <packing>
-                <property name="x">5</property>
-                <property name="y">25</property>
+                <property name="expand">False</property>
+                <property name="position">0</property>
               </packing>
             </child>
             <child>
-              <widget class="GtkLabel" id="label1">
-                <property name="width_request">230</property>
-                <property name="height_request">20</property>
+              <widget class="GtkHBox" id="hbox2">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Select index:</property>
+                <child>
+                  <widget class="GtkLabel" id="label1">
+                    <property name="visible">True</property>
+                    <property name="label" translatable="yes">SELECT query:</property>
+                  </widget>
+                  <packing>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkTextView" id="ViewSQL">
+                    <property name="width_request">210</property>
+                    <property name="height_request">225</property>
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
               </widget>
               <packing>
-                <property name="x">5</property>
-                <property name="y">5</property>
+                <property name="expand">False</property>
+                <property name="position">1</property>
               </packing>
             </child>
           </widget>
@@ -49,9 +83,8 @@
             <property name="visible">True</property>
             <property name="layout_style">end</property>
             <child>
-              <widget class="GtkButton" id="CancelBtn">
+              <widget class="GtkButton" id="button1">
                 <property name="label">gtk-cancel</property>
-                <property name="response_id">1</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
@@ -64,7 +97,7 @@
               </packing>
             </child>
             <child>
-              <widget class="GtkButton" id="OkBtn">
+              <widget class="GtkButton" id="button2">
                 <property name="label">gtk-ok</property>
                 <property name="response_id">3</property>
                 <property name="visible">True</property>
