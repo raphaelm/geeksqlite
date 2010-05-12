@@ -1,13 +1,17 @@
-NEEDED FOR BETA
-	- Structure
-		- Create Table
-		- Modify Table
-	
 NEEDED FOR RELEASE
 	- Deployment
-		- Debian-/Ubuntu-Package (done, not uploaded yet)
+		- Debian-/Ubuntu-Package (development started)
 		- Windows package (py2exe?)
-	- Structure/Data: Views?
 		
-IDEAS
-	- 
+IDEAS FOR THE FUTURE
+	- Structure 
+		- Views?
+		- Trigger?
+		- Create Table:
+			- PRIMARY KEY ASC|DESC [AUTOINCREMENT]
+			- NOT NULL
+			- UNIQUE
+			- REFERENCES (? nicht wirklich, ist wohl kaum umzusetzen…)
+			- DEFAULT (u.a. CURRENT_DATE)
+
+See also bugtracker on http://bugs.geeksfactory.de/

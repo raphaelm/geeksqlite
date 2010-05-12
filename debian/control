@@ -2,7 +2,7 @@ Source: geeksqlite
 Section: devel
 Priority: optional
 Maintainer: Raphael Michel <raphael@geeksfactory.de>
-Build-Depends: python (>= 2.6.4), build-essential, python-glade2, python-gtk2
+Build-Depends: python (>= 2.6.4), build-essential, python-glade2, python-gtk2, gettext, gzip
 Standards-Version: 3.8.3
 Homepage: http://www.geeksfactory.de/geeksqlite
 

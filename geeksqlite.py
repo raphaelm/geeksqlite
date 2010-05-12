@@ -178,8 +178,8 @@ def sqlerr(query, error):
 	dlg.format_secondary_markup(
 		_('SQL query which caused the error:\n\n<tt>%(query)s</tt>\n\nSQLite error message:\n\n<tt>%(error)s</tt>') % 
 		{
-			'query': wrap(query, 60),
-			'error': wrap(error, 60)
+			'query': wrap(query, 80),
+			'error': wrap(error, 80)
 		})
 	dlg.set_title(_('SQL error'))
 	
@@ -188,7 +188,6 @@ def sqlerr(query, error):
 	
 # SUB CLASSES
 class TableCreator:
-	
 	def add(self):
 		dialogTree = gtk.glade.XML(dist.interfacedir+"/addfielddialog.glade")
 		dlg = dialogTree.get_widget('AddFieldDialog')
@@ -276,10 +275,129 @@ class TableCreator:
 			self.delete()
 			return self.run()
 		elif self.runv == 3:
-			tblname = self.dialogTree.get_widget('TblNameEntry').get_text() #CREATE TABLE asdasd (dsfg TEXT, fdgh NUMERIC, sdfg INTEGER PRIMARY KEY, wert BLOB);
+			tblname = self.dialogTree.get_widget('TblNameEntry').get_text()
 			result = self.build_query(tblname)
 			if not result:
 				err(_('Error while creating new table. Did you fill in all form fields? Did you add any fields to your table?'))
+				return self.run()
+			else:
+				self.dlg.destroy()
+				return result
+		else:
+			self.dlg.destroy()
+			return False
+			
+class TableModifier(TableCreator):
+		
+	def build_query(self, tblname):
+		queries = []
+		
+		# Rename Query
+		queries.append("ALTER TABLE "+self.oldtblname+" RENAME TO geeksqlite_tmp_table")
+		
+		# Create Query
+		query = ['CREATE TABLE']
+		query.append(tblname)
+		fieldlistitems = []
+		for row in self.ftv.get_model():
+			fieldlistitems.append(row[0]+' '+row[1])
+			self.newfields.append(row[0])
+			
+		if len(tblname) < 1 or len(fieldlistitems) < 1:
+			return False
+		
+		fieldlist = '(' + ", ".join(fieldlistitems) + ')'
+		query.append(fieldlist)
+		
+		queries.append(" ".join(query) + ";")
+		
+		if self.newfields == self.oldfields and tblname == self.oldtblname:
+			return []
+		elif self.newfields == self.oldfields and tblname != self.oldtblname:
+			return ["ALTER TABLE "+self.oldtblname+" RENAME TO "+tblname]
+		
+		# Copy and Drop
+		holdfields = list(set(self.oldfields) & set(self.newfields))
+		holdfields = ", ".join(holdfields)
+		queries.append("INSERT INTO "+tblname+" ("+holdfields+") SELECT "+holdfields+" FROM geeksqlite_tmp_table")
+		queries.append("DROP TABLE geeksqlite_tmp_table")
+		
+		return queries
+		
+	def __init__(self, tblname, tblquery, geeksqlitem):
+		
+		self.oldtblname = tblname
+		self.oldtblquery = tblquery
+		self.newfields = []
+		self.oldfields = []
+		
+		self.dialogTree = gtk.glade.XML(dist.interfacedir+"/tablemodifydialog.glade")
+		self.dlg = self.dialogTree.get_widget('TableModifyDialog')
+		
+		self.dialogTree.get_widget('AddBtn').connect('activate', self.add)
+		
+		self.ftv = self.dialogTree.get_widget('FieldsTV')
+		
+		self.structtv_col = gtk.TreeViewColumn(_('Name'))
+		self.structtv_cell = gtk.CellRendererText()
+		self.structtv_col.pack_start(self.structtv_cell)
+		self.structtv_col.add_attribute(self.structtv_cell, 'text', 0)
+		self.structtv_col.set_resizable(True)
+		self.structtv_col.set_sizing(gtk.TREE_VIEW_COLUMN_FIXED)
+		self.structtv_col.set_fixed_width(210)
+		self.ftv.append_column(self.structtv_col)	
+		
+		self.structtv_col2 = gtk.TreeViewColumn(_('Type'))
+		self.structtv_cell2 = gtk.CellRendererText()
+		self.structtv_col2.pack_start(self.structtv_cell2)
+		self.structtv_col2.add_attribute(self.structtv_cell2, 'text', 1)
+		self.structtv_col2.set_resizable(True)
+		self.structtv_col2.set_sizing(gtk.TREE_VIEW_COLUMN_FIXED)
+		self.structtv_col2.set_fixed_width(210)
+		self.ftv.append_column(self.structtv_col2)
+		
+		ls = gtk.ListStore(str, str)
+		
+		self.dialogTree.get_widget('TblNameEntry').set_text(self.oldtblname)
+		
+		m = re.search(r'CREATE TABLE ([^\(]*) \((.*)\)', tblquery)
+		fields = m.group(2).strip()
+		if ',' in fields:
+			fieldlist = fields.split(',')
+			for f in fieldlist:
+				f = f.strip()
+				spacepos = f.find(' ')
+				if spacepos == -1:
+					ls.append([f, ''])
+					self.oldfields.append(f)
+				else:
+					ls.append([f[:spacepos], f[spacepos:].strip()])
+					self.oldfields.append(f[:spacepos])
+		else:
+			spacepos = fields.find(' ')
+			if spacepos == -1:
+				ls.append([f, ''])
+				self.oldfields.append(f)
+			else:
+				ls.append([f[:spacepos], f[spacepos:].strip()])
+				self.oldfields.append(f[:spacepos])
+							
+		self.ftv.set_model(ls)	
+	
+	def run(self):
+		self.runv = self.dlg.run()
+		
+		if self.runv == 6:
+			self.add()
+			return self.run()
+		elif self.runv == 7:
+			self.delete()
+			return self.run()
+		elif self.runv == 3:
+			tblname = self.dialogTree.get_widget('TblNameEntry').get_text()
+			result = self.build_query(tblname)
+			if not result:
+				err(_('Error while modifing table. Did you fill in all fields? Are there any fields in your new table?'))
 				return self.run()
 			else:
 				self.dlg.destroy()
@@ -377,6 +495,8 @@ class geeksqliteMain:
 					any = True
 					list = []
 					for field in row:
+						if field == None:
+							field = ''
 						list.append(str(field))
 					ls.append(list)
 					C += 1
@@ -587,16 +707,31 @@ class geeksqliteMain:
 		self.do_open()
 		
 	def table_create(self, this):
-		tc = TableCreator()
-		result = tc.run()
-		if result:
-			self.sql(result)
-			self.reloadstructure()
+		if self.fileopened:
+			tc = TableCreator()
+			result = tc.run()
+			if result:
+				self.sql(result)
+				self.reloadstructure()
+		else:
+			err(_('No database loaded'))
 		
 	def table_modify(self, this):
-		dialogTree = gtk.glade.XML(dist.interfacedir+"/tablemodifydialog.glade")
-		dlg = dialogTree.get_widget('TableModifyDialog')
-		run = dlg.run()
+		if self.fileopened:
+			tblname = self.gettablename(_('Modify Table'))
+			if tblname:
+				result = self.sql('select sql from sqlite_master WHERE type = "table" AND name = ?;', (tblname,))
+				tblquery = self.cursor.fetchone()[0]
+				tc = TableModifier(tblname, tblquery, self)
+				result = tc.run()
+				if result:
+					for q in result:
+						if not self.sql(q):
+							break
+					self.reloadstructure()
+		else:
+			err(_('No database loaded'))
+			
 		
 	def table_delete(self, this):
 		if self.fileopened:
