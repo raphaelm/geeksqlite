@@ -1145,7 +1145,7 @@ class geeksqliteMain:
 				cbm = dialogTree.get_widget('MethodSelect')
 				fi = dialogTree.get_widget('FilterInput')
 				if cb.get_active_text() and cbm.get_active_text(): 
-					field = cb.get_active_text()
+					field = '`'+cb.get_active_text()+'`'
 					method = cbm.get_active_text()
 					if method != 'NOTNULL' and method != 'ISNULL':
 						filter = " '"+fi.get_text()+"'"

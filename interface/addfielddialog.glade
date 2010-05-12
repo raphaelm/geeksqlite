@@ -62,8 +62,8 @@
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
-                <property name="active">True</property>
                 <property name="draw_indicator">True</property>
+                <property name="group">RadioNONE</property>
               </widget>
               <packing>
                 <property name="x">115</property>
@@ -79,7 +79,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="draw_indicator">True</property>
-                <property name="group">RadioNOTNULL</property>
+                <property name="group">RadioNONE</property>
               </widget>
               <packing>
                 <property name="x">115</property>
@@ -95,7 +95,7 @@
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="draw_indicator">True</property>
-                <property name="group">RadioNOTNULL</property>
+                <property name="group">RadioNONE</property>
               </widget>
               <packing>
                 <property name="x">115</property>
@@ -118,14 +118,13 @@
             <child>
               <widget class="GtkRadioButton" id="RadioNONE">
                 <property name="label" translatable="yes">nothing. just a field.</property>
-                <property name="width_request">200</property>
+                <property name="width_request">180</property>
                 <property name="height_request">23</property>
                 <property name="visible">True</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">False</property>
                 <property name="active">True</property>
                 <property name="draw_indicator">True</property>
-                <property name="group">RadioNOTNULL</property>
               </widget>
               <packing>
                 <property name="x">115</property>
