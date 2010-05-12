@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geek'SQLite\n"
 "Report-Msgid-Bugs-To: raphael@geeksfactory.de\n"
-"POT-Creation-Date: 2010-05-12 21:18+0200\n"
+"POT-Creation-Date: 2010-05-12 22:07+0200\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Raphael <raphael@geeksfactory.de>\n"
 "Language-Team: NoMoKeTo <webmaster@nomoketo.de>\n"
@@ -21,11 +21,11 @@ msgstr "geek'SQLite"
 
 #: geeksqlite.py:98
 msgid "Copyright © 2010 geek's factory"
-msgstr ""
+msgstr "Copyright © 2010 geek's factory"
 
 #: geeksqlite.py:99
 msgid "free Python GTK+ SQLite3 database file browser"
-msgstr ""
+msgstr "free Python GTK+ SQLite3 database file browser"
 
 #: geeksqlite.py:100
 msgid ""
@@ -51,10 +51,31 @@ msgid ""
 "OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n"
 "THE SOFTWARE."
 msgstr ""
+"Copyright (c) 2010 geek's factory\n"
+"\n"
+"MIT-License\n"
+"\n"
+"Permission is hereby granted, free of charge, to any person obtaining a copy\n"
+"of this software and associated documentation files (the \"Software\"), to deal\n"
+"in the Software without restriction, including without limitation the rights\n"
+"to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n"
+"copies of the Software, and to permit persons to whom the Software is\n"
+"furnished to do so, subject to the following conditions:\n"
+"\n"
+"The above copyright notice and this permission notice shall be included in\n"
+"all copies or substantial portions of the Software.\n"
+"\n"
+"THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n"
+"IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n"
+"FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n"
+"AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n"
+"LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n"
+"OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n"
+"THE SOFTWARE."
 
 #: geeksqlite.py:193
 msgid "An error occured while executing a SQL database query!"
-msgstr ""
+msgstr "Okaziz eraro dum la plenumado de SQL ordono!"
 
 #: geeksqlite.py:195
 #, python-format
@@ -67,40 +88,46 @@ msgid ""
 "\n"
 "<tt>%(error)s</tt>"
 msgstr ""
+"SQL ordono kia kaŭzis la eraron:\n"
+"\n"
+"<tt>%(query)s</tt>\n"
+"\n"
+"SQLite erarmesaĝo:\n"
+"\n"
+"<tt>%(error)s</tt>"
 
 #: geeksqlite.py:200
-#, fuzzy
 msgid "SQL error"
-msgstr "[SQLite Eraro]"
+msgstr "SQLite Eraro"
 
 #: geeksqlite.py:271
 #: geeksqlite.py:365
 #: geeksqlite.py:1224
 msgid "Name"
-msgstr ""
+msgstr "Nomo"
 
 #: geeksqlite.py:280
 #: geeksqlite.py:374
 #: geeksqlite.py:1231
 msgid "Type"
-msgstr ""
+msgstr "Tipo"
 
 #: geeksqlite.py:305
 msgid "Error while creating new table. Did you fill in all form fields? Did you add any fields to your table?"
-msgstr ""
+msgstr "Okazis eraro dum la kreado de la nova tabelo. Ĉu vi plenisgis ĉiujn kampojn? Ĉu la tabelo entute havas kampojn?"
 
 #: geeksqlite.py:424
 msgid "Error while modifing table. Did you fill in all fields? Are there any fields in your new table?"
-msgstr ""
+msgstr "Okaziz eraro dum la modifiado de la tablo. Ĉu vi plenigis ĉiujn kampojn? Ĉu la tabelo entute havas kampojn?"
 
 #: geeksqlite.py:602
 #, python-format
 msgid "%(start)d to %(end)d of %(total)d"
-msgstr ""
+msgstr "%(start)d ĝis %(end)d de entute %(total)d"
 
 #: geeksqlite.py:616
 msgid "-- -- OPEN FILE -- --"
-msgstr ""
+msgstr "-- -- MALFERMAS DOSIERON -- -- "
 
 #: geeksqlite.py:618
 msgid "Unable to open database file"
@@ -112,20 +139,19 @@ msgstr "Tabelo"
 
 #: geeksqlite.py:669
 msgid "index"
-msgstr ""
+msgstr "ŝlosilo"
 
 #: geeksqlite.py:675
 msgid "view"
-msgstr ""
+msgstr "vido"
 
 #: geeksqlite.py:683
-#, fuzzy
 msgid "Select Table"
-msgstr "Elektu tabelon:"
+msgstr "Elektu tabelon"
 
 #: geeksqlite.py:733
 msgid "No index was created because you did not fill in all required fields!"
-msgstr ""
+msgstr "Neniu ŝlosilo estis kreita ĉar vi ne plenigis cxiuj devigajn kampojn!"
 
 #: geeksqlite.py:739
 #: geeksqlite.py:787
@@ -143,13 +169,13 @@ msgstr "Nenia datumbazo ŝarĝita"
 
 #: geeksqlite.py:770
 msgid "-- -- CLOSE FILE -- --"
-msgstr ""
+msgstr "-- -- FERMAS DOSIERON -- --"
 
 #: geeksqlite.py:791
 #: interface/mainwindow.glade:207
 #: interface/tablemodifydialog.glade:9
 msgid "Modify Table"
-msgstr "Modifi tabelon"
+msgstr "Modifii tabelon"
 
 #: geeksqlite.py:807
 #: interface/mainwindow.glade:190
@@ -159,35 +185,34 @@ msgstr "Forigi tabelon"
 #: geeksqlite.py:808
 #, python-format
 msgid "Do you really want to remove the table %s?"
-msgstr "Ĉu vi vere volas forigi la tabulon %s?"
+msgstr "Ĉu vi vere volas forigi la tabelon %s?"
 
 #: geeksqlite.py:821
-#, fuzzy
 msgid "Drop View"
 msgstr "Forigi tabelon"
 
 #: geeksqlite.py:822
-#, fuzzy, python-format
+#, python-format
 msgid "Do you really want to remove the view %s?"
 msgstr "Ĉu vi vere volas forigi la indekson %s?"
 
 #: geeksqlite.py:851
 msgid "No view was created because you did not fill in all required fields!"
-msgstr ""
+msgstr "Neniu vido estis kreita ĉar vi ne plenigis cxiuj devigajn kampojn!"
 
 #: geeksqlite.py:861
 #: interface/mainwindow.glade:244
 msgid "Drop Index"
-msgstr "Forigu indekson"
+msgstr "Forigu ŝlosilo"
 
 #: geeksqlite.py:862
 #, python-format
 msgid "Do you really want to remove the index %s?"
-msgstr "Ĉu vi vere volas forigi la indekson %s?"
+msgstr "Ĉu vi vere volas forigi la ŝlosilo %s?"
 
 #: geeksqlite.py:949
 msgid "Empty result"
-msgstr ""
+msgstr "Malplena rezulto"
 
 #: geeksqlite.py:973
 msgid "[SQLite Error] "
@@ -199,42 +224,40 @@ msgstr "[geekSQLite Eraro] Malkompleta ordono!"
 
 #: geeksqlite.py:1114
 msgid "You have to restart geek'SQLite to apply some changes like the language"
-msgstr ""
+msgstr "Vi devas restarti geek'SQLite por apliki la lingvoŝanĝon"
 
 #: geeksqlite.py:1238
 msgid "Schema"
-msgstr ""
+msgstr "Skemo"
 
 #: interface/addfielddialog.glade:9
-#, fuzzy
 msgid "Add Field"
 msgstr "Aldoni kampon"
 
 #: interface/addfielddialog.glade:25
 #: interface/viewcreatedialog.glade:24
 msgid "Name:"
-msgstr ""
+msgstr "Nomo:"
 
 #: interface/addfielddialog.glade:50
 msgid "Type:"
-msgstr ""
+msgstr "Tipo:"
 
 #: interface/addfielddialog.glade:59
 msgid "NOT NULL"
-msgstr ""
+msgstr "NOT NULL"
 
 #: interface/addfielddialog.glade:75
-#, fuzzy
 msgid "UNIQUE"
-msgstr "_UNIQUE"
+msgstr "UNIQUE"
 
 #: interface/addfielddialog.glade:91
 msgid "DEFAULT:"
-msgstr ""
+msgstr "DEFAULT:"
 
 #: interface/addfielddialog.glade:120
 msgid "nothing. just a field."
-msgstr ""
+msgstr "simpla kampo."
 
 #: interface/filterdialog.glade:9
 msgid "Filter"
@@ -267,7 +290,7 @@ msgstr ""
 #: interface/indexcreatedialog.glade:9
 #: interface/mainwindow.glade:228
 msgid "Create Index"
-msgstr "Krei indekson"
+msgstr "Krei ŝlosilon"
 
 #: interface/indexcreatedialog.glade:26
 msgid "Index name:"
@@ -301,7 +324,7 @@ msgstr "<title>"
 
 #: interface/indexnamedialog.glade:35
 msgid "Select index:"
-msgstr "Elektu indekson:"
+msgstr "Elektu ŝlosilon:"
 
 #: interface/mainwindow.glade:20
 msgid "_File"
@@ -323,7 +346,7 @@ msgstr "Eksporti"
 
 #: interface/mainwindow.glade:119
 msgid "Current table as CSV (using current filters)"
-msgstr ""
+msgstr "Aktuala tabelo kiel CSV (uzanta aktualajn filtrilojn)"
 
 #: interface/mainwindow.glade:167
 msgid "_Edit"
@@ -384,35 +407,35 @@ msgstr "SQL protokolo"
 
 #: interface/preferences.glade:9
 msgid "Preferences"
-msgstr ""
+msgstr "Agordoj"
 
 #: interface/preferences.glade:29
 msgid "Language:"
-msgstr ""
+msgstr "Lingvo:"
 
 #: interface/preferences.glade:51
 msgid "Encoding:"
-msgstr ""
+msgstr "Kodoprezento:"
 
 #: interface/preferences.glade:63
 msgid "utf-8"
-msgstr ""
+msgstr "utf-8"
 
 #: interface/preferences.glade:75
 msgid "Locale"
-msgstr ""
+msgstr "Asimilado"
 
 #: interface/preferences.glade:90
 msgid ".csv Seperator:"
-msgstr ""
+msgstr ".csv Disigilo:"
 
 #: interface/preferences.glade:104
 msgid ","
-msgstr ""
+msgstr ","
 
 #: interface/preferences.glade:113
 msgid "mask .csv values with \"\""
-msgstr ""
+msgstr "maski .csv valoroj per \"\""
 
 #: interface/tablecreatedialog.glade:26
 #: interface/tablemodifydialog.glade:26
@@ -422,7 +445,7 @@ msgstr "Tabelnomo:"
 #: interface/tablecreatedialog.glade:57
 #: interface/tablemodifydialog.glade:57
 msgid "\n"
-msgstr ""
+msgstr "\n"
 
 #: interface/tablecreatedialog.glade:78
 #: interface/tablemodifydialog.glade:103
@@ -436,23 +459,21 @@ msgstr "Forigi kampon"
 
 #: interface/tablemodifydialog.glade:72
 msgid "Warning: SQLite3 does NOT support modifying tables natively. What geek'SQLite does ist to export all your data, to drop the table, create the new one and re-import all your data. This feature ist beta! We are NOT liable for any data loss!"
-msgstr ""
+msgstr "Averto: SQLite3 ne subtenas modifiadon de tabeloj. Do geek'SQLite simple eksportas ĉiujn datumojn, forigas la tabelon, kreas la novan kaj reimportas cxiujn viajn datumojn. Tiu-cxi trajto estas beta! Ni ne respondecas pri perdo de datumoj!"
 
 #: interface/tablenamedialog.glade:35
 msgid "Select table:"
 msgstr "Elektu tabelon:"
 
 #: interface/viewcreatedialog.glade:8
-#, fuzzy
 msgid "Create View"
 msgstr "Krei indekson"
 
 #: interface/viewcreatedialog.glade:53
 msgid "SELECT query:"
-msgstr ""
+msgstr "SELECT ordono:"
 
 #: interface/viewnamedialog.glade:35
-#, fuzzy
 msgid "Select view:"
 msgstr "Elektu indekson:"
 
