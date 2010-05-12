@@ -1131,6 +1131,7 @@ class geeksqliteMain:
 			lookforrow = None
 			if self.browse_current_search_field and self.browse_current_search_method and self.browse_current_search_filter:
 				dialogTree.get_widget('MethodSelect').set_active(self.browse_current_search_method_a)
+				cb.set_active(self.browse_current_search_field_a)
 				dialogTree.get_widget('FilterInput').set_text(self.browse_current_search_filter)
 				lookforrow = self.browse_current_search_field
 				
@@ -1144,6 +1145,7 @@ class geeksqliteMain:
 			cb.show()
 			dialogTree.get_widget('FilterField').put(cb, 5, 5)
 			run = dlg.run()
+			
 			if run == 3:
 				cbm = dialogTree.get_widget('MethodSelect')
 				fi = dialogTree.get_widget('FilterInput')
@@ -1155,15 +1157,18 @@ class geeksqliteMain:
 					else:
 						filter = ''
 					self.browse_to(table=self.browse_current_table,
-					start=self.browse_current_start,
-					limit=self.browse_current_limit,
 					search=field+' '+method+filter)
 					self.browse_current_search_field = field
+					self.browse_current_search_field_a = cb.get_active()
 					self.browse_current_search_method = method
 					self.browse_current_search_method_a = cbm.get_active()
 					self.browse_current_search_filter = fi.get_text()
-				else:
-					a = 0 # do nothing!
+				dlg.destroy()
+			elif run == 7:
+				self.browse_current_search = None
+				self.browse_to(table=self.browse_current_table,
+					start=self.browse_current_start,
+					limit=self.browse_current_limit)
 				dlg.destroy()
 			else:
 				dlg.destroy()

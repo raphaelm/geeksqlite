@@ -13,7 +13,6 @@
     <child internal-child="vbox">
       <widget class="GtkVBox" id="dialog-vbox2">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">2</property>
         <child>
           <widget class="GtkFixed" id="FilterField">
@@ -73,6 +72,21 @@ NOTNULL</property>
             <property name="visible">True</property>
             <property name="layout_style">end</property>
             <child>
+              <widget class="GtkButton" id="button1">
+                <property name="label">gtk-clear</property>
+                <property name="response_id">7</property>
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <property name="use_stock">True</property>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="fill">False</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
               <widget class="GtkButton" id="FilterDlgCancel">
                 <property name="label">gtk-cancel</property>
                 <property name="visible">True</property>
@@ -83,7 +97,7 @@ NOTNULL</property>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
-                <property name="position">0</property>
+                <property name="position">1</property>
               </packing>
             </child>
             <child>
@@ -98,7 +112,7 @@ NOTNULL</property>
               <packing>
                 <property name="expand">False</property>
                 <property name="fill">False</property>
-                <property name="position">1</property>
+                <property name="position">2</property>
               </packing>
             </child>
           </widget>
