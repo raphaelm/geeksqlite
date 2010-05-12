@@ -46,6 +46,7 @@ def loadconfig():
 	loadconfigfile(cfgfilename)
 	
 def loadconfigfile(cfgfilename):
+	global cfgfile, config, LANGUAGE, ENCODING
 	try:
 		config = ConfigParser.ConfigParser()
 		config.read(cfgfilename)
@@ -141,7 +142,9 @@ def info(text):
 	error_dlg.destroy()
 	
 def confirm(text):
-	dlg = gtk.MessageDialog(message_format=text, flags=gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT | gtk.MESSAGE_QUESTION)
+	dlg = gtk.MessageDialog(message_format=text, 
+							flags=gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT,
+							type=gtk.MESSAGE_QUESTION)
 	dlg.add_button(gtk.STOCK_NO, 1)
 	dlg.add_button(gtk.STOCK_YES, 3)
 	run = dlg.run()
@@ -152,8 +155,140 @@ def confirm(text):
 	dlg.destroy()
 	return ret
 	
-# MAIN CLASS
+def wrap(text, width):
+    """
+    A word-wrap function that preserves existing line breaks
+    and most spaces in the text. Expects that existing line
+    breaks are posix newlines (\n).
+    """
+    return reduce(lambda line, word, width=width: '%s%s%s' %
+                  (line,
+                   ' \n'[(len(line)-line.rfind('\n')-1
+                         + len(word.split('\n',1)[0]
+                              ) >= width)],
+                   word),
+                  text.split(' ')
+                 )
 
+def sqlerr(query, error):
+	
+	dlg = gtk.MessageDialog(flags=gtk.DIALOG_MODAL | gtk.DIALOG_DESTROY_WITH_PARENT, 
+							type=gtk.MESSAGE_ERROR, buttons=gtk.BUTTONS_CLOSE,
+							message_format=_('An error occured while executing a SQL database query!'))
+	dlg.format_secondary_markup(
+		_('SQL query which caused the error:\n\n<tt>%(query)s</tt>\n\nSQLite error message:\n\n<tt>%(error)s</tt>') % 
+		{
+			'query': wrap(query, 60),
+			'error': wrap(error, 60)
+		})
+	dlg.set_title(_('SQL error'))
+	
+	run = dlg.run()
+	dlg.destroy()
+	
+# SUB CLASSES
+class TableCreator:
+	
+	def add(self):
+		dialogTree = gtk.glade.XML(dist.interfacedir+"/addfielddialog.glade")
+		dlg = dialogTree.get_widget('AddFieldDialog')
+		
+		cb = gtk.combo_box_new_text()
+		cb.set_size_request(195,30)
+		cb.append_text('TEXT')
+		cb.append_text('NUMERIC')
+		cb.append_text('INTEGER PRIMARY KEY')
+		cb.append_text('BLOB')
+		cb.show()
+		dialogTree.get_widget('AddFieldField').put(cb, 115, 35)
+		
+		run = dlg.run()
+		if run == 3:
+			if cb.get_active_text():
+				ftype = cb.get_active_text()
+			else:
+				ftype = None
+			fname = dialogTree.get_widget('NameInput').get_text()
+			dlg.destroy()
+			self.ftv.get_model().append([fname, ftype])
+		else:
+			dlg.destroy()
+			return False
+		
+	def delete(self):
+		tuple = self.ftv.get_selection().get_selected()
+		model = tuple[0]
+		iter = tuple[1]
+		if iter != None:
+			del model[iter]
+		
+	def build_query(self, tblname):
+		query = ['CREATE TABLE']
+		query.append(tblname)
+		fieldlistitems = []
+		for row in self.ftv.get_model():
+			fieldlistitems.append(row[0]+' '+row[1])
+			
+		if len(tblname) < 1 or len(fieldlistitems) < 1:
+			return False
+		
+		fieldlist = '(' + ", ".join(fieldlistitems) + ')'
+		query.append(fieldlist)
+		
+		return " ".join(query) + ";"
+		
+	def __init__(self):
+		self.dialogTree = gtk.glade.XML(dist.interfacedir+"/tablecreatedialog.glade")
+		self.dlg = self.dialogTree.get_widget('TableCreateDialog')
+		
+		self.dialogTree.get_widget('AddBtn').connect('activate', self.add)
+		
+		self.ftv = self.dialogTree.get_widget('FieldsTV')
+		
+		self.structtv_col = gtk.TreeViewColumn(_('Name'))
+		self.structtv_cell = gtk.CellRendererText()
+		self.structtv_col.pack_start(self.structtv_cell)
+		self.structtv_col.add_attribute(self.structtv_cell, 'text', 0)
+		self.structtv_col.set_resizable(True)
+		self.structtv_col.set_sizing(gtk.TREE_VIEW_COLUMN_FIXED)
+		self.structtv_col.set_fixed_width(210)
+		self.ftv.append_column(self.structtv_col)	
+		
+		self.structtv_col2 = gtk.TreeViewColumn(_('Type'))
+		self.structtv_cell2 = gtk.CellRendererText()
+		self.structtv_col2.pack_start(self.structtv_cell2)
+		self.structtv_col2.add_attribute(self.structtv_cell2, 'text', 1)
+		self.structtv_col2.set_resizable(True)
+		self.structtv_col2.set_sizing(gtk.TREE_VIEW_COLUMN_FIXED)
+		self.structtv_col2.set_fixed_width(210)
+		self.ftv.append_column(self.structtv_col2)
+		
+		ls = gtk.ListStore(str, str)
+		self.ftv.set_model(ls)	
+	
+	def run(self):
+		self.runv = self.dlg.run()
+		
+		if self.runv == 6:
+			self.add()
+			return self.run()
+		elif self.runv == 7:
+			self.delete()
+			return self.run()
+		elif self.runv == 3:
+			tblname = self.dialogTree.get_widget('TblNameEntry').get_text() #CREATE TABLE asdasd (dsfg TEXT, fdgh NUMERIC, sdfg INTEGER PRIMARY KEY, wert BLOB);
+			result = self.build_query(tblname)
+			if not result:
+				err(_('Error while creating new table. Did you fill in all form fields? Did you add any fields to your table?'))
+				return self.run()
+			else:
+				self.dlg.destroy()
+				return result
+		else:
+			self.dlg.destroy()
+			return False
+
+# MAIN CLASS
 class geeksqliteMain:
 	def gettablename(self, title):
 		dialogTree = gtk.glade.XML(dist.interfacedir+"/tablenamedialog.glade")
@@ -216,6 +351,7 @@ class geeksqliteMain:
 		self.browse_current_start = start
 		self.browse_current_limit = limit
 		self.browse_current_search = search
+		self.browse_current_count = 0
 		
 		if self.fileopened:
 			ef = self.mainTree.get_widget('DataField')
@@ -330,7 +466,9 @@ class geeksqliteMain:
 				else:
 					return self.cursor.execute(text)
 			except sqlite3.Error, e:
-				err(_('SQLite Error: ')+e.args[0])
+				if parameters != None:
+					text += '\n-- Arguments: '+str(parameters)
+				sqlerr(text, e.args[0])
 				return False
 			
 		
@@ -449,7 +587,16 @@ class geeksqliteMain:
 		self.do_open()
 		
 	def table_create(self, this):
-		pass
+		tc = TableCreator()
+		result = tc.run()
+		if result:
+			self.sql(result)
+			self.reloadstructure()
+		
+	def table_modify(self, this):
+		dialogTree = gtk.glade.XML(dist.interfacedir+"/tablemodifydialog.glade")
+		dlg = dialogTree.get_widget('TableModifyDialog')
+		run = dlg.run()
 		
 	def table_delete(self, this):
 		if self.fileopened:
@@ -755,6 +902,7 @@ class geeksqliteMain:
 				"on_MainMenuIndexCreate_activate" : self.index_create,
 				"on_MainMenuIndexDelete_activate" : self.index_delete,
 				"on_MainMenuTableDelete_activate" : self.table_delete,
+				"on_MainMenuTableModify_activate" : self.table_modify,
 				"on_MainMenuConfig_activate" : self.preferences,
 				"on_ExecButton_activate" : self.execute,
 				"on_ExecButton_clicked" : self.execute,

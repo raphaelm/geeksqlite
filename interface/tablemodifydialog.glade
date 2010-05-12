@@ -2,11 +2,11 @@
 <glade-interface>
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
-  <widget class="GtkDialog" id="TableCreateDialog">
+  <widget class="GtkDialog" id="TableModifyDialog">
     <property name="width_request">475</property>
-    <property name="height_request">450</property>
+    <property name="height_request">460</property>
     <property name="border_width">5</property>
-    <property name="title" translatable="yes">Create Table</property>
+    <property name="title" translatable="yes">Modify Table</property>
     <property name="resizable">False</property>
     <property name="modal">True</property>
     <property name="type_hint">normal</property>
@@ -52,7 +52,7 @@
                 <child>
                   <widget class="GtkTreeView" id="FieldsTV">
                     <property name="width_request">445</property>
-                    <property name="height_request">350</property>
+                    <property name="height_request">265</property>
                     <property name="visible">True</property>
                     <property name="tooltip" translatable="yes">
 </property>
@@ -62,6 +62,31 @@
               <packing>
                 <property name="x">5</property>
                 <property name="y">34</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="label2">
+                <property name="width_request">410</property>
+                <property name="height_request">90</property>
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">Warning: SQLite3 does NOT support modifying tables natively. What geek'SQLite does ist to export all your data, to drop the table, create the new one and re-import all your data. This feature ist beta! We are NOT liable for any data loss!</property>
+                <property name="wrap">True</property>
+              </widget>
+              <packing>
+                <property name="x">40</property>
+                <property name="y">310</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkImage" id="image1">
+                <property name="width_request">30</property>
+                <property name="height_request">30</property>
+                <property name="visible">True</property>
+                <property name="stock">gtk-dialog-warning</property>
+              </widget>
+              <packing>
+                <property name="x">5</property>
+                <property name="y">320</property>
               </packing>
             </child>
           </widget>
