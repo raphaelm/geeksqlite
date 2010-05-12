@@ -325,7 +325,7 @@ class TableModifier(TableCreator):
 		fieldlistitems = []
 		for row in self.ftv.get_model():
 			fieldlistitems.append('`'+row[0]+'` '+row[1])
-			self.newfields.append(row[0])
+			self.newfields.append('`'+row[0]+'`')
 			
 		if len(tblname) < 1 or len(fieldlistitems) < 1:
 			return False
@@ -393,18 +393,18 @@ class TableModifier(TableCreator):
 				spacepos = f.find(' ')
 				if spacepos == -1:
 					ls.append([f, ''])
-					self.oldfields.append(f)
+					self.oldfields.append('`'+f+'`')
 				else:
 					ls.append([f[:spacepos], f[spacepos:].strip()])
-					self.oldfields.append(f[:spacepos])
+					self.oldfields.append('`'+f[:spacepos]+'`')
 		else:
 			spacepos = fields.find(' ')
 			if spacepos == -1:
 				ls.append([fields, ''])
-				self.oldfields.append(fields)
+				self.oldfields.append('`'+fields+'`')
 			else:
 				ls.append([fields[:spacepos], fields[spacepos:].strip()])
-				self.oldfields.append(fields[:spacepos])
+				self.oldfields.append('`'+fields[:spacepos]+'`')
 							
 		self.ftv.set_model(ls)	
 	
@@ -797,6 +797,10 @@ class geeksqliteMain:
 				if result:
 					for q in result:
 						if not self.sql(q):
+							try:
+								self.sql("ALTER TABLE `geeksqlite_tmp_table` RENAME TO `"+tblname+"`", None, False)
+							except:
+								pass
 							break
 					self.reloadstructure()
 		else:
@@ -998,11 +1002,10 @@ class geeksqliteMain:
 			f = d.get_filename(action='save')
 			if f != None:
 				s = file(f).read()
-				with open(f, 'w') as f:
-					for line in self.connection.iterdump():
-						f.write('%s\n' % line)
-		else:
-			err(_('No database loaded'))
+				f = open(f, 'w')
+				for line in self.connection.iterdump():
+					f.write('%s\n' % line)
+				f.close()
 	
 	def exportCSV(self, this):
 		global CSVSEP, CSVMASK
