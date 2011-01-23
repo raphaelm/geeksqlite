@@ -2,10 +2,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geek'SQLite\n"
 "Report-Msgid-Bugs-To: raphael@geeksfactory.de\n"
-"POT-Creation-Date: 2010-05-12 22:07+0200\n"
+"POT-Creation-Date: 2011-01-23 21:58+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Raphael <raphael@geeksfactory.de>\n"
 "Language-Team: NoMoKeTo <webmaster@nomoketo.de>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -102,13 +103,13 @@ msgstr "SQLite Eraro"
 
 #: geeksqlite.py:271
 #: geeksqlite.py:365
-#: geeksqlite.py:1224
+#: geeksqlite.py:1278
 msgid "Name"
 msgstr "Nomo"
 
 #: geeksqlite.py:280
 #: geeksqlite.py:374
-#: geeksqlite.py:1231
+#: geeksqlite.py:1285
 msgid "Type"
 msgstr "Tipo"
 
@@ -120,113 +121,116 @@ msgstr "Okazis eraro dum la kreado de la nova tabelo. Ĉu vi plenisgis ĉiujn ka
 msgid "Error while modifing table. Did you fill in all fields? Are there any fields in your new table?"
 msgstr "Okaziz eraro dum la modifiado de la tablo. Ĉu vi plenigis ĉiujn kampojn? Ĉu la tabelo entute havas kampojn?"
 
-#: geeksqlite.py:602
+#: geeksqlite.py:604
 #, python-format
 msgid "%(start)d to %(end)d of %(total)d"
 msgstr "%(start)d ĝis %(end)d de entute %(total)d"
 
-#: geeksqlite.py:616
+#: geeksqlite.py:618
 msgid "-- -- OPEN FILE -- --"
 msgstr "-- -- MALFERMAS DOSIERON -- -- "
 
-#: geeksqlite.py:618
+#: geeksqlite.py:620
 msgid "Unable to open database file"
 msgstr "Ne eblis malfermi la datumbazon."
 
-#: geeksqlite.py:662
+#: geeksqlite.py:664
 msgid "table"
 msgstr "Tabelo"
 
-#: geeksqlite.py:669
+#: geeksqlite.py:671
 msgid "index"
 msgstr "ŝlosilo"
 
-#: geeksqlite.py:675
+#: geeksqlite.py:677
 msgid "view"
 msgstr "vido"
 
-#: geeksqlite.py:683
+#: geeksqlite.py:685
 msgid "Select Table"
 msgstr "Elektu tabelon"
 
-#: geeksqlite.py:733
+#: geeksqlite.py:735
 msgid "No index was created because you did not fill in all required fields!"
 msgstr "Neniu ŝlosilo estis kreita ĉar vi ne plenigis cxiuj devigajn kampojn!"
 
-#: geeksqlite.py:739
-#: geeksqlite.py:787
-#: geeksqlite.py:803
-#: geeksqlite.py:817
-#: geeksqlite.py:831
-#: geeksqlite.py:857
+#: geeksqlite.py:741
+#: geeksqlite.py:833
+#: geeksqlite.py:853
 #: geeksqlite.py:867
-#: geeksqlite.py:977
-#: geeksqlite.py:993
-#: geeksqlite.py:1005
+#: geeksqlite.py:881
+#: geeksqlite.py:907
+#: geeksqlite.py:917
+#: geeksqlite.py:1027
 #: geeksqlite.py:1043
+#: geeksqlite.py:1092
 msgid "No database loaded"
 msgstr "Nenia datumbazo ŝarĝita"
 
-#: geeksqlite.py:770
+#: geeksqlite.py:759
+msgid "Edit field contents"
+msgstr "Redakti kampenhavon"
+
+#: geeksqlite.py:816
 msgid "-- -- CLOSE FILE -- --"
 msgstr "-- -- FERMAS DOSIERON -- --"
 
-#: geeksqlite.py:791
+#: geeksqlite.py:837
 #: interface/mainwindow.glade:207
 #: interface/tablemodifydialog.glade:9
 msgid "Modify Table"
 msgstr "Modifii tabelon"
 
-#: geeksqlite.py:807
+#: geeksqlite.py:857
 #: interface/mainwindow.glade:190
 msgid "Drop Table"
 msgstr "Forigi tabelon"
 
-#: geeksqlite.py:808
+#: geeksqlite.py:858
 #, python-format
 msgid "Do you really want to remove the table %s?"
 msgstr "Ĉu vi vere volas forigi la tabelon %s?"
 
-#: geeksqlite.py:821
+#: geeksqlite.py:871
 msgid "Drop View"
 msgstr "Forigi tabelon"
 
-#: geeksqlite.py:822
+#: geeksqlite.py:872
 #, python-format
 msgid "Do you really want to remove the view %s?"
 msgstr "Ĉu vi vere volas forigi la indekson %s?"
 
-#: geeksqlite.py:851
+#: geeksqlite.py:901
 msgid "No view was created because you did not fill in all required fields!"
 msgstr "Neniu vido estis kreita ĉar vi ne plenigis cxiuj devigajn kampojn!"
 
-#: geeksqlite.py:861
+#: geeksqlite.py:911
 #: interface/mainwindow.glade:244
 msgid "Drop Index"
 msgstr "Forigu ŝlosilo"
 
-#: geeksqlite.py:862
+#: geeksqlite.py:912
 #, python-format
 msgid "Do you really want to remove the index %s?"
 msgstr "Ĉu vi vere volas forigi la ŝlosilo %s?"
 
-#: geeksqlite.py:949
+#: geeksqlite.py:999
 msgid "Empty result"
 msgstr "Malplena rezulto"
 
-#: geeksqlite.py:973
+#: geeksqlite.py:1023
 msgid "[SQLite Error] "
 msgstr "[SQLite Eraro]"
 
-#: geeksqlite.py:975
+#: geeksqlite.py:1025
 msgid "[geekSQLite Error] Not a complete statement!"
 msgstr "[geekSQLite Eraro] Malkompleta ordono!"
 
-#: geeksqlite.py:1114
+#: geeksqlite.py:1163
 msgid "You have to restart geek'SQLite to apply some changes like the language"
 msgstr "Vi devas restarti geek'SQLite por apliki la lingvoŝanĝon"
 
-#: geeksqlite.py:1238
+#: geeksqlite.py:1292
 msgid "Schema"
 msgstr "Skemo"
 
@@ -259,11 +263,18 @@ msgstr "DEFAULT:"
 msgid "nothing. just a field."
 msgstr "simpla kampo."
 
+#: interface/fieldcontentdialog.glade:9
+#: interface/indexnamedialog.glade:9
+#: interface/tablenamedialog.glade:9
+#: interface/viewnamedialog.glade:9
+msgid "<title>"
+msgstr "<title>"
+
 #: interface/filterdialog.glade:9
 msgid "Filter"
 msgstr "Filtrilo"
 
-#: interface/filterdialog.glade:37
+#: interface/filterdialog.glade:36
 msgid ""
 "=\n"
 "!=\n"
@@ -315,12 +326,6 @@ msgstr ""
 #: interface/indexcreatedialog.glade:95
 msgid "_UNIQUE"
 msgstr "_UNIQUE"
-
-#: interface/indexnamedialog.glade:9
-#: interface/tablenamedialog.glade:9
-#: interface/viewnamedialog.glade:9
-msgid "<title>"
-msgstr "<title>"
 
 #: interface/indexnamedialog.glade:35
 msgid "Select index:"
