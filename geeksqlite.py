@@ -522,7 +522,6 @@ class geeksqliteMain:
 		self.browse_current_limit = limit
 		self.browse_current_search = search
 		self.browse_current_count = 0
-		
 		if self.fileopened:
 			ef = self.mainTree.get_widget('DataField')
 			try:
@@ -549,6 +548,8 @@ class geeksqliteMain:
 					for field in row:
 						if field == None:
 							field = ''
+						elif len(str(field)) > 70:
+							field = str(field)[:70]+'…'
 						list.append(str(field))
 					ls.append(list)
 					C += 1
@@ -574,6 +575,7 @@ class geeksqliteMain:
 						cols[i].set_fixed_width(100)
 						cells[i].set_property('editable', True)
 						cells[i].connect('edited', self.edited, (i, ls))
+						cells[i].connect('editing-started', self.editing_started, (i, ls))
 						cols[i].set_resizable(True)
 						self.btv.append_column(cols[i])
 						self.btv.show()
@@ -740,14 +742,58 @@ class geeksqliteMain:
 			
 	def edited(self, cell, path, new_text, user_data):
 		model = user_data[1]
+		if len(new_text) >= 70:
+			return False
 		iter = model.get_iter(path)
 		if iter != None:
-				rowid = str(model.get(iter, 0)[0])
+			rowid = str(model.get(iter, 0)[0])
+			if not self.sql('UPDATE `'+self.browse_current_table+'` SET `'+self.browse_current_labels[user_data[0]]+"` = ? WHERE `_rowid_` = ?", (new_text, rowid)):
+				return False
+			else:
+				model[path][user_data[0]] = new_text
+				return 
+			
+	def editfieldcontent(self, text):
+		dialogTree = gtk.glade.XML(dist.interfacedir+"/fieldcontentdialog.glade")
+		dlg = dialogTree.get_widget('FieldContentDialog')
+		dlg.set_title(_('Feldinhalt bearbeiten'))
+		
+		buf = gtk.TextBuffer()
+		buf.set_text(text)
+		tf = dialogTree.get_widget('TextField')
+		tf.set_size_request(400,300)
+		tf.set_buffer(buf)
+		
+		run = dlg.run()
+		if run == 3:
+			buf = tf.get_buffer() 
+			dlg.destroy()
+			return buf.get_text(buf.get_start_iter(), buf.get_end_iter())
+		else:
+			dlg.destroy()
+			return text
+			
+	def editing_started(self, cell, editable,path, user_data):
+		model = user_data[1]
+		iter = model.get_iter(path)
+		if iter != None:
+			content = str(model.get(iter, user_data[0])[0])
+			rowid = str(model.get(iter, 0)[0])
+			if len(content) > 70:
+				self.sql('SELECT `'+self.browse_current_labels[user_data[0]]+'` FROM `'+self.browse_current_table+'` WHERE `_rowid_` = ?', (rowid))
+				row = self.cursor.fetchone()
+				content = row[0]
+				new_text = self.editfieldcontent(content)
 				if not self.sql('UPDATE `'+self.browse_current_table+'` SET `'+self.browse_current_labels[user_data[0]]+"` = ? WHERE `_rowid_` = ?", (new_text, rowid)):
 					return False
 				else:
-					model[path][user_data[0]] = new_text
-					return 
+					if len(new_text) > 70:
+						model[path][user_data[0]] = new_text[:70]+'…'
+					else:
+						model[path][user_data[0]] = new_text
+					return True
+			return False
+		return True
 		
 	def close(self, this = None):
 		if self.fileopened:
