@@ -92,9 +92,9 @@ try:
 except:
 	print "Failed loading language"
 	
-# Cersion Information
+# Version Information
 ver_name 			= _("geek'SQLite")
-ver_version			= "0.0.0"
+ver_version			= "1.0.0"
 ver_copyright		= _(u"Copyright © 2010 geek's factory")
 ver_comments		= _("free Python GTK+ SQLite3 database file browser")
 ver_license			= _("""Copyright (c) 2010 geek's factory
