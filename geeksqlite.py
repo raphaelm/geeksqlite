@@ -756,7 +756,7 @@ class geeksqliteMain:
 	def editfieldcontent(self, text):
 		dialogTree = gtk.glade.XML(dist.interfacedir+"/fieldcontentdialog.glade")
 		dlg = dialogTree.get_widget('FieldContentDialog')
-		dlg.set_title(_('Feldinhalt bearbeiten'))
+		dlg.set_title(_('Edit field contents'))
 		
 		buf = gtk.TextBuffer()
 		buf.set_text(text)

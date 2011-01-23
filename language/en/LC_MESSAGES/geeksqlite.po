@@ -2,124 +2,277 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geek'SQLite\n"
 "Report-Msgid-Bugs-To: raphael@geeksfactory.de\n"
-"POT-Creation-Date: 2010-02-01 20:36+0100\n"
+"POT-Creation-Date: 2011-01-23 21:58+0100\n"
 "PO-Revision-Date: \n"
 "Last-Translator: Raphael <raphael@geeksfactory.de>\n"
 "Language-Team: Raphael Michel <raphael@geeksfactory.de>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "X-Poedit-Language: English\n"
 "X-Poedit-SourceCharset: utf-8\n"
 
-#: geeksqlite.py:231
+#: geeksqlite.py:96
+#: interface/mainwindow.glade:9
+msgid "geek'SQLite"
+msgstr "geek'SQLite"
+
+#: geeksqlite.py:98
+msgid "Copyright © 2010 geek's factory"
+msgstr "Copyright © 2010 geek's factory"
+
+#: geeksqlite.py:99
+msgid "free Python GTK+ SQLite3 database file browser"
+msgstr "free Python GTK+ SQLite3 database file browser"
+
+#: geeksqlite.py:100
+msgid ""
+"Copyright (c) 2010 geek's factory\n"
+"\n"
+"MIT-License\n"
+"\n"
+"Permission is hereby granted, free of charge, to any person obtaining a copy\n"
+"of this software and associated documentation files (the \"Software\"), to deal\n"
+"in the Software without restriction, including without limitation the rights\n"
+"to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n"
+"copies of the Software, and to permit persons to whom the Software is\n"
+"furnished to do so, subject to the following conditions:\n"
+"\n"
+"The above copyright notice and this permission notice shall be included in\n"
+"all copies or substantial portions of the Software.\n"
+"\n"
+"THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n"
+"IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n"
+"FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n"
+"AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n"
+"LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n"
+"OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n"
+"THE SOFTWARE."
+msgstr ""
+"Copyright (c) 2010 geek's factory\n"
+"\n"
+"MIT-License\n"
+"\n"
+"Permission is hereby granted, free of charge, to any person obtaining a copy\n"
+"of this software and associated documentation files (the \"Software\"), to deal\n"
+"in the Software without restriction, including without limitation the rights\n"
+"to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n"
+"copies of the Software, and to permit persons to whom the Software is\n"
+"furnished to do so, subject to the following conditions:\n"
+"\n"
+"The above copyright notice and this permission notice shall be included in\n"
+"all copies or substantial portions of the Software.\n"
+"\n"
+"THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n"
+"IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n"
+"FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n"
+"AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n"
+"LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n"
+"OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN\n"
+"THE SOFTWARE."
+
+#: geeksqlite.py:193
+msgid "An error occured while executing a SQL database query!"
+msgstr "An error occured while executing a SQL database query!"
+
+#: geeksqlite.py:195
 #, python-format
-msgid "%(start)d to %(end)d of %(total)d"
+msgid ""
+"SQL query which caused the error:\n"
+"\n"
+"<tt>%(query)s</tt>\n"
+"\n"
+"SQLite error message:\n"
+"\n"
+"<tt>%(error)s</tt>"
 msgstr ""
+"SQL query which caused the error:\n"
+"\n"
+"<tt>%(query)s</tt>\n"
+"\n"
+"SQLite error message:\n"
+"\n"
+"<tt>%(error)s</tt>"
 
-#: geeksqlite.py:245
-msgid "-- -- OPEN FILE -- --"
-msgstr ""
+#: geeksqlite.py:200
+msgid "SQL error"
+msgstr "SQL Error"
 
-#: geeksqlite.py:247
-msgid "Unable to open database file"
-msgstr ""
-
-#: geeksqlite.py:275
-msgid "table"
-msgstr ""
+#: geeksqlite.py:271
+#: geeksqlite.py:365
+#: geeksqlite.py:1278
+msgid "Name"
+msgstr "Name"
 
 #: geeksqlite.py:280
+#: geeksqlite.py:374
+#: geeksqlite.py:1285
+msgid "Type"
+msgstr "Type"
+
+#: geeksqlite.py:305
+msgid "Error while creating new table. Did you fill in all form fields? Did you add any fields to your table?"
+msgstr "Error while creating new table. Did you fill in all form fields? Did you add any fields to your table?"
+
+#: geeksqlite.py:424
+msgid "Error while modifing table. Did you fill in all fields? Are there any fields in your new table?"
+msgstr "Error while modifing table. Did you fill in all fields? Are there any fields in your new table?"
+
+#: geeksqlite.py:604
+#, python-format
+msgid "%(start)d to %(end)d of %(total)d"
+msgstr "%(start)d to %(end)d of %(total)d"
+
+#: geeksqlite.py:618
+msgid "-- -- OPEN FILE -- --"
+msgstr "-- -- OPEN FILE -- --"
+
+#: geeksqlite.py:620
+msgid "Unable to open database file"
+msgstr "Unable to open database file"
+
+#: geeksqlite.py:664
+msgid "table"
+msgstr "table"
+
+#: geeksqlite.py:671
 msgid "index"
-msgstr ""
+msgstr "index"
 
-#: geeksqlite.py:287
+#: geeksqlite.py:677
+msgid "view"
+msgstr "view"
+
+#: geeksqlite.py:685
 msgid "Select Table"
-msgstr ""
+msgstr "Select Table"
 
-#: geeksqlite.py:337
+#: geeksqlite.py:735
 msgid "No index was created because you did not fill in all required fields!"
-msgstr ""
+msgstr "No index was created because you did not fill in all required fields!"
 
-#: geeksqlite.py:343
-#: geeksqlite.py:390
-#: geeksqlite.py:400
-#: geeksqlite.py:506
-#: geeksqlite.py:522
-#: geeksqlite.py:534
+#: geeksqlite.py:741
+#: geeksqlite.py:833
+#: geeksqlite.py:853
+#: geeksqlite.py:867
+#: geeksqlite.py:881
+#: geeksqlite.py:907
+#: geeksqlite.py:917
+#: geeksqlite.py:1027
+#: geeksqlite.py:1043
+#: geeksqlite.py:1092
 msgid "No database loaded"
-msgstr ""
+msgstr "No database loaded"
 
-#: geeksqlite.py:366
+#: geeksqlite.py:759
+msgid "Edit field contents"
+msgstr "Edit field contents"
+
+#: geeksqlite.py:816
 msgid "-- -- CLOSE FILE -- --"
-msgstr ""
+msgstr "-- -- CLOSE FILE -- --"
 
-#: geeksqlite.py:380
-#: interface/mainwindow.glade:183
+#: geeksqlite.py:837
+#: interface/mainwindow.glade:207
+#: interface/tablemodifydialog.glade:9
+msgid "Modify Table"
+msgstr "Modify Table"
+
+#: geeksqlite.py:857
+#: interface/mainwindow.glade:190
 msgid "Drop Table"
-msgstr ""
+msgstr "Drop Table"
 
-#: geeksqlite.py:381
+#: geeksqlite.py:858
 #, python-format
 msgid "Do you really want to remove the table %s?"
-msgstr ""
+msgstr "Do you really want to remove the table %s?"
 
-#: geeksqlite.py:394
-#: interface/mainwindow.glade:237
+#: geeksqlite.py:871
+msgid "Drop View"
+msgstr "Drop View"
+
+#: geeksqlite.py:872
+#, python-format
+msgid "Do you really want to remove the view %s?"
+msgstr "Do you really want to remove the view %s?"
+
+#: geeksqlite.py:901
+msgid "No view was created because you did not fill in all required fields!"
+msgstr "No view was created because you did not fill in all required fields!"
+
+#: geeksqlite.py:911
+#: interface/mainwindow.glade:244
 msgid "Drop Index"
-msgstr ""
+msgstr "Drop Index"
 
-#: geeksqlite.py:395
+#: geeksqlite.py:912
 #, python-format
 msgid "Do you really want to remove the index %s?"
-msgstr ""
+msgstr "Do you really want to remove the index %s?"
 
-#: geeksqlite.py:480
+#: geeksqlite.py:999
 msgid "Empty result"
-msgstr ""
+msgstr "Empty result"
 
-#: geeksqlite.py:502
+#: geeksqlite.py:1023
 msgid "[SQLite Error] "
-msgstr ""
+msgstr "[SQLite Error] "
 
-#: geeksqlite.py:504
+#: geeksqlite.py:1025
 msgid "[geekSQLite Error] Not a complete statement!"
-msgstr ""
+msgstr "[geekSQLite Error] Not a complete statement!"
 
-#: geeksqlite.py:593
+#: geeksqlite.py:1163
 msgid "You have to restart geek'SQLite to apply some changes like the language"
-msgstr ""
+msgstr "You have to restart geek'SQLite to apply some changes like the language"
 
-#: geeksqlite.py:699
-msgid "Name"
-msgstr ""
-
-#: geeksqlite.py:706
-msgid "Type"
-msgstr ""
-
-#: geeksqlite.py:713
+#: geeksqlite.py:1292
 msgid "Schema"
-msgstr ""
+msgstr "Schema"
 
-#: geeksqlite.py:742
-msgid ""
-"geekSQLite - free Python GTK+ SQLite3 database file browser\n"
-"USAGE:\n"
-"geeksqlite [argument]\n"
-"\n"
-"POSSIBLE ARGUMENTS:\n"
-"* any sqlite database file (example: geeksqlite test.sqlite)\n"
-"* -v for version informations\n"
-"* -l for the license\n"
-"* -h for this text"
-msgstr ""
+#: interface/addfielddialog.glade:9
+msgid "Add Field"
+msgstr "Add Field"
+
+#: interface/addfielddialog.glade:25
+#: interface/viewcreatedialog.glade:24
+msgid "Name:"
+msgstr "Name:"
+
+#: interface/addfielddialog.glade:50
+msgid "Type:"
+msgstr "Type:"
+
+#: interface/addfielddialog.glade:59
+msgid "NOT NULL"
+msgstr "NOT NULL"
+
+#: interface/addfielddialog.glade:75
+msgid "UNIQUE"
+msgstr "UNIQUE"
+
+#: interface/addfielddialog.glade:91
+msgid "DEFAULT:"
+msgstr "DEFAULT:"
+
+#: interface/addfielddialog.glade:120
+msgid "nothing. just a field."
+msgstr "nothing. just a field."
+
+#: interface/fieldcontentdialog.glade:9
+#: interface/indexnamedialog.glade:9
+#: interface/tablenamedialog.glade:9
+#: interface/viewnamedialog.glade:9
+msgid "<title>"
+msgstr "<title>"
 
 #: interface/filterdialog.glade:9
 msgid "Filter"
-msgstr ""
+msgstr "Filter"
 
-#: interface/filterdialog.glade:37
+#: interface/filterdialog.glade:36
 msgid ""
 "=\n"
 "!=\n"
@@ -132,158 +285,219 @@ msgid ""
 "ISNULL\n"
 "NOTNULL"
 msgstr ""
+"=\n"
+"!=\n"
+"LIKE\n"
+"NOT LIKE\n"
+"<\n"
+">\n"
+"<=\n"
+">=\n"
+"ISNULL\n"
+"NOTNULL"
 
 #: interface/indexcreatedialog.glade:9
-#: interface/mainwindow.glade:221
+#: interface/mainwindow.glade:228
 msgid "Create Index"
-msgstr ""
+msgstr "Create Index"
 
 #: interface/indexcreatedialog.glade:26
 msgid "Index name:"
-msgstr ""
+msgstr "Index name:"
 
 #: interface/indexcreatedialog.glade:51
 msgid "Field:"
-msgstr ""
+msgstr "Field:"
 
 #: interface/indexcreatedialog.glade:73
 msgid "Order:"
-msgstr ""
+msgstr "Order:"
 
 #: interface/indexcreatedialog.glade:85
 msgid ""
 "ASC (Ascending)\n"
 "DESC (Descending)"
 msgstr ""
+"ASC (Ascending)\n"
+"DESC (Descending)"
 
 #: interface/indexcreatedialog.glade:95
 msgid "_UNIQUE"
-msgstr ""
+msgstr "_UNIQUE"
 
-#: interface/indexnamedialog.glade:9
-#: interface/tablenamedialog.glade:9
-msgid "<title>"
-msgstr ""
-
-#: interface/indexnamedialog.glade:36
+#: interface/indexnamedialog.glade:35
 msgid "Select index:"
-msgstr ""
+msgstr "Select index:"
 
-#: interface/mainwindow.glade:9
-msgid "geek'SQLite"
-msgstr ""
-
-#: interface/mainwindow.glade:21
+#: interface/mainwindow.glade:20
 msgid "_File"
-msgstr ""
+msgstr "_File"
 
-#: interface/mainwindow.glade:74
+#: interface/mainwindow.glade:73
 msgid "Import"
-msgstr ""
+msgstr "Import"
 
-#: interface/mainwindow.glade:84
-#: interface/mainwindow.glade:112
+#: interface/mainwindow.glade:83
+#: interface/mainwindow.glade:111
 msgid "SQL file"
-msgstr ""
+msgstr "SQL file"
 
-#: interface/mainwindow.glade:102
+#: interface/mainwindow.glade:101
+#: interface/preferences.glade:135
 msgid "Export"
-msgstr ""
+msgstr "Export"
 
-#: interface/mainwindow.glade:160
-msgid "_Edit"
-msgstr ""
+#: interface/mainwindow.glade:119
+msgid "Current table as CSV (using current filters)"
+msgstr "Current table as CSV (using current filters)"
 
 #: interface/mainwindow.glade:167
-#: interface/tablecreatedialog.glade:8
+msgid "_Edit"
+msgstr "_Edit"
+
+#: interface/mainwindow.glade:174
+#: interface/tablecreatedialog.glade:9
 msgid "Create Table"
-msgstr ""
-
-#: interface/mainwindow.glade:200
-msgid "Modify Table"
-msgstr ""
-
-#: interface/mainwindow.glade:273
-msgid "_Help"
-msgstr ""
+msgstr "Create Table"
 
 #: interface/mainwindow.glade:318
+msgid "_Help"
+msgstr "_Help"
+
+#: interface/mainwindow.glade:363
 msgid "Database Structure"
-msgstr ""
-
-#: interface/mainwindow.glade:452
-msgid "<"
-msgstr ""
-
-#: interface/mainwindow.glade:468
-msgid ">"
-msgstr ""
+msgstr "Database Structure"
 
 #: interface/mainwindow.glade:496
+msgid "<"
+msgstr "<"
+
+#: interface/mainwindow.glade:512
+msgid ">"
+msgstr ">"
+
+#: interface/mainwindow.glade:540
 msgid "Browse Data"
-msgstr ""
+msgstr "Browse Data"
 
-#: interface/mainwindow.glade:518
+#: interface/mainwindow.glade:562
 msgid "SQL string:"
-msgstr ""
+msgstr "SQL string:"
 
-#: interface/mainwindow.glade:526
+#: interface/mainwindow.glade:570
 msgid "Execute!"
-msgstr ""
+msgstr "Execute!"
 
-#: interface/mainwindow.glade:554
+#: interface/mainwindow.glade:598
 msgid "Errors (if any):"
-msgstr ""
+msgstr "Errors (if any):"
 
-#: interface/mainwindow.glade:576
+#: interface/mainwindow.glade:620
 msgid "Result:"
-msgstr ""
+msgstr "Result:"
 
-#: interface/mainwindow.glade:634
+#: interface/mainwindow.glade:678
 msgid "\t"
-msgstr ""
+msgstr "\t"
 
-#: interface/mainwindow.glade:650
+#: interface/mainwindow.glade:694
 msgid "Execute SQL"
-msgstr ""
+msgstr "Execute SQL"
 
-#: interface/mainwindow.glade:679
+#: interface/mainwindow.glade:723
 msgid "SQL Log"
-msgstr ""
+msgstr "SQL Log"
 
 #: interface/preferences.glade:9
 msgid "Preferences"
-msgstr ""
+msgstr "Preferences"
 
-#: interface/preferences.glade:30
+#: interface/preferences.glade:29
 msgid "Language:"
-msgstr ""
+msgstr "Language:"
 
-#: interface/preferences.glade:52
+#: interface/preferences.glade:51
 msgid "Encoding:"
-msgstr ""
+msgstr "Encoding:"
 
-#: interface/preferences.glade:64
+#: interface/preferences.glade:63
 msgid "utf-8"
-msgstr ""
+msgstr "utf-8"
 
-#: interface/preferences.glade:76
+#: interface/preferences.glade:75
 msgid "Locale"
-msgstr ""
+msgstr "Locale"
 
-#: interface/tablecreatedialog.glade:25
+#: interface/preferences.glade:90
+msgid ".csv Seperator:"
+msgstr ".csv Seperator:"
+
+#: interface/preferences.glade:104
+msgid ","
+msgstr ","
+
+#: interface/preferences.glade:113
+msgid "mask .csv values with \"\""
+msgstr "mask .csv values with \"\""
+
+#: interface/tablecreatedialog.glade:26
+#: interface/tablemodifydialog.glade:26
 msgid "Table name:"
-msgstr ""
+msgstr "Table name:"
 
-#: interface/tablecreatedialog.glade:67
+#: interface/tablecreatedialog.glade:57
+#: interface/tablemodifydialog.glade:57
+msgid "\n"
+msgstr "\n"
+
+#: interface/tablecreatedialog.glade:78
+#: interface/tablemodifydialog.glade:103
 msgid "Add field"
-msgstr ""
+msgstr "Add field"
 
-#: interface/tablecreatedialog.glade:81
+#: interface/tablecreatedialog.glade:94
+#: interface/tablemodifydialog.glade:119
 msgid "Delete field"
-msgstr ""
+msgstr "Delete field"
 
-#: interface/tablenamedialog.glade:36
+#: interface/tablemodifydialog.glade:72
+msgid "Warning: SQLite3 does NOT support modifying tables natively. What geek'SQLite does ist to export all your data, to drop the table, create the new one and re-import all your data. This feature ist beta! We are NOT liable for any data loss!"
+msgstr "Warning: SQLite3 does NOT support modifying tables natively. What geek'SQLite does ist to export all your data, to drop the table, create the new one and re-import all your data. This feature ist beta! We are NOT liable for any data loss!"
+
+#: interface/tablenamedialog.glade:35
 msgid "Select table:"
-msgstr ""
+msgstr "Select table:"
+
+#: interface/viewcreatedialog.glade:8
+msgid "Create View"
+msgstr "Create View"
+
+#: interface/viewcreatedialog.glade:53
+msgid "SELECT query:"
+msgstr "SELECT query:"
+
+#: interface/viewnamedialog.glade:35
+msgid "Select view:"
+msgstr "Select view:"
+
+#~ msgid ""
+#~ "geekSQLite - free Python GTK+ SQLite3 database file browser\n"
+#~ "USAGE:\n"
+#~ "geeksqlite [argument]\n"
+#~ "\n"
+#~ "POSSIBLE ARGUMENTS:\n"
+#~ "* any sqlite database file (example: geeksqlite test.sqlite)\n"
+#~ "* -v for version informations\n"
+#~ "* -l for the license\n"
+#~ "* -h for this text"
+#~ msgstr ""
+#~ "geekSQLite - free Python GTK+ SQLite3 database file browser\n"
+#~ "USAGE:\n"
+#~ "geeksqlite [argument]\n"
+#~ "\n"
+#~ "POSSIBLE ARGUMENTS:\n"
+#~ "* any sqlite database file (example: geeksqlite test.sqlite)\n"
+#~ "* -v for version informations\n"
+#~ "* -l for the license\n"
+#~ "* -h for this text"
 

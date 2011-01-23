@@ -8,10 +8,11 @@ msgid ""
 msgstr ""
 "Project-Id-Version: geek'SQLite 0.0.0\n"
 "Report-Msgid-Bugs-To: raphael@geeksfactory.de\n"
-"POT-Creation-Date: 2010-05-12 22:07+0200\n"
+"POT-Creation-Date: 2011-01-23 21:58+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -78,11 +79,11 @@ msgstr ""
 msgid "SQL error"
 msgstr ""
 
-#: geeksqlite.py:271 geeksqlite.py:365 geeksqlite.py:1224
+#: geeksqlite.py:271 geeksqlite.py:365 geeksqlite.py:1278
 msgid "Name"
 msgstr ""
 
-#: geeksqlite.py:280 geeksqlite.py:374 geeksqlite.py:1231
+#: geeksqlite.py:280 geeksqlite.py:374 geeksqlite.py:1285
 msgid "Type"
 msgstr ""
 
@@ -98,102 +99,106 @@ msgid ""
 "in your new table?"
 msgstr ""
 
-#: geeksqlite.py:602
+#: geeksqlite.py:604
 #, python-format
 msgid "%(start)d to %(end)d of %(total)d"
 msgstr ""
 
-#: geeksqlite.py:616
+#: geeksqlite.py:618
 msgid "-- -- OPEN FILE -- --"
 msgstr ""
 
-#: geeksqlite.py:618
+#: geeksqlite.py:620
 msgid "Unable to open database file"
 msgstr ""
 
-#: geeksqlite.py:662
+#: geeksqlite.py:664
 msgid "table"
 msgstr ""
 
-#: geeksqlite.py:669
+#: geeksqlite.py:671
 msgid "index"
 msgstr ""
 
-#: geeksqlite.py:675
+#: geeksqlite.py:677
 msgid "view"
 msgstr ""
 
-#: geeksqlite.py:683
+#: geeksqlite.py:685
 msgid "Select Table"
 msgstr ""
 
-#: geeksqlite.py:733
+#: geeksqlite.py:735
 msgid "No index was created because you did not fill in all required fields!"
 msgstr ""
 
-#: geeksqlite.py:739 geeksqlite.py:787 geeksqlite.py:803 geeksqlite.py:817
-#: geeksqlite.py:831 geeksqlite.py:857 geeksqlite.py:867 geeksqlite.py:977
-#: geeksqlite.py:993 geeksqlite.py:1005 geeksqlite.py:1043
+#: geeksqlite.py:741 geeksqlite.py:833 geeksqlite.py:853 geeksqlite.py:867
+#: geeksqlite.py:881 geeksqlite.py:907 geeksqlite.py:917 geeksqlite.py:1027
+#: geeksqlite.py:1043 geeksqlite.py:1092
 msgid "No database loaded"
 msgstr ""
 
-#: geeksqlite.py:770
+#: geeksqlite.py:759
+msgid "Edit field contents"
+msgstr ""
+
+#: geeksqlite.py:816
 msgid "-- -- CLOSE FILE -- --"
 msgstr ""
 
-#: geeksqlite.py:791 interface/mainwindow.glade:207
+#: geeksqlite.py:837 interface/mainwindow.glade:207
 #: interface/tablemodifydialog.glade:9
 msgid "Modify Table"
 msgstr ""
 
-#: geeksqlite.py:807 interface/mainwindow.glade:190
+#: geeksqlite.py:857 interface/mainwindow.glade:190
 msgid "Drop Table"
 msgstr ""
 
-#: geeksqlite.py:808
+#: geeksqlite.py:858
 #, python-format
 msgid "Do you really want to remove the table %s?"
 msgstr ""
 
-#: geeksqlite.py:821
+#: geeksqlite.py:871
 msgid "Drop View"
 msgstr ""
 
-#: geeksqlite.py:822
+#: geeksqlite.py:872
 #, python-format
 msgid "Do you really want to remove the view %s?"
 msgstr ""
 
-#: geeksqlite.py:851
+#: geeksqlite.py:901
 msgid "No view was created because you did not fill in all required fields!"
 msgstr ""
 
-#: geeksqlite.py:861 interface/mainwindow.glade:244
+#: geeksqlite.py:911 interface/mainwindow.glade:244
 msgid "Drop Index"
 msgstr ""
 
-#: geeksqlite.py:862
+#: geeksqlite.py:912
 #, python-format
 msgid "Do you really want to remove the index %s?"
 msgstr ""
 
-#: geeksqlite.py:949
+#: geeksqlite.py:999
 msgid "Empty result"
 msgstr ""
 
-#: geeksqlite.py:973
+#: geeksqlite.py:1023
 msgid "[SQLite Error] "
 msgstr ""
 
-#: geeksqlite.py:975
+#: geeksqlite.py:1025
 msgid "[geekSQLite Error] Not a complete statement!"
 msgstr ""
 
-#: geeksqlite.py:1114
+#: geeksqlite.py:1163
 msgid "You have to restart geek'SQLite to apply some changes like the language"
 msgstr ""
 
-#: geeksqlite.py:1238
+#: geeksqlite.py:1292
 msgid "Schema"
 msgstr ""
 
@@ -225,11 +230,16 @@ msgstr ""
 msgid "nothing. just a field."
 msgstr ""
 
+#: interface/fieldcontentdialog.glade:9 interface/indexnamedialog.glade:9
+#: interface/tablenamedialog.glade:9 interface/viewnamedialog.glade:9
+msgid "<title>"
+msgstr ""
+
 #: interface/filterdialog.glade:9
 msgid "Filter"
 msgstr ""
 
-#: interface/filterdialog.glade:37
+#: interface/filterdialog.glade:36
 msgid ""
 "=\n"
 "!=\n"
@@ -267,11 +277,6 @@ msgstr ""
 
 #: interface/indexcreatedialog.glade:95
 msgid "_UNIQUE"
-msgstr ""
-
-#: interface/indexnamedialog.glade:9 interface/tablenamedialog.glade:9
-#: interface/viewnamedialog.glade:9
-msgid "<title>"
 msgstr ""
 
 #: interface/indexnamedialog.glade:35
