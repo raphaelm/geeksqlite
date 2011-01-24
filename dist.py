@@ -1,8 +1,21 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
-import os.path
-interfacedir        = './interface'
-langdir             = './language'
+import os, os.path
+import sys
+if os.path.exists('/usr/lib/geeksqlite/'):
+	interfacedir        = '/usr/lib/geeksqlite/interface'
+elif os.path.exists(os.path.abspath(sys.argv[0])+'/interface'):
+	interfacedir 		= os.path.dirname(os.path.abspath(sys.argv[0]))+'/interface'
+else:
+	interfacedir		= './interface'
+	
+if os.path.exists('/usr/share/locale/en/LC_MESSAGES/geeksqlite.mo'):
+	interfacedir        = '/usr/share/locale/'
+elif os.path.exists(os.path.abspath(sys.argv[0])+'/language'):
+	interfacedir 		= os.path.dirname(os.path.abspath(sys.argv[0]))+'/language'
+else:
+	interfacedir		= './language'
+	
 languages			= ['de', 'en', 'eo']
-possibleconfigfiles = [os.path.expanduser('~/.geeksqlite'), './geeksqlite.conf', '/etc/geeksqlite']
+possibleconfigfiles = [os.path.expanduser('~/.geeksqlite'), os.path.dirname(os.path.abspath(sys.argv[0]))+'/geeksqlite.conf', './geeksqlite.conf', '/etc/geeksqlite']
 icon				= './geeksqlite.xpm'
