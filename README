@@ -1,10 +1,13 @@
-geekSQLite - free Python GTK+ SQLite3 database file browser
-Usage: geeksqlite [options] [file]
+geek'SQLite 1.0.0
 
-Options:
-  -h, --help            show this help message and exit
-  -c FILE, --config=FILE
-                        reads configuration from FILE
-  -q, --quiet           don't print anything(!) stdout or stderr
-  -v, --version         displays version information and quits
-  -l, --license         displays geek'SQLite's license information and quits
+################### DEPENDENCIES
+python, pygtk2, sqlite3
+
+################### INSTALLATION
+Runs from this folder, if you want to, just
+	$ make
+	$ ./geeksqlite
+
+To install:
+	$ make
+	$ make install
