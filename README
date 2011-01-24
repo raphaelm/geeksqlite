@@ -1,13 +1,17 @@
 geek'SQLite 1.0.0
 
-################### DEPENDENCIES
-python, pygtk2, sqlite3
+DEPENDENCIES
 
-################### INSTALLATION
+	$ apt-get install python, python-glade2, python-gtk2, gettext, gzip
+
+INSTALLATION
+
 Runs from this folder, if you want to, just
+
 	$ make
 	$ ./geeksqlite
 
-To install:
+To install on your system:
+
 	$ make
 	$ make install

@@ -10,11 +10,11 @@ else:
 	interfacedir		= './interface'
 	
 if os.path.exists('/usr/share/locale/en/LC_MESSAGES/geeksqlite.mo'):
-	interfacedir        = '/usr/share/locale/'
+	langdir        = '/usr/share/locale/'
 elif os.path.exists(os.path.abspath(sys.argv[0])+'/language'):
-	interfacedir 		= os.path.dirname(os.path.abspath(sys.argv[0]))+'/language'
+	langdir 		= os.path.dirname(os.path.abspath(sys.argv[0]))+'/language'
 else:
-	interfacedir		= './language'
+	langdir		= './language'
 	
 languages			= ['de', 'en', 'eo']
 possibleconfigfiles = [os.path.expanduser('~/.geeksqlite'), os.path.dirname(os.path.abspath(sys.argv[0]))+'/geeksqlite.conf', './geeksqlite.conf', '/etc/geeksqlite']

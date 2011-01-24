@@ -7,7 +7,7 @@ all:
 
 clean:
 	rm -f language/*/LC_MESSAGES/geeksqlite.mo
-	gunzip geeksqlite.1.gz
+	gunzip geeksqlite.1.gz || true
 
 install:
 	./install.sh

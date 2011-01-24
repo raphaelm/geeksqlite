@@ -8,10 +8,12 @@ done
 # program
 install -bC --mode=0644 geeksqlite.conf $DESTDIR/etc/geeksqlite
 install -bC --mode=0755 geeksqlite $DESTDIR/usr/bin/geeksqlite
-install -bC --mode=0755 geeksqlite.py $DESTDIR/usr/lib/geeksqlite/geeksqlite.py
-install -bC --mode=0755 dist.py $DESTDIR/usr/lib/geeksqlite/dist.py
-install -bC --mode=0755 filedialog.py $DESTDIR/usr/lib/geeksqlite/filedialog.py
-install -bC --mode=0644 interface/*.glade $DESTDIR/usr/lib/geeksqlite/
+mkdir -p $DESTDIR/usr/lib/geeksqlite
+install -bC --mode=0755 geeksqlite.py $DESTDIR/usr/lib/geeksqlite
+install -bC --mode=0755 dist.py $DESTDIR/usr/lib/geeksqlite
+install -bC --mode=0755 filedialog.py $DESTDIR/usr/lib/geeksqlite
+mkdir -p $DESTDIR/usr/lib/geeksqlite/interface
+install -bC --mode=0644 interface/*.glade $DESTDIR/usr/lib/geeksqlite/interface
 # docs
 install -bC --mode=0644 README $DESTDIR/usr/share/doc/geeksqlite/README
 install -bC --mode=0644 ./geeksqlite.1.gz $DESTDIR/usr/man/man1/geeksqlite.1.gz

@@ -1,5 +1,5 @@
-geeksqlite (0.0.20100511-1) unstable; urgency=low
+geeksqlite (1.0.0-1) stable; urgency=low
 
   * Initial release
 
- -- Raphael Michel <webmaster@raphaelmichel.de>  Tue, 11 May 2010 18:46:06 +0200
+ -- Raphael Michel <webmaster@raphaelmichel.de>  Tue, 24 Jan 2011 22:00:06 +0200

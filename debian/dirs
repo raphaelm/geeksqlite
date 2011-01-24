@@ -1,7 +1,7 @@
 /etc
 /usr/bin
 /usr/lib/geeksqlite
-/usr/lib/geeksqlite/dist.py
+/usr/lib/geeksqlite/interface
 /usr/share/doc/geeksqlite
 /usr/man/man1
 /usr/share/pixmaps
