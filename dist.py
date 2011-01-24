@@ -18,4 +18,10 @@ else:
 	
 languages			= ['de', 'en', 'eo']
 possibleconfigfiles = [os.path.expanduser('~/.geeksqlite'), os.path.dirname(os.path.abspath(sys.argv[0]))+'/geeksqlite.conf', './geeksqlite.conf', '/etc/geeksqlite']
-icon				= './geeksqlite.xpm'
+
+if os.path.exists('/usr/share/pixmaps/geeksqlite.xpm'):
+	icon				= '/usr/share/pixmaps/geeksqlite.xpm'
+elif s.path.exists(os.path.abspath(sys.argv[0])+'/geeksqlite.xpm'):
+	icon				= os.path.abspath(sys.argv[0])+'/geeksqlite.xpm'
+else:
+	icon				= './geeksqlite.xpm'
