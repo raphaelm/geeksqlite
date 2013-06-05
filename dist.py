@@ -21,7 +21,7 @@ possibleconfigfiles = [os.path.expanduser('~/.geeksqlite'), os.path.dirname(os.p
 
 if os.path.exists('/usr/share/pixmaps/geeksqlite.xpm'):
 	icon				= '/usr/share/pixmaps/geeksqlite.xpm'
-elif s.path.exists(os.path.abspath(sys.argv[0])+'/geeksqlite.xpm'):
+elif os.path.exists(os.path.abspath(sys.argv[0])+'/geeksqlite.xpm'):
 	icon				= os.path.abspath(sys.argv[0])+'/geeksqlite.xpm'
 else:
 	icon				= './geeksqlite.xpm'
